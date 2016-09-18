@@ -35,6 +35,8 @@ _ReSharper*/
 *.user
 
 # Ignore files build by ndk and eclipse
+external/
+resources/
 libs/
 bin/
 obj/
