@@ -21,7 +21,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance,
                        LPTSTR    lpCmdLine,
                        int       nCmdShow)
 {
-    UNREFERENCED_PARAMETER(hPrevInstance);
+    UNREFERENCED_PARAMETER(hPrevInstance); 
     UNREFERENCED_PARAMETER(lpCmdLine);
 
 	// dirty hack from turtle

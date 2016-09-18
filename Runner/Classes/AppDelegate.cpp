@@ -4,7 +4,7 @@
 #include <platform/desktop/CCGLViewImpl-desktop.h>
 #pragma warning(pop)
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
+#include "TestScene.h"
 
 USING_NS_CC;
 
@@ -79,7 +79,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 
     // create a scene. it's an autorelease object
-    auto scene = HelloWorld::createScene();
+    auto scene = TestScene::create();
 
     // run
     director->runWithScene(scene);
