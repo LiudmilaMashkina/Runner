@@ -1,9 +1,11 @@
+#pragma warning(push, 0)
 #include <2d/CCScene.h>
 #include <base/CCDirector.h>
 #include <2d/CCMenuItem.h>
 #include <2d/CCMenu.h>
 #include <2d/CCLabel.h>
 #include <2d/CCSprite.h>
+#pragma warning(pop)
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 

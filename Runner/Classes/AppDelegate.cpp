@@ -1,7 +1,8 @@
-#include <cocos2d.h>
+#pragma warning(push, 0)
 #include <platform/CCGLView.h>
 #include <base/CCDirector.h>
 #include <platform/desktop/CCGLViewImpl-desktop.h>
+#pragma warning(pop)
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
 

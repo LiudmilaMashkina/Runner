@@ -1,8 +1,10 @@
 #ifndef __HELLOWORLD_SCENE_H__
 #define __HELLOWORLD_SCENE_H__
 
+#pragma warning(push, 0)
 #include <2d/CCLayer.h>
 #include <platform/CCPlatformMacros.h>
+#pragma warning(pop)
 
 class HelloWorld : public cocos2d::Layer
 {
