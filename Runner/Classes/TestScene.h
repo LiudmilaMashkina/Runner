@@ -1,5 +1,4 @@
-#ifndef __TestScene__
-#define __TestScene__
+#pragma once
 
 #pragma warning(push, 0)
 #include <2d/CCScene.h>
@@ -18,6 +17,4 @@ public:
 private:
 	TestScene() {}
 };
-
-#endif // __TestScene__
  

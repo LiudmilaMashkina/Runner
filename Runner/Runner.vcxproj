@@ -88,14 +88,14 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(COCOS_X_ROOT)\cocos2d-x-3.13.1\cocos\audio\include;$(COCOS_X_ROOT)\cocos2d-x-3.13.1\external\glfw3\include\win32;$(COCOS_X_ROOT)\cocos2d-x-3.13.1\external\win32-specific\gles\include\OGLES;$(COCOS_X_ROOT)\cocos2d-x-3.13.1\cocos;Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(COCOS_X_ROOT)\cocos2d-x-3.13.1\cocos\audio\include;$(COCOS_X_ROOT)\cocos2d-x-3.13.1\external;$(COCOS_X_ROOT)\cocos2d-x-3.13.1\external\glfw3\include\win32;$(COCOS_X_ROOT)\cocos2d-x-3.13.1\external\win32-specific\gles\include\OGLES;$(COCOS_X_ROOT)\cocos2d-x-3.13.1\cocos;Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\external;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcocos2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcocos2d.lib;libbox2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -150,7 +150,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\AppDelegate.h" />
+    <ClInclude Include="Classes\Convert.h" />
+    <ClInclude Include="Classes\GameObjectFactory.h" />
+    <ClInclude Include="Classes\GameWorld.h" />
+    <ClInclude Include="Classes\IGameObject.h" />
+    <ClInclude Include="Classes\Environment.h" />
     <ClInclude Include="Classes\MacroCreate.h" />
+    <ClInclude Include="Classes\SimpleGameObject.h" />
     <ClInclude Include="Classes\TestScene.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Resource.h" />
@@ -158,6 +164,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\AppDelegate.cpp" />
+    <ClCompile Include="Classes\Convert.cpp" />
+    <ClCompile Include="Classes\GameObjectFactory.cpp" />
+    <ClCompile Include="Classes\GameWorld.cpp" />
+    <ClCompile Include="Classes\Environment.cpp" />
+    <ClCompile Include="Classes\SimpleGameObject.cpp" />
     <ClCompile Include="Classes\TestScene.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
