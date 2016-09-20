@@ -7,14 +7,19 @@
 
 #include "MacroCreate.h"
 
+class GameWorld;
+
 class TestScene : public cocos2d::Scene
 {
 public:
 	CC_CREATE_FUNC(TestScene);
 
     virtual bool init() override;
+	void update(float delta) override;
 
 private:
 	TestScene() {}
+
+	std::shared_ptr<GameWorld> _world;
 };
  

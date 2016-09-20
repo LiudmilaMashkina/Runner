@@ -41,7 +41,7 @@ float Convert::toPixels(float value)
 
 float Convert::toDegrees(float radians)
 {
-	return 180.0f * radians / M_PI;
+	return 180.0f * radians / float(M_PI);
 }
 
 

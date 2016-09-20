@@ -13,11 +13,12 @@ class GameObjectFactory
 {
 public:
 	GameObjectFactory(GameWorld* world);
-	std::shared_ptr<IGameObject> createSimpleObject();
+	std::shared_ptr<IGameObject> createBox(const b2Vec2& pos);
+	std::shared_ptr<IGameObject> createCircle(const b2Vec2& pos);
 
 private:
-	b2Body * createBody(cocos2d::V3F_C4B_T2F * vertices, unsigned short * indices, int indicesSize);
-	cocos2d::Sprite* createSprite(const std::string & textureName, cocos2d::V3F_C4B_T2F * verts, unsigned short * indices, int indexSize, int vertSize);
+	b2Body* createBody(const b2BodyType& t, const b2Shape& sh);
+	cocos2d::Sprite* createSprite(const std::string& textureName);
 
 	GameWorld* _world = nullptr;
 

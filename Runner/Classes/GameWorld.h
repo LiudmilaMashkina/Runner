@@ -10,19 +10,18 @@ class IGameObject;
 class GameWorld
 {
 public:
-	GameWorld(const b2Vec2& gravity);
+	GameWorld(const b2Vec2& gravity, cocos2d::Node* scene);
 	~GameWorld();
 
-	void addObject(std::shared_ptr<IGameObject> object);
+	void addObject(const std::shared_ptr<IGameObject>& object);
 
 	b2World* getPhysics() { return _physics; }
-	cocos2d::Layer* getGraphics() { return _graphics; }
+	cocos2d::Node* getGraphics() { return _graphics; }
 
 	void update(float delta);
 
 private:
 	b2World* _physics = nullptr;
-	cocos2d::Layer* _graphics = nullptr;
+	cocos2d::Node* _graphics = nullptr;
 	std::vector<std::shared_ptr<IGameObject>> _objects;
-	
 };

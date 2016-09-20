@@ -52,6 +52,18 @@
     <ClInclude Include="Classes\Environment.h">
       <Filter>Classes</Filter>
     </ClInclude>
+    <ClInclude Include="Classes\B2DebugDrawLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\GB2ShapeCacheX.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\GLESRender.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\VisibleRect.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -76,6 +88,18 @@
       <Filter>Classes</Filter>
     </ClCompile>
     <ClCompile Include="Classes\Environment.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\B2DebugDrawLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\GB2ShapeCacheX.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\GLESRender.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\VisibleRect.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>
