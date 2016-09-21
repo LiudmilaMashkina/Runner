@@ -4,7 +4,7 @@
 
 #pragma warning(pop)
 
-USING_NS_CC;
+//USING_NS_CC;
 
 class IGameObject 
 {

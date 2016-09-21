@@ -3,7 +3,7 @@
 #pragma warning(pop)
 #include <cassert>
 #include "GameWorld.h"
-#include "IGameObject.h"
+#include "GameObjects/IGameObject.h"
 
 USING_NS_CC;
 

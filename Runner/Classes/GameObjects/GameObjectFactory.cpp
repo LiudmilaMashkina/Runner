@@ -5,7 +5,7 @@
 #include "GameObjectFactory.h"
 #include "IGameObject.h"
 #include "SimpleGameObject.h"
-#include "Convert.h"
+#include "Utils/Convert.h"
 
 USING_NS_CC;
 
@@ -16,12 +16,13 @@ GameObjectFactory::GameObjectFactory(GameWorld* world) :
 std::shared_ptr<IGameObject> GameObjectFactory::createBox(const b2Vec2& pos, float angle, const b2Vec2& size, b2BodyType type, const std::string fileName)
 {
 	b2PolygonShape physShape;
-	physShape.SetAsBox(size.x / 2, size.y / 2);
-
+	physShape.SetAsBox(size.x / 2, size.y / 2, b2Vec2(size.x / 2, size.y / 2), 0);
+	
 	b2Body* body = createBody(type, &physShape, pos, angle);
 
 	Sprite* sprite = createSprite(fileName, size);
-	
+	sprite->setAnchorPoint(Vec2(0, 0));
+
 	std::shared_ptr<SimpleGameObject> obj = std::shared_ptr<SimpleGameObject>(new SimpleGameObject(body, sprite, _world));
 	_world->addObject(obj);
 

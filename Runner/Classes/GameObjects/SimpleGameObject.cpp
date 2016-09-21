@@ -4,7 +4,7 @@
 #pragma warning(pop)
 #include "SimpleGameObject.h"
 #include "GameWorld.h"
-#include "Convert.h"
+#include "Utils/Convert.h"
 
 USING_NS_CC;
 
