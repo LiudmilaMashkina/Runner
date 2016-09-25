@@ -30,4 +30,3 @@ void SimpleGameObject::update(float delta)
 	_node->setPosition(Convert::toPixels(bodyPos));
 	_node->setRotation(Convert::toDegrees(-bodyAngle));
 }
-

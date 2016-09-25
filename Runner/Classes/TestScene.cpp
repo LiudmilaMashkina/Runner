@@ -4,7 +4,6 @@
 #pragma warning(pop)
 #include "TestScene.h"
 #include "GameWorld.h"
-#include "GameObjects/GameObjectFactory.h"
 #include "Utils/Environment.h"
 #include "DebugDraw/B2DebugDrawLayer.h"
 #include "GameObjects/GameObjectComposer.h"
@@ -21,13 +20,32 @@ bool TestScene::init()
 	b2Vec2 winSize = Environment::getScreenSize();
 
 	GameObjectComposer composer(_world.get());
-	composer.assembleLine(5.3f, b2Vec2(winSize.x / 4, winSize.y / 2 - 2));
 
-	GameObjectFactory factory(_world.get());
-	factory.createCircle(b2Vec2(winSize.x / 2, winSize.y / 2 + 2), 0, 2, b2BodyType::b2_dynamicBody, "stone_basic_blue_3.png");
+	GameObjectComposer::LineDef line;
+	line.blocks.push_back(GameObjectComposer::LineDef::Block("stone_line_blue_0.png", 0.5f));
+	line.blocks.push_back(GameObjectComposer::LineDef::Block("stone_line_blue_1.png", 0.75f));
+	line.blocks.push_back(GameObjectComposer::LineDef::Block("stone_line_blue_2.png", 1.0f));
+	line.blocks.push_back(GameObjectComposer::LineDef::Block("stone_line_blue_3.png", 2.0f));
+	line.blocks.push_back(GameObjectComposer::LineDef::Block("stone_line_blue_4.png", 1.5f));
+	line.blocks.push_back(GameObjectComposer::LineDef::Block("stone_line_blue_5.png", 0.5f));
+	line.blocks.push_back(GameObjectComposer::LineDef::Block("stone_line_blue_6.png", 0.5f));
+	line.length = 50;
+	line.maxOverlap = 0;
+	line.startPos.Set(winSize.x / 5, winSize.y * 0.75f);
 
-	auto physDebugDraw = B2DebugDrawLayer::create(_world->getPhysics(), Environment::getPTMratio());
-	addChild(physDebugDraw, 100);
+	//composer.assembleLine(line);
+
+	GameObjectComposer::BridgeDef bridge;
+	bridge.startPos.Set(winSize.x / 5, winSize.y * 0.75f);
+	bridge.direction.Set(1.0f, -0.1f);
+	bridge.linkCount = 20;
+	bridge.linkSize.Set(0.6f, 0.6f);
+	bridge.overlap = 0.14f;
+
+	composer.assembleBridge(bridge);
+
+	//auto physDebugDraw = B2DebugDrawLayer::create(_world->getPhysics(), Environment::getPTMratio());
+	//addChild(physDebugDraw, 100);
 
 	scheduleUpdate();
 	return true;

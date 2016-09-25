@@ -1,7 +1,7 @@
 #pragma once
 
 #pragma warning(push, 0)
-
+#include <Box2D/Box2D.h>
 #pragma warning(pop)
 
 #include "IGameObject.h"
@@ -14,9 +14,11 @@ class SimpleGameObject : public IGameObject
 {
 public:
 	SimpleGameObject(b2Body* body, cocos2d::Node* node, GameWorld* world);
-	~SimpleGameObject();
+	virtual ~SimpleGameObject();
 
 	virtual void update(float delta) override;
+	
+	b2Body* getBody() { return _body; }
 
 private:
 	b2Body* _body = nullptr;

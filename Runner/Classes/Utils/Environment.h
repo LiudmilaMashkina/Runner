@@ -10,5 +10,6 @@ class Environment
 public:
 	static b2Vec2 getScreenSize();
 	static float32 getPTMratio();
+	static int generateIntRand(int min, int max);
 };
 

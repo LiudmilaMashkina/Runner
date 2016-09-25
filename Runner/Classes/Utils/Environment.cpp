@@ -17,12 +17,19 @@ b2Vec2 Environment::getScreenSize()
 float32 Environment::getPTMratio()
 {
 	Size winSize = Director::getInstance()->getWinSize();
-	float32 ptmWidth = winSize.width / 15;
-	float32 ptmHeight = winSize.height / 10;
+	float32 ptmWidth = winSize.width / 10;
+	float32 ptmHeight = winSize.height / 15;
 
 	if (ptmWidth > ptmHeight)
 		return ptmHeight;
 	else
 		return ptmWidth;
 }
+
+int Environment::generateIntRand(int min, int max)
+{
+	int interval = max - min;
+	return rand() % interval + min;
+}
+
 

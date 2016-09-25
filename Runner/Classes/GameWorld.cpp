@@ -28,7 +28,7 @@ void GameWorld::update(float delta)
 	int32 positionIterations = 2;
 	_physics->Step(delta, velocityIterations, positionIterations);
 
-	for (unsigned int i = 0; i < _objects.size(); ++i)
+	for (size_t i = 0; i < _objects.size(); ++i)
 	{
 		_objects[i]->update(delta);
 	}

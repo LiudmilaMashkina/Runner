@@ -10,7 +10,7 @@ class IGameObject;
 class GameWorld
 {
 public:
-	GameWorld(const b2Vec2& gravity, cocos2d::Node* scene);
+	GameWorld(const b2Vec2& gravity, cocos2d::Node* rootNode);
 	~GameWorld();
 
 	void addObject(const std::shared_ptr<IGameObject>& object);
