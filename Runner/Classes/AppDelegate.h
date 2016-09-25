@@ -1,5 +1,4 @@
-#ifndef  _APP_DELEGATE_H_
-#define  _APP_DELEGATE_H_
+#pragma once
 
 #ifdef WIN32
 #include <platform/win32/CCApplication-win32.h>
@@ -37,6 +36,4 @@ public:
     */
     virtual void applicationWillEnterForeground();
 };
-
-#endif // _APP_DELEGATE_H_
 

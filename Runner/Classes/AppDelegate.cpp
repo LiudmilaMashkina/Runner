@@ -39,6 +39,8 @@ static int register_all_packages()
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
+	srand(static_cast<unsigned int>(time(0)));
+
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
@@ -60,6 +62,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // Set the design resolution
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
     auto frameSize = glview->getFrameSize();
+
+#ifdef WIN32
+	director->getOpenGLView()->setFrameSize(1136, 640);
+	director->getOpenGLView()->setDesignResolutionSize(1136, 640, ResolutionPolicy::EXACT_FIT);
+#endif
+
     // if the frame's height is larger than the height of medium size.
     if (frameSize.height > mediumResolutionSize.height)
     {        
