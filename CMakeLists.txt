@@ -6,6 +6,14 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror")
 set(sources 
 	src/AppDelegate.cpp
 	src/AppDelegate.h
+	src/B2DebugDraw/B2DebugDrawLayer.cpp
+	src/B2DebugDraw/B2DebugDrawLayer.h
+	src/B2DebugDraw/GB2ShapeCacheX.cpp
+	src/B2DebugDraw/GB2ShapeCacheX.h
+	src/B2DebugDraw/GLESRender.cpp
+	src/B2DebugDraw/GLESRender.h
+	src/B2DebugDraw/VisibleRect.cpp
+	src/B2DebugDraw/VisibleRect.h
 	src/GameObjects/GameObjectComposer.cpp
 	src/GameObjects/GameObjectComposer.h
 	src/GameObjects/GameObjectFactory.cpp

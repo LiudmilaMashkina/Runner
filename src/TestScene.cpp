@@ -5,7 +5,7 @@
 #include "TestScene.h"
 #include "GameWorld.h"
 #include "Utils/Environment.h"
-//#include "DebugDraw/B2DebugDrawLayer.h"
+#include "B2DebugDraw/B2DebugDrawLayer.h"
 #include "GameObjects/GameObjectComposer.h"
 
 USING_NS_CC;
@@ -44,8 +44,8 @@ bool TestScene::init()
 
 	composer.assembleBridge(bridge);
 
-	//auto physDebugDraw = B2DebugDrawLayer::create(_world->getPhysics(), Environment::getPTMratio());
-	//addChild(physDebugDraw, 100);
+	auto physDebugDraw = B2DebugDrawLayer::create(_world->getPhysics(), Environment::getPTMratio());
+	addChild(physDebugDraw, 100);
 
 	scheduleUpdate();
 	return true;
