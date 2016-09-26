@@ -42,3 +42,9 @@ set(includes
 
 add_library(GameLib ${sources})
 target_include_directories(GameLib PUBLIC ${includes})
+
+foreach(source IN LISTS sources)
+    get_filename_component(source_path "${source}" PATH)
+    string(REPLACE "/" "\\" file_group "${source_path}")
+    source_group("${file_group}" FILES "${source}")
+endforeach()
