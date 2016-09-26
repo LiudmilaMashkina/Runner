@@ -1,0 +1,368 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		85FAAF3B1D99C83900933768 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 85FAAF3A1D99C83900933768 /* main.mm */; };
+		85FAAF4F1D99C8DC00933768 /* libGameLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FAAF4E1D99C87500933768 /* libGameLib.a */; };
+		85FAAF561D99CEA900933768 /* libcocos2d-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FAAF551D99CE9E00933768 /* libcocos2d-mac.a */; };
+		85FAAF581D99CEFD00933768 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FAAF571D99CEFD00933768 /* OpenGL.framework */; };
+		85FAAF5A1D99CF3100933768 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FAAF591D99CF3100933768 /* Cocoa.framework */; };
+		85FAAF5C1D99CF3F00933768 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FAAF5B1D99CF3F00933768 /* CoreVideo.framework */; };
+		85FAAF601D99CF7400933768 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FAAF5F1D99CF7400933768 /* IOKit.framework */; };
+		85FAAF621D99CFA200933768 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FAAF611D99CFA200933768 /* libz.tbd */; };
+		85FAAF641D99CFCF00933768 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FAAF631D99CFCF00933768 /* libiconv.tbd */; };
+		85FAAF661D99D14800933768 /* resources in Resources */ = {isa = PBXBuildFile; fileRef = 85FAAF651D99D14800933768 /* resources */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		85FAAF4D1D99C87500933768 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 85FAAF471D99C87500933768 /* GameLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A11252802AB642558C579062;
+			remoteInfo = GameLib;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		85FAAF331D99C83900933768 /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		85FAAF3A1D99C83900933768 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		85FAAF411D99C83A00933768 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85FAAF471D99C87500933768 /* GameLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GameLib.xcodeproj; path = ../../../build/GameLib.xcodeproj; sourceTree = "<group>"; };
+		85FAAF521D99CE6700933768 /* libcocos2d Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2d Mac.a"; path = "../../../external/libcocos2d Mac.a"; sourceTree = "<group>"; };
+		85FAAF551D99CE9E00933768 /* libcocos2d-mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libcocos2d-mac.a"; sourceTree = "<group>"; };
+		85FAAF571D99CEFD00933768 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		85FAAF591D99CF3100933768 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		85FAAF5B1D99CF3F00933768 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		85FAAF5D1D99CF6200933768 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		85FAAF5F1D99CF7400933768 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		85FAAF611D99CFA200933768 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		85FAAF631D99CFCF00933768 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		85FAAF651D99D14800933768 /* resources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = resources; path = ../../../resources; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		85FAAF301D99C83900933768 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				85FAAF641D99CFCF00933768 /* libiconv.tbd in Frameworks */,
+				85FAAF621D99CFA200933768 /* libz.tbd in Frameworks */,
+				85FAAF601D99CF7400933768 /* IOKit.framework in Frameworks */,
+				85FAAF5C1D99CF3F00933768 /* CoreVideo.framework in Frameworks */,
+				85FAAF5A1D99CF3100933768 /* Cocoa.framework in Frameworks */,
+				85FAAF581D99CEFD00933768 /* OpenGL.framework in Frameworks */,
+				85FAAF561D99CEA900933768 /* libcocos2d-mac.a in Frameworks */,
+				85FAAF4F1D99C8DC00933768 /* libGameLib.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		85FAAF2A1D99C83900933768 = {
+			isa = PBXGroup;
+			children = (
+				85FAAF651D99D14800933768 /* resources */,
+				85FAAF471D99C87500933768 /* GameLib.xcodeproj */,
+				85FAAF351D99C83900933768 /* Runner */,
+				85FAAF341D99C83900933768 /* Products */,
+				85FAAF511D99CE6700933768 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		85FAAF341D99C83900933768 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				85FAAF331D99C83900933768 /* Runner.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		85FAAF351D99C83900933768 /* Runner */ = {
+			isa = PBXGroup;
+			children = (
+				85FAAF411D99C83A00933768 /* Info.plist */,
+				85FAAF3A1D99C83900933768 /* main.mm */,
+			);
+			path = Runner;
+			sourceTree = "<group>";
+		};
+		85FAAF481D99C87500933768 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				85FAAF4E1D99C87500933768 /* libGameLib.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		85FAAF511D99CE6700933768 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				85FAAF631D99CFCF00933768 /* libiconv.tbd */,
+				85FAAF611D99CFA200933768 /* libz.tbd */,
+				85FAAF5F1D99CF7400933768 /* IOKit.framework */,
+				85FAAF5D1D99CF6200933768 /* CoreGraphics.framework */,
+				85FAAF5B1D99CF3F00933768 /* CoreVideo.framework */,
+				85FAAF591D99CF3100933768 /* Cocoa.framework */,
+				85FAAF571D99CEFD00933768 /* OpenGL.framework */,
+				85FAAF541D99CE9E00933768 /* external */,
+				85FAAF521D99CE6700933768 /* libcocos2d Mac.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		85FAAF541D99CE9E00933768 /* external */ = {
+			isa = PBXGroup;
+			children = (
+				85FAAF551D99CE9E00933768 /* libcocos2d-mac.a */,
+			);
+			name = external;
+			path = ../../../external;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		85FAAF321D99C83900933768 /* Runner */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 85FAAF441D99C83A00933768 /* Build configuration list for PBXNativeTarget "Runner" */;
+			buildPhases = (
+				85FAAF2F1D99C83900933768 /* Sources */,
+				85FAAF301D99C83900933768 /* Frameworks */,
+				85FAAF311D99C83900933768 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Runner;
+			productName = Runner;
+			productReference = 85FAAF331D99C83900933768 /* Runner.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		85FAAF2B1D99C83900933768 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = Luda;
+				TargetAttributes = {
+					85FAAF321D99C83900933768 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 85FAAF2E1D99C83900933768 /* Build configuration list for PBXProject "Runner" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 85FAAF2A1D99C83900933768;
+			productRefGroup = 85FAAF341D99C83900933768 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 85FAAF481D99C87500933768 /* Products */;
+					ProjectRef = 85FAAF471D99C87500933768 /* GameLib.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				85FAAF321D99C83900933768 /* Runner */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		85FAAF4E1D99C87500933768 /* libGameLib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGameLib.a;
+			remoteRef = 85FAAF4D1D99C87500933768 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		85FAAF311D99C83900933768 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				85FAAF661D99D14800933768 /* resources in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		85FAAF2F1D99C83900933768 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				85FAAF3B1D99C83900933768 /* main.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		85FAAF421D99C83A00933768 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		85FAAF431D99C83A00933768 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		85FAAF451D99C83A00933768 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = (
+					../../../src,
+					"/Users/luda/Downloads/cocos2d-x-3.13.1/cocos",
+				);
+				INFOPLIST_FILE = Runner/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = ../../../external;
+				PRODUCT_BUNDLE_IDENTIFIER = luda.Runner;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WARNING_CFLAGS = "-Wno-documentation";
+			};
+			name = Debug;
+		};
+		85FAAF461D99C83A00933768 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = (
+					../../../src,
+					"/Users/luda/Downloads/cocos2d-x-3.13.1/cocos",
+				);
+				INFOPLIST_FILE = Runner/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = ../../../external;
+				PRODUCT_BUNDLE_IDENTIFIER = luda.Runner;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WARNING_CFLAGS = "-Wno-documentation";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		85FAAF2E1D99C83900933768 /* Build configuration list for PBXProject "Runner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				85FAAF421D99C83A00933768 /* Debug */,
+				85FAAF431D99C83A00933768 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		85FAAF441D99C83A00933768 /* Build configuration list for PBXNativeTarget "Runner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				85FAAF451D99C83A00933768 /* Debug */,
+				85FAAF461D99C83A00933768 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 85FAAF2B1D99C83900933768 /* Project object */;
+}
