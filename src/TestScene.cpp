@@ -7,6 +7,7 @@
 #include "Utils/Environment.h"
 #include "B2DebugDraw/B2DebugDrawLayer.h"
 #include "GameObjects/GameObjectComposer.h"
+#include "GameObjects/GameLevelGenerator.h"
 
 USING_NS_CC;
 
@@ -21,28 +22,8 @@ bool TestScene::init()
 
 	GameObjectComposer composer(_world.get());
 
-	GameObjectComposer::LineDef line;
-	line.blocks.push_back(GameObjectComposer::LineDef::Block("stone_line_blue_0.png", 0.5f));
-	line.blocks.push_back(GameObjectComposer::LineDef::Block("stone_line_blue_1.png", 0.75f));
-	line.blocks.push_back(GameObjectComposer::LineDef::Block("stone_line_blue_2.png", 1.0f));
-	line.blocks.push_back(GameObjectComposer::LineDef::Block("stone_line_blue_3.png", 2.0f));
-	line.blocks.push_back(GameObjectComposer::LineDef::Block("stone_line_blue_4.png", 1.5f));
-	line.blocks.push_back(GameObjectComposer::LineDef::Block("stone_line_blue_5.png", 0.5f));
-	line.blocks.push_back(GameObjectComposer::LineDef::Block("stone_line_blue_6.png", 0.5f));
-	line.length = 50;
-	line.maxOverlap = 0;
-	line.startPos.Set(winSize.x / 5, winSize.y * 0.75f);
-
-	//composer.assembleLine(line);
-
-	GameObjectComposer::BridgeDef bridge;
-	bridge.startPos.Set(winSize.x / 5, winSize.y * 0.75f);
-	bridge.direction.Set(1.0f, -0.1f);
-	bridge.linkCount = 20;
-	bridge.linkSize.Set(0.6f, 0.6f);
-	bridge.overlap = 0.14f;
-
-	composer.assembleBridge(bridge);
+    GameLevelGenerator generator = GameLevelGenerator(_world.get());
+    generator.generateUntil(b2Vec2(winSize.x / 2 + 4, winSize.y / 2));
 
 	auto physDebugDraw = B2DebugDrawLayer::create(_world->getPhysics(), Environment::getPTMratio());
 	addChild(physDebugDraw, 100);

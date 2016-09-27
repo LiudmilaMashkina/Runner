@@ -14,11 +14,12 @@ GameObjectComposer::GameObjectComposer(GameWorld* world) :
 _world(world)
 {}
 
-void GameObjectComposer::assembleLine(const LineDef& def)
+b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
 {
 	GameObjectFactory factory = GameObjectFactory(_world);
-
-	for (float curLength = 0.0f; curLength < def.length; )
+    
+    float curLength = 0.0f;
+	for ( ; curLength < def.length; )
 	{
 		int num = Environment::generateIntRand(0, def.blocks.size() - 1);
 		const LineDef::Block& block = def.blocks[num];
@@ -27,9 +28,14 @@ void GameObjectComposer::assembleLine(const LineDef& def)
 		factory.createStaticStone(leftCorner, block.width, block.textureName);
 		curLength += block.width;
 	}
+    
+    b2Vec2 exitPos = def.startPos;
+    exitPos.x += curLength;
+    
+    return exitPos;
 }
 
-void GameObjectComposer::assembleBridge(const BridgeDef & def)
+b2Vec2 GameObjectComposer::assembleBridge(const BridgeDef & def)
 {
 	GameObjectFactory factory = GameObjectFactory(_world);
 
@@ -37,6 +43,8 @@ void GameObjectComposer::assembleBridge(const BridgeDef & def)
 	dir.Normalize();
 
 	float angle = atan2f(dir.y, dir.x);
+    
+    b2Vec2 pos{0.0f, 0.0f};
 
 	b2Body* prev = nullptr;
 	for (int i = 0; i < def.linkCount; ++i)
@@ -44,7 +52,8 @@ void GameObjectComposer::assembleBridge(const BridgeDef & def)
 		b2BodyType bodyType = i == 0 || i == def.linkCount - 1 ? b2BodyType::b2_staticBody : b2BodyType::b2_dynamicBody;
 
 		float dist = 0.5f * def.linkSize.x + (1 - def.overlap) * i * def.linkSize.x;
-		b2Vec2 pos = def.startPos + dist * dir;
+		pos = def.startPos + dist * dir;
+        pos.y -= def.linkSize.y / 2; // def.startPos is top left corner
 		auto curObj = factory.createBox(pos, angle, def.linkSize, bodyType, "resources/hanging_bridge_0.png");
 		b2Body* curBody = curObj->getBody();
 
@@ -59,5 +68,11 @@ void GameObjectComposer::assembleBridge(const BridgeDef & def)
 		}
 		prev = curBody;
 	}
+    
+    b2Vec2 exitPos = pos;
+    exitPos.x += def.linkSize.x / 2;
+    exitPos.y += def.linkSize.y / 2;
+    
+    return exitPos;
 }
 

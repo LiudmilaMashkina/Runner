@@ -28,7 +28,7 @@ float32 Environment::getPTMratio()
 
 int Environment::generateIntRand(int min, int max)
 {
-	int interval = max - min;
+	int interval = max - min + 1;
 	return rand() % interval + min;
 }
 
