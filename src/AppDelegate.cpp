@@ -63,10 +63,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
     auto frameSize = glview->getFrameSize();
 
-#ifdef WIN32
+//#ifdef WIN32
 	director->getOpenGLView()->setFrameSize(1136, 640);
 	director->getOpenGLView()->setDesignResolutionSize(1136, 640, ResolutionPolicy::EXACT_FIT);
-#endif
+//#endif
 
     // if the frame's height is larger than the height of medium size.
     if (frameSize.height > mediumResolutionSize.height)

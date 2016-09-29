@@ -12,7 +12,7 @@ set(sources
 	src/B2DebugDraw/GB2ShapeCacheX.h
 	src/B2DebugDraw/GLESRender.cpp
 	src/B2DebugDraw/GLESRender.h
-	src/B2DebugDraw/VisibleRect.cpp
+	src/B2DebugDraw/VisibleRect.cpp	
 	src/B2DebugDraw/VisibleRect.h
 	src/GameObjects/GameObjectComposer.cpp
 	src/GameObjects/GameObjectComposer.h
@@ -21,8 +21,12 @@ set(sources
 	src/GameObjects/IGameObject.h
 	src/GameObjects/SimpleGameObject.cpp
 	src/GameObjects/SimpleGameObject.h
+	src/GameObjects/GameLevelGenerator.cpp
+	src/GameObjects/GameLevelGenerator.h
 	src/GameWorld.cpp
 	src/GameWorld.h
+	src/GameCamera.cpp
+	src/GameCamera.h
 	src/TestScene.cpp
 	src/TestScene.h
 	src/Utils/Convert.cpp

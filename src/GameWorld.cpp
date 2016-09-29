@@ -22,6 +22,12 @@ void GameWorld::addObject(const std::shared_ptr<IGameObject>& object)
 	_objects.push_back(object);
 }
 
+void GameWorld::removeObject(const std::function<bool (const std::shared_ptr<IGameObject> &)> &predicate)
+{
+    auto it = std::remove_if(_objects.begin(), _objects.end(), predicate);
+    _objects.erase(it, _objects.end());
+}
+
 void GameWorld::update(float delta)
 {
 	int32 velocityIterations = 6;

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <memory>
+#include <string>
+#include <vector>
 #pragma warning(push, 0)
 #include <Box2d/Box2D.h>
 #pragma warning(pop)
@@ -38,8 +40,8 @@ public:
 
 	GameObjectComposer(GameWorld* world);
 
-	void assembleLine(const LineDef& def);
-	void assembleBridge(const BridgeDef& def);
+	b2Vec2 assembleLine(const LineDef& def);
+	b2Vec2 assembleBridge(const BridgeDef& def);
 
 private:
 	GameWorld* _world = nullptr;
