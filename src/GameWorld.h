@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #pragma warning(push, 0)
 #include <Box2D/Box2D.h>
 #include <2d/CCNode.h>
@@ -17,6 +18,7 @@ public:
 
 	b2World* getPhysics() { return _physics; }
 	cocos2d::Node* getGraphics() { return _graphics; }
+    void removeObject(const std::function<bool (const std::shared_ptr<IGameObject>&)> &predicate);
 
 	void update(float delta);
 

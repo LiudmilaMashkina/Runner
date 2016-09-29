@@ -19,6 +19,7 @@ public:
 	virtual void update(float delta) override;
 	
 	b2Body* getBody() { return _body; }
+    virtual b2Vec2 getPosition() override;
 
 private:
 	b2Body* _body = nullptr;

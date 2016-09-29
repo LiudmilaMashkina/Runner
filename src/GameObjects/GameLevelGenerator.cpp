@@ -17,9 +17,9 @@ _world(world)
     _exitPos.y = 0.5f * Environment::getScreenSize().y;
 }
 
-void GameLevelGenerator::generateUntil(const b2Vec2 &frontier)
+void GameLevelGenerator::generateUntil(const float frontier)
 {
-    while (_exitPos.x <= frontier.x)
+    while (_exitPos.x <= frontier)
     {
         int start = static_cast<int>(CompositionId::EnumStart) + 1;
         int end = static_cast<int>(CompositionId::EnumEnd) - 1;
@@ -60,7 +60,7 @@ b2Vec2 GameLevelGenerator::generateBridge(const b2Vec2& startPos)
     GameObjectComposer::BridgeDef bridge;
     //bridge.startPos.Set(winSize.x / 5, winSize.y * 0.75f);
     bridge.startPos.Set(startPos.x, startPos.y);
-    bridge.direction.Set(1.0f, -0.1f);
+    bridge.direction.Set(1.0f, 0);
     bridge.linkCount = 5;
     bridge.linkSize.Set(0.6f, 0.6f);
     bridge.overlap = 0.14f;

@@ -25,6 +25,8 @@ set(sources
 	src/GameObjects/GameLevelGenerator.h
 	src/GameWorld.cpp
 	src/GameWorld.h
+	src/GameCamera.cpp
+	src/GameCamera.h
 	src/TestScene.cpp
 	src/TestScene.h
 	src/Utils/Convert.cpp

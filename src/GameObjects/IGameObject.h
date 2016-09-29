@@ -10,4 +10,5 @@ public:
 	virtual ~IGameObject() {};
 
 	virtual void update(float delta) = 0;
+    virtual b2Vec2 getPosition() = 0;
 };

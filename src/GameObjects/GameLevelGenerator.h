@@ -29,7 +29,7 @@ class GameLevelGenerator
 {
 public:
     GameLevelGenerator(GameWorld* world);
-    void generateUntil(const b2Vec2& frontier);
+    void generateUntil(const float frontier);
     b2Vec2 generateComposition(CompositionId compositionId, const b2Vec2& startPos);
     b2Vec2 generateBridge(const b2Vec2& startPos);
     b2Vec2 generateIceLine(const b2Vec2& startPos);
