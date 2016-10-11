@@ -21,6 +21,7 @@ public:
         cocos2d::Node* layer = nullptr;
         float speedFactor = 0.0f;
         float zoomFactor = 0.0f;
+        bool clamp = false;
     };
     
     GameCamera(const std::vector<LayerInfo>& layers);

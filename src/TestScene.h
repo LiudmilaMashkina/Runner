@@ -2,6 +2,7 @@
 
 #pragma warning(push, 0)
 #include <2d/CCScene.h>
+#include <2d/CCSprite.h>
 #include <platform/CCPlatformMacros.h>
 #include <Box2D/Box2D.h>
 #pragma warning(pop)
@@ -24,6 +25,7 @@ public:
 
 private:
 	TestScene() {}
+    cocos2d::Sprite* createBackground(const std::string & backgroundName);
 
 	std::shared_ptr<GameWorld> _world;
     std::shared_ptr<GameCamera> _camera;
