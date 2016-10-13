@@ -1,13 +1,4 @@
-//
-//  Generator.h
-//  Wanderer
-//
-//  Created by Luda on 14/05/16.
-//
-//
-
-#ifndef __Wanderer__FieldMixer__
-#define __Wanderer__FieldMixer__
+#pragma once
 
 #include "IForceField.h"
 #include <functional>
@@ -33,5 +24,3 @@ private:
 	std::function<float()> _cft1;
 	std::function<float()> _cft2;
 };
-
-#endif /* defined(__Wanderer__FieldMixer__) */

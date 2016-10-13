@@ -1,13 +1,4 @@
-//
-//  GameCamera.hpp
-//  GameLib
-//
-//  Created by Luda on 28/09/16.
-//
-//
-
-#ifndef GameCamera_hpp
-#define GameCamera_hpp
+#pragma once
 
 #include <Box2D/Box2D.h>
 #include <2d/CCNode.h>
@@ -32,5 +23,3 @@ public:
 private:
     std::vector<LayerInfo> _layers;
 };
-
-#endif /* GameCamera_hpp */

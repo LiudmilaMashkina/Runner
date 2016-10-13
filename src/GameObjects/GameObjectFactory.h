@@ -1,5 +1,4 @@
-#ifndef __GameObjectFactory__
-#define __GameObjectFactory__
+#pragma once
 
 #pragma warning(push, 0)
 #include <2d/CCSprite.h>
@@ -26,6 +25,4 @@ private:
 	static void scale(const b2Vec2& size, cocos2d::Sprite* sprite);
 
 	GameWorld* _world = nullptr;
-};
-#endif // __GameObjectFactory__
- 
+}; 
