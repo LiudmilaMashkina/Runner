@@ -32,4 +32,10 @@ int Environment::generateIntRand(int min, int max)
 	return rand() % interval + min;
 }
 
+float Environment::generateFloatRand(float min, float max)
+{
+    float randNumber = min + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(max-min)));
+    
+    return randNumber;
+}
 

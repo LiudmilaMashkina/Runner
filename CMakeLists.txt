@@ -34,6 +34,39 @@ set(sources
 	src/Utils/Environment.cpp
 	src/Utils/Environment.h
 	src/Utils/MacroCreate.h
+	src/Utils/ITimeProvider.h
+	src/Utils/TimeProvider.cpp
+	src/Utils/TimeProvider.h
+	src/Utils/b2Vec2Operators.h
+	src/Particles/Particle.cpp
+	src/Particles/Particle.h
+	src/Particles/ParticlesCleaner.cpp
+	src/Particles/ParticlesCleaner.h
+	src/Particles/ParticlesGenerator.cpp
+	src/Particles/ParticlesGenerator.h
+	src/Particles/ParticlesMover.cpp
+	src/Particles/ParticlesMover.h
+	src/Particles/ParticlesReplacer.cpp
+	src/Particles/ParticlesReplacer.h
+	src/Particles/ParticlesSystem.cpp
+	src/Particles/ParticlesSystem.h
+	src/Particles/IParticlesReplacer.h
+	src/Particles/IParticlesUpdater.h
+	src/Particles/IParticlesCleaner.h
+	src/Particles/ISystemUpdater.h
+	src/ForceField/FieldMixer.cpp
+	src/ForceField/FieldMixer.h
+	src/ForceField/ForceFieldDebugDraw.cpp
+	src/ForceField/ForceFieldDebugDraw.h
+	src/ForceField/ForceFieldFactory.cpp
+	src/ForceField/ForceFieldFactory.h
+	src/ForceField/IForceField.h
+	src/ForceField/GridForceField.cpp
+	src/ForceField/GridForceField.h
+	src/ForceField/StaticForceField.cpp
+	src/ForceField/StaticForceField.h
+	src/ForceField/Clamper.cpp
+	src/ForceField/Clamper.h
 )
 
 set(includes

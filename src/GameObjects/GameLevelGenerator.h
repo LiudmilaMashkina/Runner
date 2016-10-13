@@ -1,13 +1,4 @@
-//
-//  GameLevelGenerator.hpp
-//  GameLib
-//
-//  Created by Luda on 27/09/16.
-//
-//
-
-#ifndef GameLevelGenerator_hpp
-#define GameLevelGenerator_hpp
+#pragma once
 
 #include <stdio.h>
 #include "GameObjectComposer.h"
@@ -42,5 +33,3 @@ private:
     GameWorld* _world;
     b2Vec2 _exitPos = {0.0f, 0.0f};
 };
-
-#endif /* GameLevelGenerator_hpp */
