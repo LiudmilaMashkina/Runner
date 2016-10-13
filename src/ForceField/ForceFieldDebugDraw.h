@@ -11,7 +11,7 @@ class ForceFieldDebugDraw : public cocos2d::Node
 {
 public:
 	virtual void update(float delta) override;
-    CC_CREATE_FUNC_6(ForceFieldDebugDraw, initWithField, const std::shared_ptr<IForceField> &, forceField, const b2Vec2 &, fieldSize, float, drawStep, float, maxForce)
+    CC_CREATE_FUNC_4(ForceFieldDebugDraw, initWithField, const std::shared_ptr<IForceField> &, forceField, const b2Vec2 &, fieldSize, float, drawStep, float, maxForce)
      
 private:
 	ForceFieldDebugDraw() {}

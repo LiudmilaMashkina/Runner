@@ -20,7 +20,7 @@ class ParticlesSystem;
 class TestScene : public cocos2d::Scene
 {
 public:
-	CC_CREATE_FUNC(TestScene);
+	CC_CREATE_FUNC(TestScene, init);
 
     virtual bool init() override;
 	void update(float delta) override;
