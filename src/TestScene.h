@@ -8,11 +8,14 @@
 #pragma warning(pop)
 
 #include "Utils/MacroCreate.h"
+#include "Utils/TimeProvider.h"
 
 class GameWorld;
 class GameCamera;
 class GameLevelGenerator;
 class IGameObject;
+class ParticlesLayer;
+class ParticlesSystem;
 
 class TestScene : public cocos2d::Scene
 {
@@ -30,6 +33,9 @@ private:
 	std::shared_ptr<GameWorld> _world;
     std::shared_ptr<GameCamera> _camera;
     std::shared_ptr<GameLevelGenerator> _generator;
+    std::shared_ptr<TimeProvider> _timeProvider;
+    ParticlesSystem* _system;
+
     b2Vec2 _winSize = {0.0f, 0.0f};
 };
  

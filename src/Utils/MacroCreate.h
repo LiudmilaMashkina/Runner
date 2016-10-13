@@ -16,11 +16,11 @@ static class_name* create() \
     } \
 }
 
-#define CC_CREATE_FUNC_1(class_name, t, v) \
+#define CC_CREATE_FUNC_1(class_name, initFunc, t, v) \
 static class_name* create(t v) \
 { \
     class_name *res = new class_name(); \
-    if (res && res->init(v)) \
+    if (res && res->initFunc(v)) \
     { \
         res->autorelease(); \
         return res; \
@@ -85,6 +85,22 @@ static class_name* create(t1 v1, t2 v2, t3 v3, t4 v4, t5 v5) \
 { \
     class_name *res = new class_name(); \
     if (res && res->init(v1, v2, v3, v4, v5)) \
+    { \
+        res->autorelease(); \
+        return res; \
+    } \
+    else \
+    { \
+        delete res; \
+        return nullptr; \
+    } \
+}
+
+#define CC_CREATE_FUNC_6(class_name, initFunc, t1, v1, t2, v2, t3, v3, t4, v4) \
+static class_name* create(t1 v1, t2 v2, t3 v3, t4 v4) \
+{ \
+    class_name *res = new class_name(); \
+    if (res && res->initFunc(v1, v2, v3, v4)) \
     { \
         res->autorelease(); \
         return res; \
