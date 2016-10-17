@@ -1,9 +1,36 @@
-//
-//  GenericScene.cpp
-//  GameLib
-//
-//  Created by Luda on 14/10/16.
-//
-//
+#include <cassert>
+#include "GenericScene.h"
+#include "IUpdatable.h"
 
-#include "GenericScene.hpp"
+USING_NS_CC;
+
+GenericScene::~GenericScene()
+{
+    
+}
+
+GenericScene::GenericScene()
+{
+    
+}
+
+bool GenericScene::init()
+{
+    if (!Scene::init())
+        return false;
+ 
+    scheduleUpdate();
+    return true;
+}
+
+void GenericScene::update(float delta)
+{
+    for (auto& updatable : _updatables)
+        updatable->update(delta);
+}
+
+void GenericScene::addUpdatable(const std::shared_ptr<IUpdatable> &updatable)
+{
+    assert(std::find(_updatables.begin(), _updatables.end(), updatable) == _updatables.end());
+    _updatables.push_back(updatable);
+}

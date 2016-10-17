@@ -1,13 +1,9 @@
-//
-//  IUpdatable.h
-//  GameLib
-//
-//  Created by Luda on 14/10/16.
-//
-//
+#pragma once
 
-#ifndef IUpdatable_h
-#define IUpdatable_h
-
-
-#endif /* IUpdatable_h */
+class IUpdatable
+{
+public:
+    virtual ~IUpdatable() {}
+    
+    virtual void update(float delta) = 0;
+};

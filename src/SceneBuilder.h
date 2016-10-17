@@ -1,14 +1,38 @@
-//
-//  SceneBuilder.hpp
-//  GameLib
-//
-//  Created by Luda on 14/10/16.
-//
-//
+#pragma once
 
-#ifndef SceneBuilder_hpp
-#define SceneBuilder_hpp
+#include <memory>
+#include <2d/CCNode.h>
+#include "Particles/ParticlesFactory.h"
 
-#include <stdio.h>
+class GenericScene;
+class IUpdatable;
+class GameLevelGenerator;
+class GameWorld;
+class GameCamera;
+class TimeProvider;
+class ParticlesSystem;
 
-#endif /* SceneBuilder_hpp */
+class SceneBuilder
+{
+public:
+    SceneBuilder();
+    
+    SceneBuilder& withBackground();
+    SceneBuilder& withParticleLayer();
+    SceneBuilder& withGameWorld();
+    SceneBuilder& withCamera();
+    SceneBuilder& withLevelGenerator();
+    
+    GenericScene* build();
+
+private:
+    cocos2d::Node* _gameNode = nullptr;
+    cocos2d::Sprite* _background = nullptr;
+    std::shared_ptr<GameWorld> _world;
+    std::shared_ptr<GameCamera> _camera;
+    std::shared_ptr<GameLevelGenerator> _levelGenerator;
+    std::shared_ptr<TimeProvider> _timeProvider;
+    ParticlesFactory::GeneratorInfo _particlesSystem;
+
+};
+

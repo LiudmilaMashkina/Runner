@@ -45,3 +45,8 @@ void ParticlesGenerator::update(float delta, ParticlesSystem &system)
         _cooldown = 1 / _params.rate;
     }
 }
+
+void ParticlesGenerator::setPosition(const b2Vec2 &position)
+{
+    _params.position = position;
+}

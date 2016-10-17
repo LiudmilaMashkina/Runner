@@ -1,13 +1,14 @@
 #pragma once
 
 #include "ITimeProvider.h"
+#include "IUpdatable.h"
 #include <memory>
 
-class TimeProvider : public ITimeProvider
+class TimeProvider : public ITimeProvider, public IUpdatable
 {
 public:
 	virtual float getTime() override;
-	void update(float delta);
+	virtual void update(float delta) override;
 	static std::shared_ptr<TimeProvider> create();
 
 private:

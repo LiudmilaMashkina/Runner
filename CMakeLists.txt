@@ -4,16 +4,36 @@ project (GameLib)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror")
 
 set(sources 
+	src/IUpdatable.h
 	src/AppDelegate.cpp
 	src/AppDelegate.h
+	src/UpdaterFunc.cpp
+	src/UpdaterFunc.h
 	src/B2DebugDraw/B2DebugDrawLayer.cpp
 	src/B2DebugDraw/B2DebugDrawLayer.h
 	src/B2DebugDraw/GB2ShapeCacheX.cpp
 	src/B2DebugDraw/GB2ShapeCacheX.h
 	src/B2DebugDraw/GLESRender.cpp
 	src/B2DebugDraw/GLESRender.h
-	src/B2DebugDraw/VisibleRect.cpp	
+	src/B2DebugDraw/VisibleRect.cpp
 	src/B2DebugDraw/VisibleRect.h
+	src/ForceField/Clamper.cpp
+	src/ForceField/Clamper.h
+	src/ForceField/FieldMixer.cpp
+	src/ForceField/FieldMixer.h
+	src/ForceField/ForceFieldDebugDraw.cpp
+	src/ForceField/ForceFieldDebugDraw.h
+	src/ForceField/ForceFieldFactory.cpp
+	src/ForceField/ForceFieldFactory.h
+	src/ForceField/GridForceField.cpp
+	src/ForceField/GridForceField.h
+	src/ForceField/IForceField.h
+	src/ForceField/StaticForceField.cpp
+	src/ForceField/StaticForceField.h
+	src/GameCamera.cpp
+	src/GameCamera.h
+	src/GameObjects/GameLevelGenerator.cpp
+	src/GameObjects/GameLevelGenerator.h
 	src/GameObjects/GameObjectComposer.cpp
 	src/GameObjects/GameObjectComposer.h
 	src/GameObjects/GameObjectFactory.cpp
@@ -21,23 +41,14 @@ set(sources
 	src/GameObjects/IGameObject.h
 	src/GameObjects/SimpleGameObject.cpp
 	src/GameObjects/SimpleGameObject.h
-	src/GameObjects/GameLevelGenerator.cpp
-	src/GameObjects/GameLevelGenerator.h
 	src/GameWorld.cpp
 	src/GameWorld.h
-	src/GameCamera.cpp
-	src/GameCamera.h
-	src/TestScene.cpp
-	src/TestScene.h
-	src/Utils/Convert.cpp
-	src/Utils/Convert.h
-	src/Utils/Environment.cpp
-	src/Utils/Environment.h
-	src/Utils/MacroCreate.h
-	src/Utils/ITimeProvider.h
-	src/Utils/TimeProvider.cpp
-	src/Utils/TimeProvider.h
-	src/Utils/b2Vec2Operators.h
+	src/GenericScene.cpp
+	src/GenericScene.h
+	src/Particles/IParticlesCleaner.h
+	src/Particles/IParticlesReplacer.h
+	src/Particles/IParticlesUpdater.h
+	src/Particles/ISystemUpdater.h
 	src/Particles/Particle.cpp
 	src/Particles/Particle.h
 	src/Particles/ParticlesCleaner.cpp
@@ -50,23 +61,21 @@ set(sources
 	src/Particles/ParticlesReplacer.h
 	src/Particles/ParticlesSystem.cpp
 	src/Particles/ParticlesSystem.h
-	src/Particles/IParticlesReplacer.h
-	src/Particles/IParticlesUpdater.h
-	src/Particles/IParticlesCleaner.h
-	src/Particles/ISystemUpdater.h
-	src/ForceField/FieldMixer.cpp
-	src/ForceField/FieldMixer.h
-	src/ForceField/ForceFieldDebugDraw.cpp
-	src/ForceField/ForceFieldDebugDraw.h
-	src/ForceField/ForceFieldFactory.cpp
-	src/ForceField/ForceFieldFactory.h
-	src/ForceField/IForceField.h
-	src/ForceField/GridForceField.cpp
-	src/ForceField/GridForceField.h
-	src/ForceField/StaticForceField.cpp
-	src/ForceField/StaticForceField.h
-	src/ForceField/Clamper.cpp
-	src/ForceField/Clamper.h
+	src/Particles/ParticlesFactory.cpp
+	src/Particles/ParticlesFactory.h
+	src/SceneBuilder.cpp
+	src/SceneBuilder.h
+	src/TestScene.cpp
+	src/TestScene.h
+	src/Utils/b2Vec2Operators.h
+	src/Utils/Convert.cpp
+	src/Utils/Convert.h
+	src/Utils/Environment.cpp
+	src/Utils/Environment.h
+	src/Utils/ITimeProvider.h
+	src/Utils/MacroCreate.h
+	src/Utils/TimeProvider.cpp
+	src/Utils/TimeProvider.h
 )
 
 set(includes

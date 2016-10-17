@@ -1,14 +1,27 @@
-//
-//  GenericScene.hpp
-//  GameLib
-//
-//  Created by Luda on 14/10/16.
-//
-//
+#pragma once
+#pragma warning(push, 0)
+#include <2d/CCScene.h>
+#pragma warning(pop)
+#include <vector>
+#include <memory>
+#include "Utils/MacroCreate.h"
 
-#ifndef GenericScene_hpp
-#define GenericScene_hpp
+class IUpdatable;
 
-#include <stdio.h>
-
-#endif /* GenericScene_hpp */
+class GenericScene : public cocos2d::Scene
+{
+public:
+    virtual ~GenericScene();
+    
+    CC_CREATE_FUNC(GenericScene, init);
+    
+    virtual bool init() override;
+    void update(float delta) override;
+    
+    void addUpdatable(const std::shared_ptr<IUpdatable> &updatable);
+    
+private:
+    GenericScene();
+    
+    std::vector<std::shared_ptr<IUpdatable>> _updatables;
+};

@@ -4,14 +4,16 @@
 #include <vector>
 #include <memory>
 #include "Particle.h"
+#include "IUpdatable.h"
 
 class IParticlesUpdater;
 class ISystemUpdater;
 
-class ParticlesSystem
+class ParticlesSystem : public IUpdatable
 {
 public:
-    void update(float delta);
+    virtual void update(float delta) override;
+    
     void addParticle(const Particle &particle);
     void addParticlesUpdater(std::shared_ptr<IParticlesUpdater> pUpdater);
     void addSystemUpdater(std::shared_ptr<ISystemUpdater> sUpdater);

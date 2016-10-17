@@ -6,9 +6,11 @@
 #include <2d/CCNode.h>
 #pragma warning(pop)
 
+#include "IUpdatable.h"
+
 class IGameObject;
 
-class GameWorld
+class GameWorld : public IUpdatable
 {
 public:
 	GameWorld(const b2Vec2& gravity, cocos2d::Node* rootNode);
@@ -20,7 +22,7 @@ public:
 	cocos2d::Node* getGraphics() { return _graphics; }
     void removeObject(const std::function<bool (const std::shared_ptr<IGameObject>&)> &predicate);
 
-	void update(float delta);
+	virtual void update(float delta) override;
 
 private:
 	b2World* _physics = nullptr;
