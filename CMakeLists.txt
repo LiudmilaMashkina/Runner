@@ -73,6 +73,8 @@ set(sources
 	src/GUI/ViewPort.h
 	src/GUI/UILayer.cpp
 	src/GUI/UILayer.h
+	src/GUI/Placer.cpp
+	src/GUI/Placer.h
 	src/Hero/AttackState.cpp
 	src/Hero/AttackState.h
 	src/Hero/DeadState.cpp

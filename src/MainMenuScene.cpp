@@ -16,6 +16,8 @@
 #include "GUI/View.h"
 #include "GUI/ViewPort.h"
 #include "GUI/Button.h"
+#include "GUI/CheckBox.h"
+#include "GUI/Placer.h"
 #include "SceneManager.h"
 
 USING_NS_CC;
@@ -50,33 +52,39 @@ bool MainMenuScene::init()
 
 	//_forceDebugDraw = ForceFieldDebugDraw::create(forceField, fieldSize, 0.5, 15);
 	//addChild(_forceDebugDraw);
-
-    ////// trying to add several buttons
     
     _viewPort = gui::ViewPort::create(this);
     _viewPort->setSize(Director::getInstance()->getWinSize());
     
     auto baseView = gui::View::create();
-    auto layout = gui::BoxLayout::create(gui::Orientation::Vertical, gui::Alignment::Center);
+    auto layout = gui::BoxLayout::create(gui::Orientation::Horizontal, gui::Alignment::Center);
     baseView->setLayout(layout);
     
     auto restartButton = gui::Button::create("resources/restart_button_normal.png", "resources/restart_button_pressed.png");
+    Vec2 buttonPos;
+    buttonPos.x = Director::getInstance()->getWinSize().width / 2 - restartButton->getSize().x / 2;
+    buttonPos.y = Director::getInstance()->getWinSize().height / 2;
+
+    restartButton->setPosition(buttonPos);
+    
     auto startGameCallback = [=](gui::Button* button)
     {
         SceneManager::getInstance()->showGameScene();
     };
     restartButton->setCallback(startGameCallback);
     
-    auto settingsButton = gui::Button::create("resources/settings_button_normal.png", "resources/settings_button_pressed.png");
+    auto soundOff = gui::CheckBox::create("resources/check_box_on.png", "resources/check_box_off.png");
+    auto musicOff = gui::CheckBox::create("resources/music_check_box_on.png", "resources/music_check_box_off.png");
     
-    baseView->addView(restartButton);
-    baseView->setPosition(Vec2(_viewPort->getSize().x / 2, _viewPort->getSize().y / 2));
-    _viewPort->addView(baseView);
-    
+    baseView->addView(soundOff);
+    baseView->addView(musicOff);
     layout->doLayout(baseView, false);
+    _viewPort->addView(baseView);
+    _viewPort->addView(restartButton);
     
-    ////// end
-    
+    //gui::place(baseView).align(gui::Anchor::Center).atScreenCenter();
+    gui::place(baseView).align(gui::Anchor::Center).under(restartButton, gui::Alignment::Center);
+ 
 	scheduleUpdate();
 	return true;
 }

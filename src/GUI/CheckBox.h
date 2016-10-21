@@ -1,28 +1,30 @@
 #pragma once
 
+#include <2d/CCSprite.h>
 #include "View.h"
-#include "2d/CCSprite.h"
+#include "Utils/MacroCreate.h"
 
 namespace gui
 {
-	class Button : public View
+	class CheckBox : public View
 	{
 	public:
-		~Button();
-		static std::shared_ptr<Button> create(const std::string &normal, const std::string &pressed);
-		void setCallback(const std::function<void(Button*)> callback);
-
+		~CheckBox();
+		
+        static std::shared_ptr<CheckBox> create(const std::string &normal, const std::string &checked);
+		void setCallback(const std::function<void(CheckBox*)> callback);
+        
 	private:
-		Button(cocos2d::Node* node, const std::string &normal, const std::string &pressed);
+		CheckBox(cocos2d::Node* node, const std::string &normal, const std::string &checked);
 
 		bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
 		void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
 		void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
 
 		cocos2d::Sprite* _normal = nullptr;
-		cocos2d::Sprite* _pressed = nullptr;
-
-		std::function<void(Button*)> _callback;
+		cocos2d::Sprite* _checked = nullptr;
+        bool _isChecked = false;
+		std::function<void(CheckBox*)> _callback;
 	};
 
 }

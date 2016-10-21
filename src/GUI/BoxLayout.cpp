@@ -151,7 +151,7 @@ namespace gui
 
 		desiredSize += getSize(children[children.size() - 1].get()) + getMarginAfter(children[children.size() - 1].get());
 		
-		float mult;
+		float mult = 0;
 		if (isFixedSize == false)
 		{
 			setSize(view, desiredSize);

@@ -1,37 +1,36 @@
-#include "Button.h"
-#include "2d/CCSprite.h"
+#include "CheckBox.h"
 #include "gui/BorderdNode.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventDispatcher.h"
 
 namespace gui
 {
-	Button::Button(cocos2d::Node* node, const std::string &normal, const std::string &pressed)
+	CheckBox::CheckBox(cocos2d::Node* node, const std::string &normal, const std::string &checked)
 	{
 		cocos2d::Sprite* normalSprite = cocos2d::Sprite::create(normal);
 		normalSprite->setAnchorPoint(Vec2(0, 0));
 		normalSprite->setVisible(true);
 		_normal = normalSprite;
 
-		cocos2d::Sprite* pressedSprite = cocos2d::Sprite::create(pressed);
-		pressedSprite->setAnchorPoint(Vec2(0, 0));
-		pressedSprite->setVisible(false);
-		_pressed = pressedSprite;
+		cocos2d::Sprite* checkedSprite = cocos2d::Sprite::create(checked);
+		checkedSprite->setAnchorPoint(Vec2(0, 0));
+		checkedSprite->setVisible(false);
+		_checked = checkedSprite;
 
 		node->setContentSize(normalSprite->getContentSize());
 		node->addChild(normalSprite);
-		node->addChild(pressedSprite);
+		node->addChild(checkedSprite);
 
 		auto touchListener = cocos2d::EventListenerTouchOneByOne::create();
-		touchListener->onTouchBegan = CC_CALLBACK_2(Button::onTouchBegan, this);
-		touchListener->onTouchMoved = CC_CALLBACK_2(Button::onTouchMoved, this);
-		touchListener->onTouchEnded = CC_CALLBACK_2(Button::onTouchEnded, this);
+		touchListener->onTouchBegan = CC_CALLBACK_2(CheckBox::onTouchBegan, this);
+		touchListener->onTouchMoved = CC_CALLBACK_2(CheckBox::onTouchMoved, this);
+		touchListener->onTouchEnded = CC_CALLBACK_2(CheckBox::onTouchEnded, this);
 		node->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, node);
 
 		setNode(node);
 	}
 
-	bool Button::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * event)
+	bool CheckBox::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * event)
 	{
 		Vec2 touchPos =	getNode()->convertTouchToNodeSpace(touch);
 
@@ -41,37 +40,51 @@ namespace gui
 
 		if (getNode()->isVisible() == false)
 			return false;
-
-		_normal->setVisible(false);
-		_pressed->setVisible(true);
-
+        
+        if (_isChecked == false)
+        {
+            _normal->setVisible(false);
+            _checked->setVisible(true);
+            _isChecked = true;
+        }
+        else
+        {
+            _normal->setVisible(true);
+            _checked->setVisible(false);
+            _isChecked = false;
+        }
 		event->stopPropagation();
+        
 		return true;
 	}
 
-	void Button::onTouchMoved(cocos2d::Touch * touch, cocos2d::Event * event)
+	void CheckBox::onTouchMoved(cocos2d::Touch * touch, cocos2d::Event * event)
 	{
 	}
 
-	void Button::onTouchEnded(cocos2d::Touch * touch, cocos2d::Event * event)
+	void CheckBox::onTouchEnded(cocos2d::Touch * touch, cocos2d::Event * event)
 	{
+        /*
 		_normal->setVisible(true);
-		_pressed->setVisible(false);
-		_callback(this);
-	}
+		_checked->setVisible(false);
+        */
+        if (_callback)
+            _callback(this);
+        
+    }
 
 
-	Button::~Button()
+	CheckBox::~CheckBox()
 	{
 	}
 
-	std::shared_ptr<Button> Button::create(const std::string &normal, const std::string &pressed)
+	std::shared_ptr<CheckBox> CheckBox::create(const std::string &normal, const std::string &pressed)
 	{
 		auto node = BorderdNode::create();
-		return std::shared_ptr<Button>(new Button(node, normal, pressed));
+		return std::shared_ptr<CheckBox>(new CheckBox(node, normal, pressed));
 	}
 	
-	void Button::setCallback(const std::function<void(Button*)> callback)
+	void CheckBox::setCallback(const std::function<void(CheckBox*)> callback)
 	{
 		_callback = callback;
 	}

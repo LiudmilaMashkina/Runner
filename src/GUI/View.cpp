@@ -1,4 +1,5 @@
 #include "View.h"
+#include "BorderdNode.h"
 
 USING_NS_CC;
 
@@ -12,7 +13,7 @@ namespace gui
     {
         std::shared_ptr<View> view(new View());
         
-        Node* node = Node::create();
+        Node* node = BorderdNode::create();
         view->setNode(node);
         
         return view;
@@ -24,6 +25,8 @@ namespace gui
 
 	void View::setSize(const cocos2d::Vec2 &size)
 	{
+        assert(size.x >= 0);
+        assert(size.y >= 0);
         cocos2d::Size s;
         s.width = size.x;
         s.height = size.y;
