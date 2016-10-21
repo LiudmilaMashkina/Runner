@@ -20,8 +20,9 @@ public:
     
     void addUpdatable(const std::shared_ptr<IUpdatable> &updatable);
     
-private:
+protected:
     GenericScene();
     
+private:
     std::vector<std::shared_ptr<IUpdatable>> _updatables;
 };

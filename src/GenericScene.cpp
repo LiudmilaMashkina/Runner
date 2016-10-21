@@ -31,6 +31,7 @@ void GenericScene::update(float delta)
 
 void GenericScene::addUpdatable(const std::shared_ptr<IUpdatable> &updatable)
 {
+    assert(updatable);
     assert(std::find(_updatables.begin(), _updatables.end(), updatable) == _updatables.end());
     _updatables.push_back(updatable);
 }

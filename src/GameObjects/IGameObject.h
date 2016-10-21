@@ -4,6 +4,8 @@
 
 #pragma warning(pop)
 
+#include <Box2D/Common/b2Math.h>
+
 class IGameObject 
 {
 public:

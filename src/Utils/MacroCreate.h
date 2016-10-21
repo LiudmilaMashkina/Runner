@@ -108,3 +108,15 @@ static std::shared_ptr<class_name> create(t1 v1) \
     return std::shared_ptr<class_name>(new class_name(v1)); \
 }
 
+#define CREATE_FUNC_2(class_name, t1, v1, t2, v2) \
+static std::shared_ptr<class_name> create(t1 v1, t2 v2) \
+{ \
+return std::shared_ptr<class_name>(new class_name(v1, v2)); \
+}
+
+#define CREATE_FUNC_3(class_name, t1, v1, t2, v2, t3, v3) \
+static std::shared_ptr<class_name> create(t1 v1, t2 v2, t3 v3) \
+{ \
+return std::shared_ptr<class_name>(new class_name(v1, v2, v3)); \
+}
+

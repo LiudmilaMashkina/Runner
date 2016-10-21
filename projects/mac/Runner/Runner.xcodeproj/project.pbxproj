@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		85A877E01DB7854600A25CB1 /* config in Resources */ = {isa = PBXBuildFile; fileRef = 85A877DF1DB7854600A25CB1 /* config */; };
 		85FAAF3B1D99C83900933768 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 85FAAF3A1D99C83900933768 /* main.mm */; };
 		85FAAF4F1D99C8DC00933768 /* libGameLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FAAF4E1D99C87500933768 /* libGameLib.a */; };
 		85FAAF561D99CEA900933768 /* libcocos2d-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FAAF551D99CE9E00933768 /* libcocos2d-mac.a */; };
@@ -30,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		85A877DF1DB7854600A25CB1 /* config */ = {isa = PBXFileReference; lastKnownFileType = folder; name = config; path = ../../../config; sourceTree = "<group>"; };
 		85FAAF331D99C83900933768 /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85FAAF3A1D99C83900933768 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		85FAAF411D99C83A00933768 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 		85FAAF2A1D99C83900933768 = {
 			isa = PBXGroup;
 			children = (
+				85A877DF1DB7854600A25CB1 /* config */,
 				85FAAF651D99D14800933768 /* resources */,
 				85FAAF471D99C87500933768 /* GameLib.xcodeproj */,
 				85FAAF351D99C83900933768 /* Runner */,
@@ -200,6 +203,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85A877E01DB7854600A25CB1 /* config in Resources */,
 				85FAAF661D99D14800933768 /* resources in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

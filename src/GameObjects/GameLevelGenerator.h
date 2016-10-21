@@ -4,6 +4,7 @@
 #include "GameObjectComposer.h"
 #include "GameWorld.h"
 #include "Utils/MacroCreate.h"
+#include "IGameLavelInfo.h"
 
 enum class CompositionId
 {
@@ -17,10 +18,12 @@ enum class CompositionId
 };
 
 
-class GameLevelGenerator
+class GameLevelGenerator : public IGameLavelInfo
 {
 public:
     CREATE_FUNC_1(GameLevelGenerator, GameWorld*, world);
+    
+    virtual float getCurrentBottom(float valueX) override;
     
     void generateUntil(const float frontier);
     b2Vec2 generateComposition(CompositionId compositionId, const b2Vec2& startPos);

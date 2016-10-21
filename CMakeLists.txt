@@ -4,11 +4,18 @@ project (GameLib)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror")
 
 set(sources 
-	src/IUpdatable.h
+	src/AnimationEngine/Animation.cpp
+	src/AnimationEngine/Animation.h
+	src/AnimationEngine/AnimationEngine.cpp
+	src/AnimationEngine/AnimationEngine.h
+	src/AnimationEngine/AnimationFactory.cpp
+	src/AnimationEngine/AnimationFactory.h
+	src/AnimationEngine/FrameId.h
+	src/AnimationEngine/IAnimation.h
+	src/AnimationEngine/IndexedAnimation.cpp
+	src/AnimationEngine/IndexedAnimation.h
 	src/AppDelegate.cpp
 	src/AppDelegate.h
-	src/UpdaterFunc.cpp
-	src/UpdaterFunc.h
 	src/B2DebugDraw/B2DebugDrawLayer.cpp
 	src/B2DebugDraw/B2DebugDrawLayer.h
 	src/B2DebugDraw/GB2ShapeCacheX.cpp
@@ -38,6 +45,7 @@ set(sources
 	src/GameObjects/GameObjectComposer.h
 	src/GameObjects/GameObjectFactory.cpp
 	src/GameObjects/GameObjectFactory.h
+	src/GameObjects/IGameLavelInfo.h
 	src/GameObjects/IGameObject.h
 	src/GameObjects/SimpleGameObject.cpp
 	src/GameObjects/SimpleGameObject.h
@@ -45,6 +53,45 @@ set(sources
 	src/GameWorld.h
 	src/GenericScene.cpp
 	src/GenericScene.h
+	src/GUI/Alignment.h
+	src/GUI/BorderdNode.cpp
+	src/GUI/BorderdNode.h
+	src/GUI/BoxLayout.cpp
+	src/GUI/BoxLayout.h
+	src/GUI/Button.cpp
+	src/GUI/Button.h
+	src/GUI/CheckBox.cpp
+	src/GUI/CheckBox.h
+	src/GUI/ILayout.h
+	src/GUI/Image.cpp
+	src/GUI/Image.h
+	src/GUI/Orientation.h
+	src/GUI/ScalePolicy.h
+	src/GUI/View.cpp
+	src/GUI/View.h
+	src/GUI/ViewPort.cpp
+	src/GUI/ViewPort.h
+	src/GUI/UILayer.cpp
+	src/GUI/UILayer.h
+	src/Hero/AttackState.cpp
+	src/Hero/AttackState.h
+	src/Hero/DeadState.cpp
+	src/Hero/DeadState.h
+	src/Hero/FallState.cpp
+	src/Hero/FallState.h
+	src/Hero/Hero.cpp
+	src/Hero/Hero.h
+	src/Hero/HeroData.h
+	src/Hero/HeroStateId.h
+	src/Hero/IHeroState.h
+	src/Hero/JumpState.cpp
+	src/Hero/JumpState.h
+	src/Hero/RunState.cpp
+	src/Hero/RunState.h
+	src/IGame.h
+	src/IUpdatable.h
+	src/MainMenuScene.cpp
+	src/MainMenuScene.h
 	src/Particles/IParticlesCleaner.h
 	src/Particles/IParticlesReplacer.h
 	src/Particles/IParticlesUpdater.h
@@ -53,6 +100,8 @@ set(sources
 	src/Particles/Particle.h
 	src/Particles/ParticlesCleaner.cpp
 	src/Particles/ParticlesCleaner.h
+	src/Particles/ParticlesFactory.cpp
+	src/Particles/ParticlesFactory.h
 	src/Particles/ParticlesGenerator.cpp
 	src/Particles/ParticlesGenerator.h
 	src/Particles/ParticlesMover.cpp
@@ -61,17 +110,22 @@ set(sources
 	src/Particles/ParticlesReplacer.h
 	src/Particles/ParticlesSystem.cpp
 	src/Particles/ParticlesSystem.h
-	src/Particles/ParticlesFactory.cpp
-	src/Particles/ParticlesFactory.h
 	src/SceneBuilder.cpp
 	src/SceneBuilder.h
+	src/SceneManager.cpp
+	src/SceneManager.h
 	src/TestScene.cpp
 	src/TestScene.h
+	src/UpdaterFunc.cpp
+	src/UpdaterFunc.h
+	src/Utils/b2Utils.cpp
+	src/Utils/b2Utils.h
 	src/Utils/b2Vec2Operators.h
 	src/Utils/Convert.cpp
 	src/Utils/Convert.h
 	src/Utils/Environment.cpp
 	src/Utils/Environment.h
+	src/Utils/Forwards.h
 	src/Utils/ITimeProvider.h
 	src/Utils/MacroCreate.h
 	src/Utils/TimeProvider.cpp

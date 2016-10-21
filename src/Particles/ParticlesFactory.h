@@ -18,4 +18,5 @@ public:
     };
     
     static GeneratorInfo createGameParticlesSystem(std::shared_ptr<TimeProvider> timeProvider);
+    static GeneratorInfo createMainMenuParticlesSystem(std::shared_ptr<TimeProvider> timeProvider);
 };

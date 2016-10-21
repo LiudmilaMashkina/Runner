@@ -17,6 +17,11 @@ _world(world)
     _exitPos.y = 0.5f * Environment::getScreenSize().y;
 }
 
+float GameLevelGenerator::getCurrentBottom(float valueX)
+{
+    return -5.0f;
+}
+
 void GameLevelGenerator::generateUntil(const float frontier)
 {
     while (_exitPos.x <= frontier)
@@ -26,6 +31,7 @@ void GameLevelGenerator::generateUntil(const float frontier)
         CompositionId random = static_cast<CompositionId>(Environment::generateIntRand(start, end));
         
         _exitPos = generateComposition(random, _exitPos);
+        _exitPos.x += 3;
     }
 }
 

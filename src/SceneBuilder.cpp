@@ -1,6 +1,8 @@
 #pragma warning(push, 0)
 #include <2d/CCSprite.h>
 #include <base/CCDirector.h>
+#include <base/CCEventListenerTouch.h>
+#include <base/CCEventDispatcher.h>
 #pragma warning(pop)
 
 #include "SceneBuilder.h"
@@ -13,9 +15,10 @@
 #include "Utils/TimeProvider.h"
 #include "Utils/Convert.h"
 #include "GameObjects/GameLevelGenerator.h"
-#include "Particles/ParticlesFactory.h"
+#include "GameObjects/IGameLavelInfo.h"
 #include "Particles/ParticlesSystem.h"
 #include "Particles/ParticlesGenerator.h"
+#include "Hero/Hero.h"
 
 USING_NS_CC;
 
@@ -27,8 +30,7 @@ SceneBuilder::SceneBuilder()
 
 SceneBuilder& SceneBuilder::withBackground()
 {
-    _background = Sprite::create("resources/background_1_1024x1024.jpg");
-    
+    _background = Sprite::create("resources/background_square_256x256.png");
     Vec2 backgroundScale;
     backgroundScale.x = Convert::toPixels(Environment::getScreenSize().x) * 2 / _background->getContentSize().width;
     backgroundScale.y = Convert::toPixels(Environment::getScreenSize().y) * 2/ _background->getContentSize().height;
@@ -41,7 +43,6 @@ SceneBuilder& SceneBuilder::withBackground()
 SceneBuilder& SceneBuilder::withParticleLayer()
 {
     _particlesSystem = ParticlesFactory::createGameParticlesSystem(_timeProvider);
-    //_particlesNode = _particlesSystem.particlesNode;
     
     return *this;
 }
@@ -49,6 +50,19 @@ SceneBuilder& SceneBuilder::withParticleLayer()
 SceneBuilder& SceneBuilder::withGameWorld()
 {
     _world = std::shared_ptr<GameWorld>(new GameWorld(b2Vec2(0, -10), _gameNode));
+    
+    return *this;
+}
+
+SceneBuilder& SceneBuilder::withHero()
+{
+    assert(_levelGenerator);
+    assert(_gameNode);
+    assert(_world);
+    
+    _hero = Hero::create(_levelGenerator.get(), _gameNode, _world.get());
+    _hero->setPosition({10, 10});
+    _world->addObject(_hero);
     
     return *this;
 }
@@ -133,12 +147,30 @@ GenericScene* SceneBuilder::build()
         _camera->addLayer(gameLayer);
         
         auto timeProvider = _timeProvider;
-        auto moveCamera = [=](float delta)
+        
+        if (_hero)
         {
-            b2Vec2 camPos = {timeProvider->getTime() * 2, 0};
-            camera->setPosition(b2Vec2(camPos));
-        };
-        scene->addUpdatable(UpdaterFunc::create(moveCamera));
+            auto hero = _hero;
+            auto moveCamera = [=](float delta)
+            {
+                b2Vec2 heroPos = hero->getPosition();
+                b2Vec2 camPos;
+                camPos.x = heroPos.x - Environment::getScreenSize().x / 3;
+                camPos.y = heroPos.y - Environment::getScreenSize().y / 2;
+                camera->setPosition(b2Vec2(camPos));
+            };
+            scene->addUpdatable(UpdaterFunc::create(moveCamera));
+        }
+        else
+        {
+            auto moveCamera = [=](float delta)
+            {
+                b2Vec2 camPos = {timeProvider->getTime() * 2, 0};
+                camera->setPosition(b2Vec2(camPos));
+            };
+            scene->addUpdatable(UpdaterFunc::create(moveCamera));
+
+        }
         
         auto levelGenerator = _levelGenerator;
         auto sync = [=](float delta)
@@ -148,7 +180,18 @@ GenericScene* SceneBuilder::build()
             levelGenerator->generateUntil(camX + winSizeX * 0.75f);
         };
         scene->addUpdatable(UpdaterFunc::create(sync));
-
+    }
+    
+    if (_hero)
+    {
+        auto hero = _hero;
+        auto touchListener = EventListenerTouchOneByOne::create();
+        touchListener->onTouchBegan = [=](Touch* touch, Event* event)
+        {
+            hero->onTap();
+            return true;
+        };
+        scene->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, scene);
     }
     
     return scene;
