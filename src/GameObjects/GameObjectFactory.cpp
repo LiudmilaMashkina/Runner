@@ -7,7 +7,6 @@
 #include "SimpleGameObject.h"
 #include "Utils/Convert.h"
 
-
 USING_NS_CC;
 
 GameObjectFactory::GameObjectFactory(GameWorld* world) :

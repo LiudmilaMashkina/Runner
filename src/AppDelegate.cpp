@@ -5,6 +5,9 @@
 #pragma warning(pop)
 #include "AppDelegate.h"
 #include "TestScene.h"
+#include "SceneBuilder.h"
+#include "GenericScene.h"
+#include "SceneManager.h"
 
 USING_NS_CC;
 
@@ -85,12 +88,28 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 
     register_all_packages();
+    
+    
+    SceneManager* manager = SceneManager::getInstance();
+    manager->startGame();
+    
+    /*
+    GenericScene* scene1 = SceneBuilder()
+        .withGameWorld()
+        .withBackground()
+        .withParticleLayer()
+        .withLevelGenerator()
+        .withHero()
+        .withCamera()
+        .build();
+    director->runWithScene(scene1);
+    */
 
     // create a scene. it's an autorelease object
-    auto scene = TestScene::create();
+    //auto scene = TestScene::create();
 
     // run
-    director->runWithScene(scene);
+    //director->runWithScene(scene);
 
     return true;
 }

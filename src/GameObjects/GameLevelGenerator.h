@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include "GameObjectComposer.h"
 #include "GameWorld.h"
+#include "Utils/MacroCreate.h"
+#include "IGameLavelInfo.h"
 
 enum class CompositionId
 {
@@ -16,10 +18,13 @@ enum class CompositionId
 };
 
 
-class GameLevelGenerator
+class GameLevelGenerator : public IGameLavelInfo
 {
 public:
-    GameLevelGenerator(GameWorld* world);
+    CREATE_FUNC_1(GameLevelGenerator, GameWorld*, world);
+    
+    virtual float getCurrentBottom(float valueX) override;
+    
     void generateUntil(const float frontier);
     b2Vec2 generateComposition(CompositionId compositionId, const b2Vec2& startPos);
     b2Vec2 generateBridge(const b2Vec2& startPos);
@@ -30,6 +35,8 @@ public:
     
     
 private:
+    GameLevelGenerator(GameWorld* world);
+
     GameWorld* _world;
     b2Vec2 _exitPos = {0.0f, 0.0f};
 };

@@ -1,7 +1,7 @@
 #pragma warning(push, 0)
-#include <2d/CCSprite.h>
 #include <base/CCDirector.h>
 #pragma warning(pop)
+
 #include "TestScene.h"
 #include "GameWorld.h"
 #include "Utils/Environment.h"
@@ -37,7 +37,7 @@ bool TestScene::init()
     addChild(gameNode);
 
 	_world = std::shared_ptr<GameWorld>(new GameWorld(b2Vec2(0, -10), gameNode));
-    _generator = std::shared_ptr<GameLevelGenerator>(new GameLevelGenerator(_world.get()));
+    _generator = GameLevelGenerator::create(_world.get());
     _timeProvider = TimeProvider::create();
     
     b2Vec2 fieldSize = Environment::getScreenSize();
@@ -82,13 +82,10 @@ bool TestScene::init()
     backgroundLayer.clamp = true;
     layers.push_back(backgroundLayer);
     
-    _camera = std::shared_ptr<GameCamera>(new GameCamera(layers));
-    
-	auto physDebugDraw = B2DebugDrawLayer::create(_world->getPhysics(), Environment::getPTMratio());
+    auto physDebugDraw = B2DebugDrawLayer::create(_world->getPhysics().get(), Environment::getPTMratio());
 	gameNode->addChild(physDebugDraw, 100);
 
-	scheduleUpdate();
-	return true;
+    return true;
 }
 
 void TestScene::update(float delta)
@@ -110,7 +107,6 @@ void TestScene::update(float delta)
     };
     
     _world->removeObject(shouldRemove);
-    //_particlesLayer->update(delta);
     _timeProvider->update(delta);
     _system->update(delta);
 

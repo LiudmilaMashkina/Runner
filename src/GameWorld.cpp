@@ -9,7 +9,7 @@ USING_NS_CC;
 
 GameWorld::GameWorld(const b2Vec2& gravity, Node* rootNode)
 {
-	_physics = new b2World(gravity);
+	_physics.reset(new b2World(gravity));
 	_graphics = rootNode;
 }
 

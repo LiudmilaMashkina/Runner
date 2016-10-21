@@ -12,12 +12,13 @@
 
 USING_NS_CC;
 
-GameCamera::GameCamera(const std::vector<LayerInfo>& layers) :
-_layers(layers)
+GameCamera::GameCamera()
 {}
 
 void GameCamera::setPosition(const b2Vec2 &camPos)
 {
+    _position = camPos;
+    
     for (int i = 0; i < _layers.size(); ++i)
     {
         Vec2 layerPos = _layers[i].speedFactor * Convert::toPixels(-camPos);
@@ -37,4 +38,14 @@ void GameCamera::setPosition(const b2Vec2 &camPos)
             _layers[i].layer->setPosition(pos);
         }
     }
+}
+
+b2Vec2 GameCamera::getPosition() const
+{
+    return _position;
+}
+
+void GameCamera::addLayer(const GameCamera::LayerInfo &layer)
+{
+    _layers.push_back(layer);
 }

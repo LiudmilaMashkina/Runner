@@ -1,0 +1,282 @@
+{
+	"animations": {
+		"run_from_left_leg": {
+			"cyclic": false,
+			"frame_pattern": {
+				"prefix": "resources/run_from_left_leg_",
+				"extension": "png",
+				"range": {
+					"first": 0,
+					"last": 5
+				}
+			},
+			"fps": 5
+		},
+
+		"run_from_right_leg": {
+			"cyclic": false,
+			"frame_pattern": {
+				"prefix": "resources/run_from_right_leg_",
+				"extension": "png",
+				"range": {
+					"first": 0,
+					"last": 5
+				}
+			},
+			"fps": 5
+		},
+
+		"jump_from_right_leg": {
+			"cyclic": false,
+			"frame_pattern": {
+				"prefix": "resources/jump_white_right_",
+				"extension": "png",
+				"range": {
+					"first": 0,
+					"last": 9
+				}
+			},
+			"fps": 5
+		},		
+
+		"jump_from_left_leg": {
+			"cyclic": false,
+			"frame_pattern": {
+				"prefix": "resources/jump_white_left_",
+				"extension": "png",
+				"range": {
+					"first": 0,
+					"last": 9
+				}
+			},
+			"fps": 5
+		},
+
+		"fall_right": {
+			"cyclic": false,
+			"frame_pattern": {
+				"prefix": "resources/jump_white_left_",
+				"extension": "png",
+				"range": {
+					"first": 3,
+					"last": 9
+				}
+			},
+			"fps": 5
+		},
+
+		"fall_left": {
+			"cyclic": false,
+			"frame_pattern": {
+				"prefix": "resources/jump_white_right_",
+				"extension": "png",
+				"range": {
+					"first": 3,
+					"last": 9
+				}
+			},
+			"fps": 5
+		},
+
+		"attack_from_right": {
+			"cyclic": true,
+			"frame_pattern": {
+				"prefix": "resources/attack_from_right_",
+				"extension": "png",
+				"range": {
+					"first": 0,
+					"last": 2
+				}
+			},
+			"fps": 5
+		},
+
+		"attack_from_left": {
+			"cyclic": true,
+			"frame_pattern": {
+				"prefix": "resources/attack_from_left_",
+				"extension": "png",
+				"range": {
+					"first": 0,
+					"last": 2
+				}
+			},
+			"fps": 5
+		},
+		"dead": {
+			"cyclic": true,
+			"frame_pattern": {
+				"prefix": "resources/deadState_",
+				"extension": "png",
+				"range": {
+					"first": 0,
+					"last": 1
+				}
+			},
+			"fps": 1
+		}
+	},
+
+
+	"groups": {
+		"run": {
+			"animations": [
+				"run_from_left_leg",
+				"run_from_right_leg"
+			],
+			"default_start": "run_from_left_leg"
+		},
+		"jump": {
+			"animations": [
+				"jump_from_right_leg",
+				"jump_from_left_leg"
+			],
+			"default_start": "jump_from_left_leg"
+		},
+		"fall": {
+			"animations": [
+				"fall_right",
+				"fall_left"
+			],
+			"default_start": "fall_left"
+		},
+		"attack": {
+			"animations": [
+				"attack_from_right",
+				"attack_from_left"
+			],
+			"default_start": "attack_from_left"
+		},
+		"dead": {
+			"animations": [
+				"dead"
+			],
+			"default_start": "dead"
+		}
+	},
+
+	"fallbacks": {
+		"run": "run_from_left_leg",
+		"jump": "jump_from_left_leg",
+		"fall": "fall_left",
+		"attack": "attack_from_left",
+		"dead": "dead"
+	},
+
+	"transitions": {
+		"jump": {
+			"run_from_left_leg": {
+				"transition": "jump_from_left_leg"
+			},
+			"run_from_right_leg": {
+				"transition": "jump_from_right_leg"
+			}
+		},
+		"run": {
+			"jump_from_left_leg": {
+				"transition": "run_from_right_leg"
+			},
+			"jump_from_right_leg": {
+				"transition": "run_from_left_leg"
+			},
+			"fall_right": {
+				"transition": "run_from_right_leg"
+			},
+			"fall_left": {
+				"transition": "run_from_left_leg"
+			},
+			"attack_from_right": {
+				"transition": "run_from_left_leg"
+			},
+			"attack_from_left": {
+				"transition": "run_from_right_leg"
+			}
+		},
+		"fall": {
+			"run_from_left_leg": {
+				"transition": "fall_right"
+			},
+			"run_from_right_leg": {
+				"transition": "fall_left"
+			},
+			"attack_from_left": {
+				"transition": "fall_right"
+			},
+			"attack_from_right": {
+				"transition": "fall_left"
+			}
+		},
+		"attack": {
+			"jump_from_left_leg": {
+				"transition": "attack_from_left"
+			},
+			"jump_from_right_leg": {
+				"transition": "attack_from_right"
+			},
+			"fall_right": {
+				"transition": "attack_from_left"
+			},
+			"fall_left": {
+				"transition": "attack_from_right"
+			}
+		},
+		"dead": {
+			"fall_right": {
+				"transition": "dead"
+			},
+			"fall_left": {
+				"transition": "dead"
+			},
+			"jump_from_right_leg": {
+				"transition": "dead"
+			},
+			"jump_from_left_leg": {
+				"transition": "dead"
+			},
+			"run_from_left_leg": {
+				"transition": "dead"
+			},
+			"run_from_right_leg": {
+				"transition": "dead"
+			}
+		},
+		"auto": {
+			"run_from_left_leg": {
+				"transition": "run_from_right_leg"
+			},
+			"run_from_right_leg": {
+				"transition": "run_from_left_leg"
+			},
+			"jump_from_right_leg": {
+				"transition": "run_from_left_leg"
+			},
+			"jump_from_left_leg": {
+				"transition": "run_from_right_leg"
+			},
+			"attack_from_left": {
+				"transition": "attack_from_left"
+			},
+			"attack_from_right": {
+				"transition": "attack_from_right"
+			},
+			"fall_right": {
+				"transition": "run_from_right_leg"
+			},
+			"fall_left": {
+				"transition": "run_from_left_leg"
+			} 
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
