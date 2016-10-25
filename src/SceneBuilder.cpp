@@ -19,6 +19,7 @@
 #include "Particles/ParticlesSystem.h"
 #include "Particles/ParticlesGenerator.h"
 #include "Hero/Hero.h"
+#include "HeadUpDisplay.h"
 
 USING_NS_CC;
 
@@ -98,6 +99,9 @@ GenericScene* SceneBuilder::build()
     
     scene->addChild(_gameNode);
     scene->addUpdatable(_timeProvider);
+    
+    _hud = HeadUpDisplay::create(scene);
+    //scene->addChild(_hud);
     
     if (_world)
         scene->addUpdatable(_world);

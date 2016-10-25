@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 
 #include <2d/CCLayer.h>
 #include "GUI/ViewPort.h"
@@ -6,25 +6,29 @@
 #include "SceneManager.h"
 #include "Utils/MacroCreate.h"
 #include "IGame.h"
+#include "GUI/ViewPort.h"
 
-class UILayer : public cocos2d::Node
+class GenericScene;
+
+class HeadUpDisplay : public gui::ViewPort
 {
 public:
-	virtual ~UILayer();
-	virtual bool init() override;
-	virtual void update(float delta) override;
+	virtual ~HeadUpDisplay();
+	virtual void update(float delta);
 	void onPauseClicked(gui::Button* sender);
 	void onContinueClicked(gui::Button* sender);
 	void onRestartClicked(gui::Button* sender);
-	void setGameLayer(IGame* gameLayer);
+	//void setGameLayer(IGame* gameLayer);
 	
-	//CREATE_FUNC(UILayer);
-	CC_CREATE_FUNC(UILayer, init);
+	CREATE_FUNC_1(HeadUpDisplay, GenericScene*, scene);
 
 private:
-	void createPauseMenu();
-	std::shared_ptr<gui::ViewPort> _viewPort;
-	IGame* _gameLayer;
+    HeadUpDisplay(GenericScene* scene);
+	
+    void createPauseMenu();
+	
+    //IGame* _gameLayer;
 	std::shared_ptr<gui::Button> _pauseButton;
 	std::shared_ptr<gui::View> _pauseMenu;
+    GenericScene* _scene = nullptr;
 };

@@ -19,10 +19,12 @@ public:
     void update(float delta) override;
     
     void addUpdatable(const std::shared_ptr<IUpdatable> &updatable);
+    void setPaused(bool isPaused);
     
 protected:
     GenericScene();
     
 private:
     std::vector<std::shared_ptr<IUpdatable>> _updatables;
+    bool _isPaused = false;
 };

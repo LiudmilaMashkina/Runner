@@ -93,18 +93,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
     SceneManager* manager = SceneManager::getInstance();
     manager->startGame();
     
-    /*
-    GenericScene* scene1 = SceneBuilder()
-        .withGameWorld()
-        .withBackground()
-        .withParticleLayer()
-        .withLevelGenerator()
-        .withHero()
-        .withCamera()
-        .build();
-    director->runWithScene(scene1);
-    */
-
     // create a scene. it's an autorelease object
     //auto scene = TestScene::create();
 

@@ -39,6 +39,8 @@ set(sources
 	src/ForceField/StaticForceField.h
 	src/GameCamera.cpp
 	src/GameCamera.h
+	src/GameScene.cpp
+	src/GameScene.h
 	src/GameObjects/GameLevelGenerator.cpp
 	src/GameObjects/GameLevelGenerator.h
 	src/GameObjects/GameObjectComposer.cpp
@@ -71,10 +73,10 @@ set(sources
 	src/GUI/View.h
 	src/GUI/ViewPort.cpp
 	src/GUI/ViewPort.h
-	src/GUI/UILayer.cpp
-	src/GUI/UILayer.h
 	src/GUI/Placer.cpp
 	src/GUI/Placer.h
+	src/HeadUpDisplay.cpp
+	src/HeadUpDisplay.h
 	src/Hero/AttackState.cpp
 	src/Hero/AttackState.h
 	src/Hero/DeadState.cpp

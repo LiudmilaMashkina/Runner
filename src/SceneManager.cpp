@@ -1,5 +1,4 @@
 #include "SceneManager.h"
-#include "GUI/UILayer.h"
 #include "GameWorld.h"
 #include "MainMenuScene.h"
 #include "TestScene.h"

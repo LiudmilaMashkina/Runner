@@ -13,6 +13,8 @@ class TimeProvider;
 class ParticlesSystem;
 class Hero;
 class TouchHandler;
+class HeadUpDisplay;
+
 class SceneBuilder
 {
 public:
@@ -35,6 +37,7 @@ private:
     std::shared_ptr<GameCamera> _camera;
     std::shared_ptr<GameLevelGenerator> _levelGenerator;
     std::shared_ptr<TimeProvider> _timeProvider;
+    std::shared_ptr<HeadUpDisplay> _hud;
     ParticlesFactory::GeneratorInfo _particlesSystem;
 
 };
