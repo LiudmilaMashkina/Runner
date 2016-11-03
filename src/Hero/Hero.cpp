@@ -36,6 +36,28 @@ _world(world)
     float scale = Convert::toPixels(1/height);
     _data.node->setScale(scale);
     
+    b2Vec2 bodySize = Convert::toMeters(_data.node->getContentSize() * scale);
+    b2PolygonShape physShape;
+    physShape.SetAsBox(bodySize.x / 2, bodySize.y / 2);
+    
+    b2BodyDef bodyDef;
+    bodyDef.type = b2BodyType::b2_dynamicBody;
+    bodyDef.position = b2Vec2(bodySize.x / 2, bodySize.y / 2);
+    bodyDef.angle = 0;
+    bodyDef.linearDamping = 5;
+    bodyDef.angularDamping = 5;
+
+    _data.body = _world->getPhysics()->CreateBody(&bodyDef);
+    
+    b2FixtureDef bodyFixtureDef;
+    bodyFixtureDef.shape = &physShape;
+    bodyFixtureDef.density = 1;
+    bodyFixtureDef.isSensor = true;
+    _data.body->CreateFixture(&bodyFixtureDef);
+    
+    IGameObject* ihero = this;
+    _data.body->SetUserData(ihero);
+    
     std::shared_ptr<RunState> runState(new RunState(world, &_data));
     _states[HeroStateId::Run] = runState;
     
@@ -65,6 +87,9 @@ Hero::~Hero()
 
 void Hero::update(float delta)
 {
+    b2Vec2 bodyPos = Convert::toMeters(_data.node->getPosition());
+    _data.body->SetTransform(bodyPos, 0);
+    
     HeroStateId stateId = _currentState->update(delta);
     
     if (stateId != _currentState->getStateId())
@@ -75,8 +100,7 @@ void Hero::update(float delta)
     }
     
 	auto currentButtom = _info->getCurrentBottom(getPosition().x);
-    //if (getBodyPosition().y < _info->getCurrentBottom(getBodyPosition().x))
-	if (getPosition().y < currentButtom)
+    if (getPosition().y < currentButtom)
     {
         _currentState = _states[HeroStateId::Dead];
         _currentState->onEnter();
@@ -109,3 +133,34 @@ b2Vec2 Hero::getPosition()
     
     return position;
 }
+
+int Hero::getLifes()
+{
+    auto state = _currentState->getStateId();
+    if (state == HeroStateId::Dead)
+    {
+        return 0;
+    }
+    return _lifes;
+}
+
+void Hero::onContactBegin(std::shared_ptr<IGameObject> obj)
+{
+    GameObjectType type = obj->getType();
+    if (type == GameObjectType::Bomb)
+        decreaseLifes(20);
+}
+
+void Hero::decreaseLifes(int num)
+{
+    _lifes -= num;
+    
+    if (_lifes <= 0)
+    {
+        _currentState = _states[HeroStateId::Dead];
+        _currentState->onEnter();
+    }
+}
+
+
+

@@ -2,7 +2,7 @@
 #include "GameWorld.h"
 #include "MainMenuScene.h"
 #include "TestScene.h"
-#include "SceneBuilder.h"
+#include "GameScene.h"
 #include "GenericScene.h"
 
 USING_NS_CC;
@@ -17,7 +17,7 @@ SceneManager* SceneManager::getInstance()
     return _manager;
 }
 
-void SceneManager::startGame()
+void SceneManager::showMainMenu()
 {
 	auto scene = MainMenuScene::create();
 	setScene(scene);
@@ -25,16 +25,9 @@ void SceneManager::startGame()
 
 void SceneManager::showGameScene()
 {
-    GenericScene* scene = SceneBuilder()
-    .withGameWorld()
-    .withBackground()
-    .withParticleLayer()
-    .withLevelGenerator()
-    .withHero()
-    .withCamera()
-    .build();
+    GameScene* gameScene = GameScene::create();
     
-    setScene(scene);
+    setScene(gameScene);
 }
 
 void SceneManager::setScene(cocos2d::Scene* scene)

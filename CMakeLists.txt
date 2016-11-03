@@ -24,6 +24,8 @@ set(sources
 	src/B2DebugDraw/GLESRender.h
 	src/B2DebugDraw/VisibleRect.cpp
 	src/B2DebugDraw/VisibleRect.h
+	src/ContactListener.cpp
+	src/ContactListener.h
 	src/ForceField/Clamper.cpp
 	src/ForceField/Clamper.h
 	src/ForceField/FieldMixer.cpp
@@ -41,6 +43,9 @@ set(sources
 	src/GameCamera.h
 	src/GameScene.cpp
 	src/GameScene.h
+	src/GameObjects/Bomb.cpp
+	src/GameObjects/Bomb.h
+	src/GameObjects/GameObjectType.h
 	src/GameObjects/GameLevelGenerator.cpp
 	src/GameObjects/GameLevelGenerator.h
 	src/GameObjects/GameObjectComposer.cpp
@@ -67,12 +72,16 @@ set(sources
 	src/GUI/ILayout.h
 	src/GUI/Image.cpp
 	src/GUI/Image.h
+	src/GUI/Label.cpp
+	src/GUI/Label.h
 	src/GUI/Orientation.h
 	src/GUI/ScalePolicy.h
 	src/GUI/View.cpp
 	src/GUI/View.h
 	src/GUI/ViewPort.cpp
 	src/GUI/ViewPort.h
+	src/GUI/ProgressBar.cpp
+	src/GUI/ProgressBar.h
 	src/GUI/Placer.cpp
 	src/GUI/Placer.h
 	src/HeadUpDisplay.cpp
@@ -114,8 +123,6 @@ set(sources
 	src/Particles/ParticlesReplacer.h
 	src/Particles/ParticlesSystem.cpp
 	src/Particles/ParticlesSystem.h
-	src/SceneBuilder.cpp
-	src/SceneBuilder.h
 	src/SceneManager.cpp
 	src/SceneManager.h
 	src/TestScene.cpp

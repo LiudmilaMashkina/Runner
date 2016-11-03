@@ -5,6 +5,7 @@
 #include "GameObjectFactory.h"
 #include "IGameObject.h"
 #include "SimpleGameObject.h"
+#include "Bomb.h"
 #include "Utils/Convert.h"
 
 USING_NS_CC;
@@ -23,6 +24,9 @@ std::shared_ptr<SimpleGameObject> GameObjectFactory::createBox(const b2Vec2& pos
 	
 	std::shared_ptr<SimpleGameObject> obj = std::shared_ptr<SimpleGameObject>(new SimpleGameObject(body, sprite, _world));
 	_world->addObject(obj);
+    
+    IGameObject* iobj = obj.get();
+    body->SetUserData(iobj);
 
 	return obj;
 }
@@ -42,10 +46,13 @@ std::shared_ptr<IGameObject> GameObjectFactory::createStaticStone(const b2Vec2 &
 	b2PolygonShape physShape;
 	physShape.SetAsBox(bodySize.x / 2, bodySize.y / 2);
 	b2Body* body = createBody(b2BodyType::b2_staticBody, &physShape, bodyCenter, 0);
-
+    
 	std::shared_ptr<SimpleGameObject> obj = std::shared_ptr<SimpleGameObject>(new SimpleGameObject(body, sprite, _world));
 	_world->addObject(obj);
 
+    IGameObject* iobj = obj.get();
+    body->SetUserData(iobj);
+    
 	return obj;
 }
 
@@ -65,6 +72,21 @@ std::shared_ptr<IGameObject> GameObjectFactory::createCircle(const b2Vec2& pos, 
 	return obj;
 }
 
+std::shared_ptr<Bomb> GameObjectFactory::createBomb(const b2Vec2 &pos, float angle, const b2Vec2 &size)
+{
+    b2PolygonShape physShape;
+    physShape.SetAsBox(size.x / 2, size.y / 2);
+    b2Body* body = createSensor(b2BodyType::b2_staticBody, &physShape, pos, angle);
+    
+    std::shared_ptr<Bomb> obj = std::shared_ptr<Bomb>(new Bomb(body, _world));
+    _world->addObject(obj);
+    
+    IGameObject* ibomb = obj.get();
+    body->SetUserData(ibomb);
+    
+    return obj;
+}
+
 b2Body* GameObjectFactory::createBody(b2BodyType type, b2Shape* shape, const b2Vec2& pos, float angle)
 {
 	b2BodyDef bodyDef;
@@ -81,6 +103,25 @@ b2Body* GameObjectFactory::createBody(b2BodyType type, b2Shape* shape, const b2V
 	body->CreateFixture(&bodyFixtureDef);
 
 	return body;
+}
+
+b2Body* GameObjectFactory::createSensor(b2BodyType type, b2Shape *shape, const b2Vec2 &pos, float angle)
+{
+    b2BodyDef bodyDef;
+    bodyDef.type = type;
+    bodyDef.position = pos;
+    bodyDef.angle = angle;
+    bodyDef.linearDamping = 5;
+    bodyDef.angularDamping = 5;
+    b2Body* body = _world->getPhysics()->CreateBody(&bodyDef);
+    
+    b2FixtureDef bodyFixtureDef;
+    bodyFixtureDef.shape = shape;
+    bodyFixtureDef.density = 1;
+    bodyFixtureDef.isSensor = true;
+    body->CreateFixture(&bodyFixtureDef);
+    
+    return body;
 }
 
 Sprite* GameObjectFactory::createSprite(const std::string& textureName, const b2Vec2& bodySize)

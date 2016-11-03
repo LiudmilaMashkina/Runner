@@ -2,11 +2,15 @@
 
 #include <2d/CCLayer.h>
 #include "GUI/ViewPort.h"
-#include "GUI/Button.h"
 #include "SceneManager.h"
 #include "Utils/MacroCreate.h"
-#include "IGame.h"
-#include "GUI/ViewPort.h"
+
+namespace gui
+{
+    class ProgressBar;
+    class Button;
+    class Label;
+}
 
 class GenericScene;
 
@@ -18,17 +22,22 @@ public:
 	void onPauseClicked(gui::Button* sender);
 	void onContinueClicked(gui::Button* sender);
 	void onRestartClicked(gui::Button* sender);
-	//void setGameLayer(IGame* gameLayer);
+    void onMainMenuClicked(gui::Button* sender);
+    
+    void setDistance(int dist);
+    void setLifes(int lifes);
 	
 	CREATE_FUNC_1(HeadUpDisplay, GenericScene*, scene);
 
 private:
     HeadUpDisplay(GenericScene* scene);
-	
+    
+    //void createStatsMenu();
     void createPauseMenu();
 	
-    //IGame* _gameLayer;
 	std::shared_ptr<gui::Button> _pauseButton;
 	std::shared_ptr<gui::View> _pauseMenu;
+    std::shared_ptr<gui::ProgressBar> _progressBar;
+    std::shared_ptr<gui::Label> _distanceBar;
     GenericScene* _scene = nullptr;
 };

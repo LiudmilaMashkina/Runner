@@ -8,9 +8,13 @@
 #include "GUI/Image.h"
 #include "GUI/Button.h"
 #include "GUI/BoxLayout.h"
-//#include "IGame.h"
+#include "GUI/View.h"
+#include "GUI/CheckBox.h"
+#include "GUI/ProgressBar.h"
+#include "GUI/Label.h"
 #include "IUpdatable.h"
 #include "GenericScene.h"
+
 
 USING_NS_CC;
 
@@ -27,6 +31,21 @@ HeadUpDisplay::HeadUpDisplay(GenericScene* scene) : gui::ViewPort(scene)
     pausePos.x = Convert::toPixels(Environment::getScreenSize().x) - _pauseButton->getSize().x;
     pausePos.y = Convert::toPixels(Environment::getScreenSize().y) - _pauseButton->getSize().y;
     _pauseButton->setPosition(pausePos);
+    
+    _progressBar = gui::ProgressBar::create("resources/life_bar_base.png", "resources/life_bar_progress.png");
+    addView(_progressBar);
+    Vec2 progressPos;
+    progressPos.x = 0.0f;
+    progressPos.y = Convert::toPixels(Environment::getScreenSize().y) - _progressBar->getSize().y;
+    _progressBar->setPosition(progressPos);
+    
+    _distanceBar = gui::Label::create("resources/dist_bar.png", "0", "resources/Monster_AG.ttf", 65);
+    addView(_distanceBar);
+    Vec2 distPos;
+    distPos.x = progressPos.x + _progressBar->getSize().x;
+    distPos.y = progressPos.y;
+    _distanceBar->setPosition(distPos);
+    //_distanceBar->setDistance(1);
 }
 
 HeadUpDisplay::~HeadUpDisplay()
@@ -41,7 +60,6 @@ void HeadUpDisplay::update(float delta)
 
 void HeadUpDisplay::onPauseClicked(gui::Button * sender)
 {
-	// just for testing:
 	_scene->setPaused(true);
 	sender->setVisible(false);
 	createPauseMenu();
@@ -58,43 +76,50 @@ void HeadUpDisplay::onContinueClicked(gui::Button* sender)
 void HeadUpDisplay::onRestartClicked(gui::Button* sender)
 {
     auto manager = SceneManager::getInstance();
-    manager->startGame();
+    manager->showGameScene();
 }
 
-/*
-void HeadUpDisplay::setGameLayer(IGame* gameLayer)
+void HeadUpDisplay::onMainMenuClicked(gui::Button *sender)
 {
-	_gameLayer = gameLayer;
+    auto manager = SceneManager::getInstance();
+    manager->showMainMenu();
 }
-*/
+
+void HeadUpDisplay::setDistance(int dist)
+{
+    assert(_distanceBar);
+    _distanceBar->setDistance(dist);
+}
+
+void HeadUpDisplay::setLifes(int lifes)
+{
+    assert(_progressBar);
+    _progressBar->setLifes(lifes);
+}
 
 void HeadUpDisplay::createPauseMenu()
 {
 	const std::shared_ptr<gui::Image> pauseMenu = gui::Image::create("resources/pause_menu_background.png", gui::ScalePolicy::Stretch);
 	addView(pauseMenu);
 	pauseMenu->setSize(cocos2d::Size(500, 500));
-
-	/*
-	const std::shared_ptr<gui::Image> decoreImage = gui::Image::create("pause_menu_decore.png", gui::ScalePolicy::Stretch);
-	_viewPort->addView(decoreImage);
-	decoreImage->setSize(cocos2d::Size(55, 400));
-	*/
 	
-	std::shared_ptr<gui::Button> quitButton = gui::Button::create("resources/quit_button_normal.png", "resources/quit_button_pressed.png");
-	pauseMenu->addView(quitButton);
-	quitButton->setMargin(0, 0, 70, 0);
-	quitButton->setCallback(std::bind(&HeadUpDisplay::onContinueClicked, this, std::placeholders::_1));
-
 	std::shared_ptr<gui::Button> menuButton = gui::Button::create("resources/menu_button_normal.png", "resources/menu_button_pressed.png");
 	pauseMenu->addView(menuButton);
 	menuButton->setMargin(0, 0, 0, 0);
-	menuButton->setCallback(std::bind(&HeadUpDisplay::onContinueClicked, this, std::placeholders::_1));
+	menuButton->setCallback(std::bind(&HeadUpDisplay::onMainMenuClicked, this, std::placeholders::_1));
 
-	std::shared_ptr<gui::Button> settingsButton = gui::Button::create("resources/settings_button_normal.png", "resources/settings_button_pressed.png");
-	pauseMenu->addView(settingsButton);
-	settingsButton->setMargin(0, 0, 0, 0);
-	settingsButton->setCallback(std::bind(&HeadUpDisplay::onContinueClicked, this, std::placeholders::_1));
-
+    // adding sound buttons
+    std::shared_ptr<gui::View> settingsButtons = gui::View::create();
+    auto settingsLayout = gui::BoxLayout::create(gui::Orientation::Horizontal, gui::Alignment::Center);
+    settingsButtons->setLayout(settingsLayout);
+    auto soundOff = gui::CheckBox::create("resources/check_box_on.png", "resources/check_box_off.png");
+    auto musicOff = gui::CheckBox::create("resources/music_check_box_on.png", "resources/music_check_box_off.png");
+    settingsButtons->addView(soundOff);
+    settingsButtons->addView(musicOff);
+    settingsLayout->doLayout(settingsButtons, false);
+    pauseMenu->addView(settingsButtons);
+    // end
+    
 	std::shared_ptr<gui::Button> restartButton = gui::Button::create("resources/restart_button_normal.png", "resources/restart_button_pressed.png");
 	pauseMenu->addView(restartButton);
 	restartButton->setMargin(0, 0, 0, 0);
@@ -123,3 +148,5 @@ void HeadUpDisplay::createPauseMenu()
 	*/
 	_pauseMenu = pauseMenu;
 }
+
+

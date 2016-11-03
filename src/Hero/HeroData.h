@@ -1,14 +1,7 @@
-//
-//  HeroData.h
-//  Wanderer
-//
-//  Created by Luda on 28/12/15.
-//
-//
+#pragma once
 
-#ifndef HeroData_h
-#define HeroData_h
 #include "Utils/Forwards.h"
+#include <Box2D/Dynamics/b2Body.h>
 
 FORWARD_DECLARE_SHARED(AnimationEngine)
 
@@ -24,9 +17,7 @@ struct HeroData
     b2Vec2 acceleration;
     b2Vec2 velocity;
     cocos2d::Node* node = nullptr;
+    b2Body* body = nullptr;
     AnimationEnginePtr animationEngine;
     bool canAttack = true;
 };
-
-
-#endif /* HeroData_h */

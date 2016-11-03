@@ -8,7 +8,7 @@ class SceneManager
 public:
     static SceneManager* getInstance();
     
-	void startGame();
+    void showMainMenu();
     void showGameScene();
 
 private:

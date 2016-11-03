@@ -9,6 +9,8 @@
 
 #include "Utils/MacroCreate.h"
 #include "Utils/TimeProvider.h"
+#include "Particles/ParticlesFactory.h"
+#include "GenericScene.h"
 
 class GameWorld;
 class GameCamera;
@@ -16,26 +18,33 @@ class GameLevelGenerator;
 class IGameObject;
 class ParticlesLayer;
 class ParticlesSystem;
+class Hero;
+class HeadUpDisplay;
 
-class TestScene : public cocos2d::Scene
+class GameScene : public GenericScene
 {
 public:
-	CC_CREATE_FUNC(TestScene, init);
+	CC_CREATE_FUNC(GameScene, init);
 
     virtual bool init() override;
 	void update(float delta) override;
     bool shouldBeRemoved(std::shared_ptr<IGameObject> obj);
 
 private:
-	TestScene() {}
+	GameScene() {}
     cocos2d::Sprite* createBackground(const std::string & backgroundName);
-
+    
+    cocos2d::Node* _gameNode = nullptr;
 	std::shared_ptr<GameWorld> _world;
+    std::shared_ptr<Hero> _hero;
     std::shared_ptr<GameCamera> _camera;
-    std::shared_ptr<GameLevelGenerator> _generator;
+    std::shared_ptr<GameLevelGenerator> _levelGenerator;
     std::shared_ptr<TimeProvider> _timeProvider;
-    ParticlesSystem* _system;
-
+    std::shared_ptr<HeadUpDisplay> _hud;
+    ParticlesFactory::GeneratorInfo _particlesSystem;
+    cocos2d::Sprite* _background = nullptr;
+    
+    
     b2Vec2 _winSize = {0.0f, 0.0f};
 };
  

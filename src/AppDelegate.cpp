@@ -5,7 +5,6 @@
 #pragma warning(pop)
 #include "AppDelegate.h"
 #include "TestScene.h"
-#include "SceneBuilder.h"
 #include "GenericScene.h"
 #include "SceneManager.h"
 
@@ -91,7 +90,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     
     SceneManager* manager = SceneManager::getInstance();
-    manager->startGame();
+    manager->showMainMenu();
     
     // create a scene. it's an autorelease object
     //auto scene = TestScene::create();

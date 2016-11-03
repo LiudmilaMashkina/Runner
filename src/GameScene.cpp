@@ -2,7 +2,7 @@
 #include <base/CCDirector.h>
 #pragma warning(pop)
 
-#include "TestScene.h"
+#include "GameScene.h"
 #include "GameWorld.h"
 #include "Utils/Environment.h"
 #include "Utils/Convert.h"
@@ -20,99 +20,132 @@
 #include "Particles/ParticlesMover.h"
 #include "Particles/ParticlesReplacer.h"
 #include "GameCamera.h"
+#include "IUpdatable.h"
+#include "Hero/Hero.h"
+#include "HeadUpDisplay.h"
+#include "UpdaterFunc.h"
 
 USING_NS_CC;
 
-bool TestScene::init()
+bool GameScene::init()
 {
-	if (!Scene::init())
+	if (!GenericScene::init())
 		return false;
 
     _winSize = Environment::getScreenSize();
     
-    auto background = createBackground("resources/background_1_1024x1024.jpg");
-    addChild(background);
-    
-    Node* gameNode = Node::create();
-    addChild(gameNode);
+    _background = createBackground("resources/background_square_256x256.png");
+    addChild(_background);
 
-	_world = std::shared_ptr<GameWorld>(new GameWorld(b2Vec2(0, -10), gameNode));
-    _generator = GameLevelGenerator::create(_world.get());
+    _gameNode = Node::create();
+    addChild(_gameNode);
+    
+    _world = std::shared_ptr<GameWorld>(new GameWorld(b2Vec2(0, -10), _gameNode));
+    addUpdatable(_world);
+    
+    _levelGenerator = GameLevelGenerator::create(_world.get());
+    _levelGenerator->generateUntil(Environment::getScreenSize().x * 0.75f);
+    
+    _camera = GameCamera::create();
+    
+    _hero = Hero::create(_levelGenerator.get(), _gameNode, _world.get());
+    _hero->setPosition({10, 10});
+    _world->addObject(_hero);
+    
     _timeProvider = TimeProvider::create();
+    addUpdatable(_timeProvider);
     
-    b2Vec2 fieldSize = Environment::getScreenSize();
-    auto forceField = ForceFieldFactory::createWindUpField(_timeProvider, fieldSize);
-    auto system = new ParticlesSystem();
-    _system = system;
+    auto camera = _camera;
+    auto timeProvider = _timeProvider;
+    auto hero = _hero;
+    auto moveCamera = [=](float delta)
+    {
+        b2Vec2 heroPos = hero->getPosition();
+        b2Vec2 camPos;
+        camPos.x = heroPos.x - Environment::getScreenSize().x / 3;
+        camPos.y = heroPos.y - Environment::getScreenSize().y / 2;
+        camera->setPosition(b2Vec2(camPos));
+    };
+    addUpdatable(UpdaterFunc::create(moveCamera));
     
-    ParticlesGenerator::Params gParams;
-    gParams.fileName = "resources/particle_16x16.png";
-    gParams.rate = 5;
-    gParams.velocityRange.set(b2Vec2(0, 1), b2Vec2(0, 2));
-    gParams.massRange.set(0.5, 1);
-    gParams.position = b2Vec2(Environment::getScreenSize().x / 2.0f, -0.5);
-    gParams.generationRange.set(b2Vec2(-7.0f , 0.0f), b2Vec2(7.0f, 0.0f));
-    gParams.field = forceField;
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = [=](Touch* touch, Event* event)
+    {
+        hero->onTap();
+        return true;
+    };
+    getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
 
-    auto pGenerator = ParticlesGenerator::create(gParams, this);
-    _system->addSystemUpdater(pGenerator);
-
-    auto pMover = ParticlesMover::create(forceField, 2);
-    _system->addParticlesUpdater(pMover);
+    _particlesSystem = ParticlesFactory::createGameParticlesSystem(_timeProvider);
+    addChild(_particlesSystem.particlesNode);
+    addUpdatable(_particlesSystem.particlesSystem);
     
-    auto pReplacer = ParticlesReplacer::create();
+    auto particlesSystem = _particlesSystem;
+    auto moveParticlesGenerator = [=](float delta)
+    {
+        b2Vec2 gPos;
+        gPos.x = Environment::getScreenSize().x / 2.0f;
+        gPos.y = -0.5f;
+        Vec2 tmpPos = particlesSystem.particlesNode->convertToNodeSpace(Convert::toPixels(gPos));
+        gPos = Convert::toMeters(tmpPos);
+        particlesSystem.particlesGenerator->setPosition(gPos);
+    };
+    addUpdatable(UpdaterFunc::create(moveParticlesGenerator));
     
-    ParticlesReplacer::Bounds bounds;
-    bounds.downLeft = b2Vec2(0, 0);
-    bounds.upperRight = Environment::getScreenSize();
+    auto levelGenerator = _levelGenerator;
+    auto sync = [=](float delta)
+    {
+        float camX = camera->getPosition().x;
+        float winSizeX = Environment::getScreenSize().x;
+        levelGenerator->generateUntil(camX + winSizeX * 0.75f);
+    };
+    addUpdatable(UpdaterFunc::create(sync));
     
-    pReplacer->setBounds(bounds);
-    std::vector<GameCamera::LayerInfo> layers;
-    
-    GameCamera::LayerInfo gameLayer;
-    gameLayer.layer = gameNode;
-    gameLayer.speedFactor = 1.0f;
-    gameLayer.zoomFactor = 1.0f;
-    layers.push_back(gameLayer);
     
     GameCamera::LayerInfo backgroundLayer;
-    backgroundLayer.layer = background;
-    backgroundLayer.speedFactor = 0.5f;
-    backgroundLayer.zoomFactor = 0.5f;
+    backgroundLayer.layer = _background;
+    backgroundLayer.speedFactor = 0.3f;
+    backgroundLayer.zoomFactor = 0.3f;
     backgroundLayer.clamp = true;
-    layers.push_back(backgroundLayer);
+    _camera->addLayer(backgroundLayer);
+
+    GameCamera::LayerInfo particlesLayer;
+    particlesLayer.layer = _particlesSystem.particlesNode;
+    particlesLayer.speedFactor = 0.5f;
+    particlesLayer.zoomFactor = 0.5f;
+    particlesLayer.clamp = false;
+    _camera->addLayer(particlesLayer);
+    
+    GameCamera::LayerInfo gameLayer;
+    gameLayer.layer = _gameNode;
+    gameLayer.speedFactor = 1.0f;
+    gameLayer.zoomFactor = 1.0f;
+    gameLayer.clamp = false;
+    _camera->addLayer(gameLayer);
+    
+    _hud = HeadUpDisplay::create(this);
+    
     
     auto physDebugDraw = B2DebugDrawLayer::create(_world->getPhysics().get(), Environment::getPTMratio());
-	gameNode->addChild(physDebugDraw, 100);
+	_gameNode->addChild(physDebugDraw, 100);
 
     return true;
 }
 
-void TestScene::update(float delta)
+void GameScene::update(float delta)
 {
-    static float time = 0;
-    time += delta;
-    
-	_world->update(delta);
-    b2Vec2 camPos = {time * 2, 0};
-    _camera->setPosition(b2Vec2(camPos));
-    _generator->generateUntil(camPos.x + _winSize.x * 0.75f);
-    
-    auto shouldRemove = [&](const std::shared_ptr<IGameObject>& obj)
+    GenericScene::update(delta);
+    if (_hud && _hero)
     {
-        b2Vec2 objPos = obj->getPosition();
-        if (objPos.x < camPos.x + 5)
-            return true;
-        return false;
-    };
-    
-    _world->removeObject(shouldRemove);
-    _timeProvider->update(delta);
-    _system->update(delta);
-
+        int dist = _hero->getPosition().x;
+        _hud->setDistance(dist);
+        
+        int lifes = _hero->getLifes();
+        _hud->setLifes(lifes);  
+    }
 }
 
-Sprite* TestScene::createBackground(const std::string & backgroundName)
+Sprite* GameScene::createBackground(const std::string & backgroundName)
 {
     auto background = Sprite::create(backgroundName);
     
