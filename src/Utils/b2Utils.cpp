@@ -6,7 +6,7 @@ namespace
     const float MaxRaycastDistance = 1000;
 }
 
-float b2Utils::raycast(std::shared_ptr<b2World> b2world, const b2Vec2 &source, const b2Vec2 &direction)
+float b2Utils::raycast(const std::shared_ptr<b2World> &b2world, const b2Vec2 &source, const b2Vec2 &direction)
 {
     struct Callback : public b2RayCastCallback
     {
@@ -15,7 +15,8 @@ float b2Utils::raycast(std::shared_ptr<b2World> b2world, const b2Vec2 &source, c
         virtual float ReportFixture(b2Fixture* fixture, const b2Vec2& point,
                                       const b2Vec2& normal, float fraction) override
         {
-            distance = std::min(distance, fraction * MaxRaycastDistance);
+            if (!fixture->IsSensor())
+                distance = std::min(distance, fraction * MaxRaycastDistance);
             return 1;
         }
         

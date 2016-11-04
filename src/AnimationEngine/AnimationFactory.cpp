@@ -15,7 +15,6 @@
 #include "AnimationFactory.h"
 #include "AnimationEngine.h"
 #include "Animation.h"
-#include "IndexedAnimation.h"
 
 using namespace cocos2d;
 

@@ -11,7 +11,7 @@ public:
     CREATE_FUNC_1(UpdaterFunc, const std::function<void(float)> &, delegate);
     
     virtual void update(float delta) override;
-  
+    
 private:
     UpdaterFunc(const std::function<void(float)> &delegate);
     

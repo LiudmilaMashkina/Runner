@@ -21,7 +21,7 @@ public:
 
 	virtual bool init() override;
 	CC_CREATE_FUNC(MainMenuScene, init);
-
+    
 private:
     MainMenuScene();
     

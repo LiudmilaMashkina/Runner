@@ -90,7 +90,7 @@ b2Vec2 GameLevelGenerator::generateBlueStoneLine(const b2Vec2 &startPos)
     line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_4.png", 1.5f));
     line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_5.png", 0.5f));
     line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_6.png", 0.5f));
-    line.length = 3;
+    line.length = 10;
     line.maxOverlap = 0;
     line.startPos.Set(startPos.x, startPos.y);
     

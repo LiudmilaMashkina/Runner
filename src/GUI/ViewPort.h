@@ -10,7 +10,7 @@ namespace gui
 		~ViewPort();
 		static std::shared_ptr<ViewPort> create(cocos2d::Node* node);
         
-	private:
+	protected:
 		ViewPort(cocos2d::Node* node);
 	};
 }

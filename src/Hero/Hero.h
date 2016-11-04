@@ -11,6 +11,7 @@
 
 #include <map>
 #include "GameObjects/IGameObject.h"
+#include "GameObjects/GameObjectType.h"
 #include "Utils/Forwards.h"
 #include "HeroStateId.h"
 #include "HeroData.h"
@@ -31,16 +32,10 @@ public:
     
     virtual void setPosition(const b2Vec2 &position);
     virtual b2Vec2 getPosition() override;
-    /*
-    virtual b2Vec2 getBodySize() override {return b2Vec2();};
-    virtual void setRotationRad(float32 radAng) override {};
-    virtual void setRotationDeg(float32 degAng) override {};
-    virtual bool acceptTouch(b2Vec2 touchPos) override {return false;};
-    virtual void onTouchBegan(b2Vec2 touchPos) override {};
-    virtual void onTouchMoved(b2Vec2 touchPos) override {};
-    virtual void onTouchEnded(b2Vec2 touchPos) override {};
-    virtual bool canBeDeleted() override {return false;};
-    */
+    virtual GameObjectType getType() const override { return GameObjectType::Hero; }
+    
+    int getLifes();
+    virtual void onContactBegin(std::shared_ptr<IGameObject> obj) override;
     
     CREATE_FUNC_3(Hero, IGameLavelInfo*, info, cocos2d::Node*, layer, GameWorld*, world);
     
@@ -49,11 +44,14 @@ private:
          cocos2d::Node* layer,
          GameWorld* world);
 
+    void decreaseLifes(int num);
+    
     IGameLavelInfo* _info;
     GameWorld* _world;
     HeroData _data;
     std::map<HeroStateId, std::shared_ptr<IHeroState>> _states;
     std::shared_ptr<IHeroState> _currentState;
+    int _lifes = 100;
     
     // world pointer
     // states + current state
