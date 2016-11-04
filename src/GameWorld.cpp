@@ -33,6 +33,15 @@ void GameWorld::removeObject(const std::function<bool (const std::shared_ptr<IGa
     _objects.erase(it, _objects.end());
 }
 
+void GameWorld::removeObjectLater(IGameObject* objToDelete)
+{
+    auto it = _objectsMap.find(objToDelete);
+    
+    assert(it != _objectsMap.end());
+    
+    _objectsToRemove.push_back(it->second);
+}
+
 void GameWorld::addContact(IGameObject *a, IGameObject *b)
 {
     std::pair<IGameObject*, IGameObject*> contact(a, b);
@@ -63,5 +72,14 @@ void GameWorld::update(float delta)
 	{
 		_objects[i]->update(delta);
 	}
+    
+    for (auto& obj : _objectsToRemove)
+    {
+        auto it = std::find(_objects.begin(), _objects.end(), obj);
+        assert(it != _objects.end());
+        _objects.erase(it);
+        _objectsMap.erase(obj.get());
+    }
+    _objectsToRemove.clear();
 }
 

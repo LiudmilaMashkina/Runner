@@ -9,6 +9,7 @@
 
 class SimpleGameObject;
 class Bomb;
+class AnimationObject;
 
 class GameObjectFactory 
 {
@@ -18,6 +19,7 @@ public:
 	std::shared_ptr<IGameObject> createStaticStone(const b2Vec2& topLeftCornerPos, float width, const std::string& fileName);
 	std::shared_ptr<IGameObject> createCircle(const b2Vec2& pos, float angle, float radius, b2BodyType type, const std::string& fileName);
     std::shared_ptr<Bomb> createBomb(const b2Vec2& pos, float angle, const b2Vec2& size);
+    std::shared_ptr<AnimationObject> createBombExplosion(const b2Vec2& pos);
 
 private:
 	b2Body* createBody(b2BodyType type, b2Shape* shape, const b2Vec2& pos, float angle);

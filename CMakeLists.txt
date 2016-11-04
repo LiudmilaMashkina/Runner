@@ -12,8 +12,6 @@ set(sources
 	src/AnimationEngine/AnimationFactory.h
 	src/AnimationEngine/FrameId.h
 	src/AnimationEngine/IAnimation.h
-	src/AnimationEngine/IndexedAnimation.cpp
-	src/AnimationEngine/IndexedAnimation.h
 	src/AppDelegate.cpp
 	src/AppDelegate.h
 	src/B2DebugDraw/B2DebugDrawLayer.cpp
@@ -43,6 +41,8 @@ set(sources
 	src/GameCamera.h
 	src/GameScene.cpp
 	src/GameScene.h
+	src/GameObjects/AnimationObject.cpp
+	src/GameObjects/AnimationObject.h
 	src/GameObjects/Bomb.cpp
 	src/GameObjects/Bomb.h
 	src/GameObjects/GameObjectType.h

@@ -22,7 +22,8 @@ public:
 	b2Body* getBody() { return _body; }
     virtual b2Vec2 getPosition() override;
     virtual GameObjectType getType() const override { return GameObjectType::Bomb; }
-
+    virtual void onContactBegin(std::shared_ptr<IGameObject> obj) override;
+    
 private:
 	b2Body* _body = nullptr;
 	cocos2d::Node* _node = nullptr;

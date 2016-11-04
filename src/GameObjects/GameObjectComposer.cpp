@@ -30,7 +30,7 @@ b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
 	}
     
     float leftLength = curLength;
-    int bNum = Environment::generateIntRand(1, 3);
+    int bNum = Environment::generateIntRand(1, 5);
     float bp = Environment::generateFloatRand(0.0f, leftLength / bNum);
     b2Vec2 bombPos = def.startPos;
     bombPos.x += bp;

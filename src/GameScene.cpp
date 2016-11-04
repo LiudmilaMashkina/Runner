@@ -24,6 +24,8 @@
 #include "Hero/Hero.h"
 #include "HeadUpDisplay.h"
 #include "UpdaterFunc.h"
+#include "GameObjects/GameObjectFactory.h"
+#include "GameObjects/AnimationObject.h"
 
 USING_NS_CC;
 
@@ -58,6 +60,7 @@ bool GameScene::init()
     auto camera = _camera;
     auto timeProvider = _timeProvider;
     auto hero = _hero;
+    
     auto moveCamera = [=](float delta)
     {
         b2Vec2 heroPos = hero->getPosition();
@@ -128,13 +131,27 @@ bool GameScene::init()
     
     auto physDebugDraw = B2DebugDrawLayer::create(_world->getPhysics().get(), Environment::getPTMratio());
 	_gameNode->addChild(physDebugDraw, 100);
-
+    
     return true;
 }
 
 void GameScene::update(float delta)
 {
     GenericScene::update(delta);
+    
+    auto shouldRemove = [&](const std::shared_ptr<IGameObject>& obj)
+    {
+        b2Vec2 camPos = _camera->getPosition();
+        b2Vec2 objPos = obj->getPosition();
+        
+        if (objPos.x < camPos.x + 5)
+            return true;
+        
+        return false;
+    };
+    
+    _world->removeObject(shouldRemove);
+    
     if (_hud && _hero)
     {
         int dist = _hero->getPosition().x;

@@ -4,5 +4,6 @@ enum class GameObjectType
 {
     SimpleGameObject,
     Bomb,
-    Hero
+    Hero,
+    Animation
 };

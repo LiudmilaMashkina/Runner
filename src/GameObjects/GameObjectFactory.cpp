@@ -1,11 +1,12 @@
 #pragma warning(push, 0)
-
+#include <2d/CCSpriteFrame.h>
 #pragma warning(pop)
 
 #include "GameObjectFactory.h"
 #include "IGameObject.h"
 #include "SimpleGameObject.h"
 #include "Bomb.h"
+#include "AnimationObject.h"
 #include "Utils/Convert.h"
 
 USING_NS_CC;
@@ -85,6 +86,28 @@ std::shared_ptr<Bomb> GameObjectFactory::createBomb(const b2Vec2 &pos, float ang
     body->SetUserData(ibomb);
     
     return obj;
+}
+
+std::shared_ptr<AnimationObject> GameObjectFactory::createBombExplosion(const b2Vec2& pos)
+{
+    Vector<SpriteFrame*> frames;
+    
+    for (int i = 0; i < 4; ++i)
+    {
+        std::string fString = "resources/bomb_" + std::to_string(i) + ".png";
+        Rect fRect;
+        fRect.size = Size(64, 64);
+        fRect.origin = Vec2(0, 0);
+        SpriteFrame* frame = SpriteFrame::create(fString, fRect);
+        
+        frames.pushBack(frame);
+    }
+    
+    std::shared_ptr<AnimationObject> animation = std::shared_ptr<AnimationObject>(new AnimationObject(_world, frames, 10, false));
+    animation->setPosition(pos);
+    _world->addObject(animation);
+    
+    return animation;
 }
 
 b2Body* GameObjectFactory::createBody(b2BodyType type, b2Shape* shape, const b2Vec2& pos, float angle)
