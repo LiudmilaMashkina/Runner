@@ -28,6 +28,7 @@ ParticlesFactory::GeneratorInfo ParticlesFactory::createGameParticlesSystem(std:
     gParams.position = b2Vec2(Environment::getScreenSize().x / 2.0f, -0.5);
     gParams.generationRange.set(b2Vec2(-7.0f , 0.0f), b2Vec2(7.0f, 0.0f));
     gParams.field = forceField;
+    gParams.ttlRange.set(7, 15);
     
     ParticlesFactory::GeneratorInfo gInfo;
     gInfo.particlesNode = Node::create();
@@ -67,6 +68,7 @@ ParticlesFactory::GeneratorInfo ParticlesFactory::createMainMenuParticlesSystem(
     gParams.position = b2Vec2(Environment::getScreenSize().x / 2.0f, -0.5);
     gParams.generationRange.set(b2Vec2(-7.0f , 0.0f), b2Vec2(7.0f, 0.0f));
     gParams.field = forceField;
+    gParams.ttlRange.set(7, 15);
     
     ParticlesFactory::GeneratorInfo gInfo;
     gInfo.particlesNode = Node::create();
@@ -93,7 +95,7 @@ ParticlesFactory::GeneratorInfo ParticlesFactory::createMainMenuParticlesSystem(
 
 ParticlesFactory::GeneratorInfo ParticlesFactory::createBombParticles(std::shared_ptr<TimeProvider> timeProvider)
 {
-    auto forceField = StaticForceField::create(b2Vec2(0, 10));
+    auto forceField = StaticForceField::create(b2Vec2(0, 7));
     std::shared_ptr<ParticlesSystem> system = ParticlesSystem::create();
     
     ParticlesGenerator::Params params;
@@ -103,6 +105,7 @@ ParticlesFactory::GeneratorInfo ParticlesFactory::createBombParticles(std::share
     params.massRange.set(0.5, 1);
     params.generationRange.set(b2Vec2(-0.25f, 0.0f), b2Vec2(0.25f, 0.0f));
     params.field = forceField;
+    params.ttlRange.set(0.5, 1.0);
     
     ParticlesFactory::GeneratorInfo info;
     info.particlesNode = Node::create();

@@ -24,6 +24,7 @@ GameWorld::~GameWorld()
 
 void GameWorld::addObject(const std::shared_ptr<IGameObject>& object)
 {
+    assert(object);
 	assert(find(_objects.begin(), _objects.end(), object) == _objects.end());
     _objectsMap[object.get()] = object;
 	_objects.push_back(object);
@@ -31,7 +32,11 @@ void GameWorld::addObject(const std::shared_ptr<IGameObject>& object)
 
 void GameWorld::removeObject(const std::function<bool (const std::shared_ptr<IGameObject> &)> &predicate)
 {
-    auto startIt = std::remove_if(_objects.begin(), _objects.end(), predicate);
+    auto startIt = std::partition(_objects.begin(), _objects.end(),
+                                  [&](const std::shared_ptr<IGameObject>& obj)
+                                  {
+                                      return !predicate(obj);
+                                  });
     for (auto it = startIt; it != _objects.end(); ++it)
         _objectsMap.erase(it->get());
     

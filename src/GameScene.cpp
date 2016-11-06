@@ -38,8 +38,8 @@ bool GameScene::init()
 
     _winSize = Environment::getScreenSize();
     
-    //_background = createBackground("resources/background_square_256x256.png");
-    //addChild(_background);
+    _background = createBackground("resources/background_square_256x256.png");
+    addChild(_background);
 
     _gameNode = Node::create();
     addChild(_gameNode);
@@ -50,24 +50,19 @@ bool GameScene::init()
     _world = std::shared_ptr<GameWorld>(new GameWorld(b2Vec2(0, -10), _gameNode, _timeProvider));
     addUpdatable(_world);
     
-    //_levelGenerator = GameLevelGenerator::create(_world.get());
-    //_levelGenerator->generateUntil(Environment::getScreenSize().x * 0.75f);
+    _levelGenerator = GameLevelGenerator::create(_world.get());
+    _levelGenerator->generateUntil(Environment::getScreenSize().x * 0.75f);
     
     _camera = GameCamera::create();
     
-    GameObjectFactory factory(_world.get());
-    factory.createBomb(_winSize / 2, 0, b2Vec2(0.5, 0.5));
+    _hero = Hero::create(_levelGenerator.get(), _gameNode, _world.get());
+    _hero->setPosition({10, 10});
+    _world->addObject(_hero);
     
+    auto camera = _camera;
+    auto timeProvider = _timeProvider;
+    auto hero = _hero;
     
-    //_hero = Hero::create(_levelGenerator.get(), _gameNode, _world.get());
-    //_hero->setPosition({10, 10});
-    //_world->addObject(_hero);
-    
-    //auto camera = _camera;
-    //auto timeProvider = _timeProvider;
-    //auto hero = _hero;
-    
-    /*
     auto moveCamera = [=](float delta)
     {
         b2Vec2 heroPos = hero->getPosition();
@@ -77,32 +72,31 @@ bool GameScene::init()
         camera->setPosition(b2Vec2(camPos));
     };
     addUpdatable(UpdaterFunc::create(moveCamera));
-    */
     
-    //auto touchListener = EventListenerTouchOneByOne::create();
-    //touchListener->onTouchBegan = [=](Touch* touch, Event* event)
-    //{
-    //    hero->onTap();
-    //    return true;
-    //};
-    //getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = [=](Touch* touch, Event* event)
+    {
+        hero->onTap();
+        return true;
+    };
+    getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
 
-    //_particlesSystem = ParticlesFactory::createGameParticlesSystem(_timeProvider);
-    //addChild(_particlesSystem.particlesNode);
-    //addUpdatable(_particlesSystem.particlesSystem);
+    _particlesSystem = ParticlesFactory::createGameParticlesSystem(_timeProvider);
+    addChild(_particlesSystem.particlesNode);
+    addUpdatable(_particlesSystem.particlesSystem);
     
-    //auto particlesSystem = _particlesSystem;
-    //auto moveParticlesGenerator = [=](float delta)
-    //{
-    //    b2Vec2 gPos;
-//        gPos.x = Environment::getScreenSize().x / 2.0f;
-  //      gPos.y = -0.5f;
-    //    Vec2 tmpPos = particlesSystem.particlesNode->convertToNodeSpace(Convert::toPixels(gPos));
-//        gPos = Convert::toMeters(tmpPos);
-//        particlesSystem.particlesGenerator->setPosition(gPos);
-//    };
+    auto particlesSystem = _particlesSystem;
+    auto moveParticlesGenerator = [=](float delta)
+    {
+        b2Vec2 gPos;
+        gPos.x = Environment::getScreenSize().x / 2.0f;
+        gPos.y = -0.5f;
+        Vec2 tmpPos = particlesSystem.particlesNode->convertToNodeSpace(Convert::toPixels(gPos));
+        gPos = Convert::toMeters(tmpPos);
+        particlesSystem.particlesGenerator->setPosition(gPos);
+    };
 
-/*
+
     addUpdatable(UpdaterFunc::create(moveParticlesGenerator));
     
     auto levelGenerator = _levelGenerator;
@@ -128,7 +122,7 @@ bool GameScene::init()
     particlesLayer.zoomFactor = 0.5f;
     particlesLayer.clamp = false;
     _camera->addLayer(particlesLayer);
-*/
+
     GameCamera::LayerInfo gameLayer;
     gameLayer.layer = _gameNode;
     gameLayer.speedFactor = 1.0f;
@@ -136,11 +130,10 @@ bool GameScene::init()
     gameLayer.clamp = false;
     _camera->addLayer(gameLayer);
     
-//    _hud = HeadUpDisplay::create(this);
+    _hud = HeadUpDisplay::create(this);
     
-    
-//    auto physDebugDraw = B2DebugDrawLayer::create(_world->getPhysics().get(), Environment::getPTMratio());
-//	_gameNode->addChild(physDebugDraw, 100);
+    auto physDebugDraw = B2DebugDrawLayer::create(_world->getPhysics().get(), Environment::getPTMratio());
+	_gameNode->addChild(physDebugDraw, 100);
  
     return true;
 }

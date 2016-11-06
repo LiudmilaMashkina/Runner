@@ -31,6 +31,7 @@ public:
         b2Vec2 position = {0, 0};
         Diapason<b2Vec2> generationRange;
         std::shared_ptr<IForceField> field;
+        Diapason<float> ttlRange;
     };
     
     void update(float delta, ParticlesSystem& system) override;
