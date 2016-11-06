@@ -34,6 +34,9 @@ int Environment::generateIntRand(int min, int max)
 
 float Environment::generateFloatRand(float min, float max)
 {
+    if (fabs(max - min) < 0.001f)
+        return min;
+    
     float randNumber = min + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(max-min)));
     
     return randNumber;

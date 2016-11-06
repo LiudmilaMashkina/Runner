@@ -6,6 +6,16 @@
 #include "ISystemUpdater.h"
 #include "Particle.h"
 
+ParticlesSystem::ParticlesSystem()
+{
+    
+}
+
+std::shared_ptr<ParticlesSystem> ParticlesSystem::create()
+{
+    return std::shared_ptr<ParticlesSystem>(new ParticlesSystem());
+}
+
 void ParticlesSystem::addParticlesUpdater(std::shared_ptr<IParticlesUpdater> pUpdater)
 {
     _pUpdaters.push_back(pUpdater);

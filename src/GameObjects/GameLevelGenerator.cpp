@@ -26,11 +26,12 @@ void GameLevelGenerator::generateUntil(const float frontier)
 {
     while (_exitPos.x <= frontier)
     {
-        int start = static_cast<int>(CompositionId::EnumStart) + 1;
-        int end = static_cast<int>(CompositionId::EnumEnd) - 1;
-        CompositionId random = static_cast<CompositionId>(Environment::generateIntRand(start, end));
+        //int start = static_cast<int>(CompositionId::EnumStart) + 1;
+        //int end = static_cast<int>(CompositionId::EnumEnd) - 1;
+        //CompositionId random = static_cast<CompositionId>(Environment::generateIntRand(start, end));
         
-        _exitPos = generateComposition(random, _exitPos);
+        //_exitPos = generateComposition(random, _exitPos);
+        _exitPos = generateComposition(CompositionId::BlueStoneLine, _exitPos);
         _exitPos.x += 3;
     }
 }
@@ -39,8 +40,8 @@ b2Vec2 GameLevelGenerator::generateComposition(CompositionId compositionId, cons
 {
     switch (compositionId)
     {
-        case CompositionId::Bridge :
-            return generateBridge(startPos);
+        //case CompositionId::Bridge :
+            //return generateBridge(startPos);
         //case CompositionId::IceLine :
           //  generateIceLine(startPos);
             //break;

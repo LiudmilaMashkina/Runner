@@ -28,12 +28,12 @@ public:
         float rate = 0;
         Diapason<b2Vec2> velocityRange;
         Diapason<float> massRange;
-        b2Vec2 position;
+        b2Vec2 position = {0, 0};
         Diapason<b2Vec2> generationRange;
         std::shared_ptr<IForceField> field;
     };
     
-    void update(float delta, ParticlesSystem &system) override;
+    void update(float delta, ParticlesSystem& system) override;
     void setPosition(const b2Vec2 &position);
     static std::shared_ptr<ParticlesGenerator> create(const Params &params, cocos2d::Node* layerNode);
     

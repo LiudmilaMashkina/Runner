@@ -13,7 +13,6 @@ class GameWorld;
 class Bomb : public IGameObject
 {
 public:
-	//Bomb(b2Body* body, cocos2d::Node* node, GameWorld* world);
     Bomb(b2Body* body, GameWorld* world);
     virtual ~Bomb();
 

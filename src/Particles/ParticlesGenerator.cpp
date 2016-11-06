@@ -21,7 +21,7 @@ _parentNode(layerNode)
 {
 }
 
-void ParticlesGenerator::update(float delta, ParticlesSystem &system)
+void ParticlesGenerator::update(float delta, ParticlesSystem& system)
 {
     _cooldown -= delta;
     if (_cooldown <= 0)

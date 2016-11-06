@@ -6,6 +6,7 @@
 #include "GameWorld.h"
 #include "Utils/Convert.h"
 #include "GameObjectFactory.h"
+#include "ParticlesObject.h"
 
 USING_NS_CC;
 

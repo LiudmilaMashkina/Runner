@@ -18,7 +18,11 @@ public:
     void addParticlesUpdater(std::shared_ptr<IParticlesUpdater> pUpdater);
     void addSystemUpdater(std::shared_ptr<ISystemUpdater> sUpdater);
     
+    static std::shared_ptr<ParticlesSystem> create();
+    
 private:
+    ParticlesSystem();
+    
     std::list<Particle> _particles;
     std::vector<std::shared_ptr<IParticlesUpdater>> _pUpdaters;
     std::vector<std::shared_ptr<ISystemUpdater>> _sUpdaters;

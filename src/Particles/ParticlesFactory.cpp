@@ -7,6 +7,7 @@
 #include "ParticlesGenerator.h"
 #include "Utils/Environment.h"
 #include "ForceField/ForceFieldFactory.h"
+#include "ForceField/StaticForceField.h"
 #include "Utils/TimeProvider.h"
 #include "ParticlesMover.h"
 
@@ -17,7 +18,7 @@ ParticlesFactory::GeneratorInfo ParticlesFactory::createGameParticlesSystem(std:
     b2Vec2 fieldSize = Environment::getScreenSize();
     auto forceField = ForceFieldFactory::createWindUpField(timeProvider, fieldSize);
     
-    std::shared_ptr<ParticlesSystem> system(new ParticlesSystem());
+    std::shared_ptr<ParticlesSystem> system = ParticlesSystem::create();
     
     ParticlesGenerator::Params gParams;
     gParams.fileName = "resources/dust_16x16.png";
@@ -56,7 +57,7 @@ ParticlesFactory::GeneratorInfo ParticlesFactory::createMainMenuParticlesSystem(
     b2Vec2 fieldSize = Environment::getScreenSize();
     auto forceField = ForceFieldFactory::createWindUpField(timeProvider, fieldSize);
     
-    std::shared_ptr<ParticlesSystem> system(new ParticlesSystem());
+    std::shared_ptr<ParticlesSystem> system = ParticlesSystem::create();
     
     ParticlesGenerator::Params gParams;
     gParams.fileName = "resources/dust_32x32.png";
@@ -88,4 +89,32 @@ ParticlesFactory::GeneratorInfo ParticlesFactory::createMainMenuParticlesSystem(
     gInfo.particlesGenerator = pGenerator;
     
     return gInfo;
+}
+
+ParticlesFactory::GeneratorInfo ParticlesFactory::createBombParticles(std::shared_ptr<TimeProvider> timeProvider)
+{
+    auto forceField = StaticForceField::create(b2Vec2(0, 10));
+    std::shared_ptr<ParticlesSystem> system = ParticlesSystem::create();
+    
+    ParticlesGenerator::Params params;
+    params.fileName = "resources/bomb_particle.png";
+    params.rate = 7;
+    params.velocityRange.set(b2Vec2(0, 0), b2Vec2(0, 0));
+    params.massRange.set(0.5, 1);
+    params.generationRange.set(b2Vec2(-0.25f, 0.0f), b2Vec2(0.25f, 0.0f));
+    params.field = forceField;
+    
+    ParticlesFactory::GeneratorInfo info;
+    info.particlesNode = Node::create();
+    
+    auto generator = ParticlesGenerator::create(params, info.particlesNode);
+    system->addSystemUpdater(generator);
+    
+    auto partMover = ParticlesMover::create(forceField, 0);
+    system->addParticlesUpdater(partMover);
+    
+    info.particlesSystem = system;
+    info.particlesGenerator = generator;
+    
+    return info;
 }

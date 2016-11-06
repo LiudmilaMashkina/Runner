@@ -5,14 +5,16 @@
 #include "GameWorld.h"
 #include "GameObjects/IGameObject.h"
 #include "ContactListener.h"
+#include "Utils/TimeProvider.h"
 
 USING_NS_CC;
 
-GameWorld::GameWorld(const b2Vec2& gravity, Node* rootNode) :
+GameWorld::GameWorld(const b2Vec2& gravity, Node* rootNode, const std::shared_ptr<TimeProvider>& timeProvider) :
 _contactListener(this)
 {
 	_physics.reset(new b2World(gravity));
 	_graphics = rootNode;
+    _timeProvider = timeProvider;
     
     _physics->SetContactListener(&_contactListener);
 }
@@ -29,8 +31,12 @@ void GameWorld::addObject(const std::shared_ptr<IGameObject>& object)
 
 void GameWorld::removeObject(const std::function<bool (const std::shared_ptr<IGameObject> &)> &predicate)
 {
-    auto it = std::remove_if(_objects.begin(), _objects.end(), predicate);
-    _objects.erase(it, _objects.end());
+    auto startIt = std::remove_if(_objects.begin(), _objects.end(), predicate);
+    for (auto it = startIt; it != _objects.end(); ++it)
+        _objectsMap.erase(it->get());
+    
+    _objects.erase(startIt, _objects.end());
+    
 }
 
 void GameWorld::removeObjectLater(IGameObject* objToDelete)
