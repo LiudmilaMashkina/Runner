@@ -81,13 +81,13 @@ std::shared_ptr<Bomb> GameObjectFactory::createBomb(const b2Vec2 &pos, float ang
     physShape.SetAsBox(size.x / 2, size.y / 2);
     b2Body* body = createSensor(b2BodyType::b2_staticBody, &physShape, pos, angle);
     
-    std::shared_ptr<Bomb> obj = std::shared_ptr<Bomb>(new Bomb(body, _world));
+    auto particles = createBombParticles(pos);
+    
+    std::shared_ptr<Bomb> obj = std::shared_ptr<Bomb>(new Bomb(body, _world, particles));
     _world->addObject(obj);
     
     IGameObject* ibomb = obj.get();
     body->SetUserData(ibomb);
-    
-    auto particles = createBombParticles(pos);
     
     return obj;
 }

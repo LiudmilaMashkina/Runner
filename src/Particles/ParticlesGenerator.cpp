@@ -24,7 +24,7 @@ _parentNode(layerNode)
 void ParticlesGenerator::update(float delta, ParticlesSystem& system)
 {
     _cooldown -= delta;
-    if (_cooldown <= 0)
+    if (_cooldown <= 0 && !_stopped)
     {
         Particle particle;
         particle.sprite = Sprite::create(_params.fileName);
@@ -52,4 +52,9 @@ void ParticlesGenerator::update(float delta, ParticlesSystem& system)
 void ParticlesGenerator::setPosition(const b2Vec2 &position)
 {
     _params.position = position;
+}
+
+void ParticlesGenerator::stopGenerating(bool stopped)
+{
+    _stopped = stopped;
 }

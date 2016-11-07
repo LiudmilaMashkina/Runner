@@ -31,3 +31,8 @@ GameObjectType ParticlesObject::getType() const
 {
     return GameObjectType::PariclesObject;
 }
+
+void ParticlesObject::stopGenerating(bool stopped)
+{
+    _particleSystem.particlesGenerator->stopGenerating(stopped);
+}
