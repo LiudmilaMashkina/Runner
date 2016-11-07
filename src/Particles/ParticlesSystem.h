@@ -17,6 +17,7 @@ public:
     void addParticle(const Particle &particle);
     void addParticlesUpdater(std::shared_ptr<IParticlesUpdater> pUpdater);
     void addSystemUpdater(std::shared_ptr<ISystemUpdater> sUpdater);
+    int getParticleCount() const;
     
     static std::shared_ptr<ParticlesSystem> create();
     

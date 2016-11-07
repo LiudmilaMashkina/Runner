@@ -8,8 +8,9 @@
 #include "Utils/Convert.h"
 #include "GameWorld.h"
 
-ParticlesObject::ParticlesObject(const ParticlesFactory::GeneratorInfo& particleSystem) :
-_particleSystem(particleSystem)
+ParticlesObject::ParticlesObject(const ParticlesFactory::GeneratorInfo& particleSystem, GameWorld* world) :
+_particleSystem(particleSystem),
+_world(world)
 {}
 
 ParticlesObject::~ParticlesObject()
@@ -19,6 +20,14 @@ ParticlesObject::~ParticlesObject()
 
 void ParticlesObject::update(float delta)
 {
+    if (_particleSystem.particlesGenerator->isPaused())
+    {
+        int count = _particleSystem.particlesSystem->getParticleCount();
+        if (count == 0)
+        {
+            _world->removeObjectLater(this);
+        }
+    }
     _particleSystem.particlesSystem->update(delta);
 }
 
@@ -32,7 +41,7 @@ GameObjectType ParticlesObject::getType() const
     return GameObjectType::PariclesObject;
 }
 
-void ParticlesObject::stopGenerating(bool stopped)
+void ParticlesObject::setPaused(bool paused)
 {
-    _particleSystem.particlesGenerator->stopGenerating(stopped);
+    _particleSystem.particlesGenerator->setPaused(paused);
 }

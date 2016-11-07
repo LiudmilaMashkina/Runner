@@ -11,16 +11,18 @@ class ParticlesSystem;
 class ParticlesObject : public IGameObject
 {
 public:
-    ParticlesObject(const ParticlesFactory::GeneratorInfo& particleSystem);
+    ParticlesObject(const ParticlesFactory::GeneratorInfo& particleSystem,
+                    GameWorld* world);
     virtual ~ParticlesObject();
   
     virtual void update(float delta) override;
     virtual b2Vec2 getPosition() override;
     virtual GameObjectType getType() const override;
-    void stopGenerating(bool stopped);
+    void setPaused(bool paused);
     
 private:
     ParticlesFactory::GeneratorInfo _particleSystem;
+    GameWorld* _world = nullptr;
 };
 
  

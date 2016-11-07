@@ -26,6 +26,11 @@ void ParticlesSystem::addSystemUpdater(std::shared_ptr<ISystemUpdater> sUpdater)
     _sUpdaters.push_back(sUpdater);
 }
 
+int ParticlesSystem::getParticleCount() const
+{
+    return _particles.size();
+}
+
 void ParticlesSystem::addParticle(const Particle &particle)
 {
     _particles.push_back(particle);

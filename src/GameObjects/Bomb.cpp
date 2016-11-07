@@ -36,6 +36,7 @@ void Bomb::update(float delta)
 
 	_node->setPosition(Convert::toPixels(bodyPos));
 	_node->setRotation(Convert::toDegrees(-bodyAngle));
+    
 }
 
 b2Vec2 Bomb::getPosition()
@@ -48,6 +49,6 @@ void Bomb::onContactBegin(std::shared_ptr<IGameObject> obj)
     GameObjectFactory factory(_world);
     factory.createBombExplosion(getPosition());
     
-    _particles->stopGenerating(true);
+    _particles->setPaused(true);
     _world->removeObjectLater(this);
 }
