@@ -20,6 +20,8 @@ std::shared_ptr<ParticlesMover> ParticlesMover::create(const std::shared_ptr<IFo
 IParticlesUpdater::Action ParticlesMover::updateParticle(Particle &particle, float delta)
 {
     particle.ttl -= delta;
+    float decrOpacity = 255.0f / (particle.constTtl / delta);
+    
     if (particle.ttl <= 0.0f)
     {
         return Action::Remove;
@@ -34,7 +36,9 @@ IParticlesUpdater::Action ParticlesMover::updateParticle(Particle &particle, flo
     particlePos += particle.velocity * delta;
     
     particle.sprite->setPosition(Convert::toPixels(particlePos));
-    
+    particle.sprite->setOpacity(particle.opacity);
+    particle.opacity -= decrOpacity;
+
     return Action::Nothing;
 }
 

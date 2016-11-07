@@ -34,6 +34,8 @@ void ParticlesGenerator::update(float delta, ParticlesSystem& system)
         particle.mass = Environment::generateFloatRand(_params.massRange.min, _params.massRange.max);
         float ttl = Environment::generateFloatRand(_params.ttlRange.min, _params.ttlRange.max);
         particle.ttl = ttl;
+        particle.constTtl = ttl;
+        particle.opacity = 255.0f;
         //particle.sprite->setColor(cocos2d::Color3B::YELLOW);
         b2Vec2 partPos = _params.position;
         partPos.x += Environment::generateFloatRand(_params.generationRange.min.x, _params.generationRange.max.x);

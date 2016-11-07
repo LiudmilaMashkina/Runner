@@ -9,4 +9,6 @@ struct Particle
     b2Vec2 velocity;
     float mass = 0;
     float ttl = 0;
+    float constTtl = 0;
+    float opacity = 255.0f;
 };
