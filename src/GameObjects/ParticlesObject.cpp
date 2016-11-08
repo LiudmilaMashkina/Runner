@@ -3,7 +3,6 @@
 #pragma warning(pop)
 
 #include "ParticlesObject.h"
-#include "Particles/ParticlesGenerator.h"
 #include "Particles/ParticlesSystem.h"
 #include "Utils/Convert.h"
 #include "GameWorld.h"
@@ -22,10 +21,11 @@ void ParticlesObject::update(float delta)
 {
     if (_particleSystem.particlesGenerator->isPaused())
     {
-        int count = _particleSystem.particlesSystem->getParticleCount();
+        size_t count = _particleSystem.particlesSystem->getParticleCount();
         if (count == 0)
         {
             _world->removeObjectLater(this);
+            return;
         }
     }
     _particleSystem.particlesSystem->update(delta);

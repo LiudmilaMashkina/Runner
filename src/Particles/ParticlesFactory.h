@@ -18,7 +18,7 @@ public:
         std::shared_ptr<ParticlesGenerator> particlesGenerator;
     };
     
-    static GeneratorInfo createGameParticlesSystem(std::shared_ptr<TimeProvider> timeProvider);
-    static GeneratorInfo createMainMenuParticlesSystem(std::shared_ptr<TimeProvider> timeProvider);
-    static GeneratorInfo createBombParticles(std::shared_ptr<TimeProvider> timeProvider);
+    static GeneratorInfo createGameParticlesSystem(const std::shared_ptr<TimeProvider>& timeProvider);
+    static GeneratorInfo createMainMenuParticlesSystem(const std::shared_ptr<TimeProvider>& timeProvider);
+    static GeneratorInfo createBombParticles(const std::shared_ptr<TimeProvider>& timeProvider);
 };

@@ -143,6 +143,7 @@ set(sources
 	src/Utils/MacroCreate.h
 	src/Utils/TimeProvider.cpp
 	src/Utils/TimeProvider.h
+	src/Utils/StrongPtr.h
 )
 
 set(includes

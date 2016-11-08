@@ -4,6 +4,7 @@
 #include <Box2D/Dynamics/b2Body.h>
 #pragma warning(pop)
 
+#include "Utils/MacroCreate.h"
 #include "IGameObject.h"
 
 namespace cocos2d { class Node; }
@@ -14,19 +15,22 @@ class ParticlesObject;
 class Bomb : public IGameObject
 {
 public:
-    Bomb(b2Body* body,
-         GameWorld* world,
-         const std::shared_ptr<ParticlesObject>& particles);
+    CREATE_FUNC_3(Bomb, b2Body*, body, GameWorld*, world, const std::shared_ptr<ParticlesObject>&, particles);
+    
     virtual ~Bomb();
 
 	virtual void update(float delta) override;
 	
-	b2Body* getBody() { return _body; }
+	virtual b2Body* getBody() override { return _body; }
     virtual b2Vec2 getPosition() override;
     virtual GameObjectType getType() const override { return GameObjectType::Bomb; }
     virtual void onContactBegin(std::shared_ptr<IGameObject> obj) override;
     
 private:
+    Bomb(b2Body* body,
+         GameWorld* world,
+         const std::shared_ptr<ParticlesObject>& particles);
+    
 	b2Body* _body = nullptr;
 	cocos2d::Node* _node = nullptr;
 	GameWorld* _world = nullptr;

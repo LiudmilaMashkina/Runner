@@ -19,10 +19,10 @@ public:
 
 	virtual void update(float delta) override;
 	
-	b2Body* getBody() { return _body; }
+	virtual b2Body* getBody() override { return _body; }
     virtual b2Vec2 getPosition() override;
     virtual GameObjectType getType() const override { return GameObjectType::SimpleGameObject; }
-
+    
 private:
 	b2Body* _body = nullptr;
 	cocos2d::Node* _node = nullptr;

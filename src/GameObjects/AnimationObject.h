@@ -2,6 +2,7 @@
 
 #include "IGameObject.h"
 #include "AnimationEngine/IAnimation.h"
+#include "Utils/StrongPtr.h"
 
 class GameWorld;
 
@@ -17,12 +18,13 @@ public:
     virtual void update(float delta) override;
     virtual b2Vec2 getPosition() override;
     virtual GameObjectType getType() const override;
+    virtual b2Body* getBody() override { return nullptr; }
     
     void setPosition(const b2Vec2& pos);
     
 private:
     IAnimationPtr _animation = nullptr;
-    cocos2d::Sprite* _sprite = nullptr;
+    StrongPtr<cocos2d::Sprite> _sprite;
     GameWorld* _world = nullptr;
 };
 

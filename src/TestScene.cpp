@@ -38,7 +38,7 @@ bool TestScene::init()
     addChild(gameNode);
 
     _timeProvider = TimeProvider::create();
-    _world = std::shared_ptr<GameWorld>(new GameWorld(b2Vec2(0, -10), gameNode, _timeProvider));
+    _world = GameWorld::create(b2Vec2(0, -10), gameNode, _timeProvider);
     _generator = GameLevelGenerator::create(_world.get());
     
     b2Vec2 fieldSize = Environment::getScreenSize();

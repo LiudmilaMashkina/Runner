@@ -38,7 +38,7 @@ public:
     void setPosition(const b2Vec2 &position);
     static std::shared_ptr<ParticlesGenerator> create(const Params &params, cocos2d::Node* layerNode);
     void setPaused(bool isPaused);
-    bool isPaused();
+    bool isPaused() const;
     
 private:
     ParticlesGenerator(const Params &params, cocos2d::Node* layerNode);

@@ -33,6 +33,7 @@ public:
     virtual void setPosition(const b2Vec2 &position);
     virtual b2Vec2 getPosition() override;
     virtual GameObjectType getType() const override { return GameObjectType::Hero; }
+    virtual b2Body* getBody() override { return _data.body; }
     
     int getLifes();
     virtual void onContactBegin(std::shared_ptr<IGameObject> obj) override;

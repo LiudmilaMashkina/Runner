@@ -5,6 +5,7 @@
 #include <memory>
 #include "Particle.h"
 #include "IUpdatable.h"
+#include "Utils/MacroCreate.h"
 
 class IParticlesUpdater;
 class ISystemUpdater;
@@ -12,14 +13,14 @@ class ISystemUpdater;
 class ParticlesSystem : public IUpdatable
 {
 public:
+    CREATE_FUNC_0(ParticlesSystem);
+    
     virtual void update(float delta) override;
     
     void addParticle(const Particle &particle);
     void addParticlesUpdater(std::shared_ptr<IParticlesUpdater> pUpdater);
     void addSystemUpdater(std::shared_ptr<ISystemUpdater> sUpdater);
-    int getParticleCount() const;
-    
-    static std::shared_ptr<ParticlesSystem> create();
+    size_t getParticleCount() const;
     
 private:
     ParticlesSystem();

@@ -5,6 +5,7 @@
 #include "GameObjectComposer.h"
 #include "GameObjectFactory.h"
 #include "SimpleGameObject.h"
+#include "Bomb.h"
 #include "Utils/Environment.h"
 #include "Utils/Convert.h"
 
@@ -25,24 +26,31 @@ b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
 		const LineDef::Block& block = def.blocks[num];
 		
 		b2Vec2 leftCorner(def.startPos.x + curLength, def.startPos.y);
-		factory.createStaticStone(leftCorner, block.width, block.textureName);
-		curLength += block.width;
+		auto stone = factory.createStaticStone(leftCorner, block.width, block.textureName);
+        
+        int yesOrNo = Environment::generateIntRand(1, 5);
+        
+        if (yesOrNo == 1)
+        {
+            b2Vec2 bombPos = leftCorner;
+            bombPos.x += block.width / 2;
+            auto bomb = factory.createBomb(bombPos, 0, b2Vec2(0.5, 0.5));
+            
+            b2RevoluteJointDef jointDef;
+            auto stoneBody = stone->getBody();
+            (assert(stoneBody));
+            jointDef.bodyA = stoneBody;
+            jointDef.localAnchorA.Set(block.width * 0.5f, 0.0f);
+            auto bombBody = bomb->getBody();
+            (assert(bombBody));
+            jointDef.bodyB = bombBody;
+            jointDef.localAnchorB.Set(0.0f, 0.0f);
+            _world->getPhysics()->CreateJoint(&jointDef);
+        }
+        
+        curLength += block.width;
 	}
     
-    float leftLength = curLength;
-    int bNum = Environment::generateIntRand(1, 5);
-    float bp = Environment::generateFloatRand(0.0f, leftLength / bNum);
-    b2Vec2 bombPos = def.startPos;
-    bombPos.x += bp;
-
-    for (int i = 1; i <= bNum; ++i)
-    {
-        factory.createBomb(bombPos, 0, b2Vec2(0.5, 0.5));
-        leftLength -= bp;
-        bp = Environment::generateFloatRand(0.0f, leftLength);
-        bombPos.x += bp;
-    }
-  
     b2Vec2 exitPos = def.startPos;
     exitPos.x += curLength;
     

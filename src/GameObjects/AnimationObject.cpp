@@ -18,11 +18,11 @@ _world(world)
     assert(!frames.empty());
     _animation = std::shared_ptr<Animation>(new Animation(frames, fps, cycled));
     
-    _sprite = cocos2d::Sprite::createWithSpriteFrame(frames.at(0));
+    _sprite.reset(cocos2d::Sprite::createWithSpriteFrame(frames.at(0)));
     
-    assert(_sprite);
-    _animation->setTarget(_sprite);
-    _world->getGraphics()->addChild(_sprite); 
+    assert(_sprite.get());
+    _animation->setTarget(_sprite.get());
+    _world->getGraphics()->addChild(_sprite.get());
 }
 
 AnimationObject::~AnimationObject()

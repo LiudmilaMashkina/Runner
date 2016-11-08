@@ -13,7 +13,7 @@
 
 USING_NS_CC;
 
-ParticlesFactory::GeneratorInfo ParticlesFactory::createGameParticlesSystem(std::shared_ptr<TimeProvider> timeProvider)
+ParticlesFactory::GeneratorInfo ParticlesFactory::createGameParticlesSystem(const std::shared_ptr<TimeProvider>& timeProvider)
 {
     b2Vec2 fieldSize = Environment::getScreenSize();
     auto forceField = ForceFieldFactory::createWindUpField(timeProvider, fieldSize);
@@ -53,7 +53,7 @@ ParticlesFactory::GeneratorInfo ParticlesFactory::createGameParticlesSystem(std:
     return gInfo;
 }
 
-ParticlesFactory::GeneratorInfo ParticlesFactory::createMainMenuParticlesSystem(std::shared_ptr<TimeProvider> timeProvider)
+ParticlesFactory::GeneratorInfo ParticlesFactory::createMainMenuParticlesSystem(const std::shared_ptr<TimeProvider>& timeProvider)
 {
     b2Vec2 fieldSize = Environment::getScreenSize();
     auto forceField = ForceFieldFactory::createWindUpField(timeProvider, fieldSize);
@@ -93,7 +93,7 @@ ParticlesFactory::GeneratorInfo ParticlesFactory::createMainMenuParticlesSystem(
     return gInfo;
 }
 
-ParticlesFactory::GeneratorInfo ParticlesFactory::createBombParticles(std::shared_ptr<TimeProvider> timeProvider)
+ParticlesFactory::GeneratorInfo ParticlesFactory::createBombParticles(const std::shared_ptr<TimeProvider>& timeProvider)
 {
     auto forceField = StaticForceField::create(b2Vec2(0, 7));
     std::shared_ptr<ParticlesSystem> system = ParticlesSystem::create();
