@@ -21,10 +21,10 @@ _parentNode(layerNode)
 {
 }
 
-void ParticlesGenerator::update(float delta, ParticlesSystem &system)
+void ParticlesGenerator::update(float delta, ParticlesSystem& system)
 {
     _cooldown -= delta;
-    if (_cooldown <= 0)
+    if (_cooldown <= 0 && !_paused)
     {
         Particle particle;
         particle.sprite = Sprite::create(_params.fileName);
@@ -32,7 +32,9 @@ void ParticlesGenerator::update(float delta, ParticlesSystem &system)
         float velocityY = Environment::generateFloatRand(_params.velocityRange.min.y, _params.velocityRange.max.y);
         particle.velocity = b2Vec2(velocityX, velocityY);
         particle.mass = Environment::generateFloatRand(_params.massRange.min, _params.massRange.max);
-        particle.ttl = 15.0f;
+        float ttl = Environment::generateFloatRand(_params.ttlRange.min, _params.ttlRange.max);
+        particle.ttl = ttl;
+        particle.startTtl = ttl;
         //particle.sprite->setColor(cocos2d::Color3B::YELLOW);
         b2Vec2 partPos = _params.position;
         partPos.x += Environment::generateFloatRand(_params.generationRange.min.x, _params.generationRange.max.x);
@@ -49,4 +51,14 @@ void ParticlesGenerator::update(float delta, ParticlesSystem &system)
 void ParticlesGenerator::setPosition(const b2Vec2 &position)
 {
     _params.position = position;
+}
+
+void ParticlesGenerator::setPaused(bool paused)
+{
+    _paused = paused;
+}
+
+bool ParticlesGenerator::isPaused() const
+{
+    return _paused;
 }

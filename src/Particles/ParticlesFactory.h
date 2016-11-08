@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <2d/CCNode.h>
+#include <Box2D/Common/b2Math.h>
 
 class ParticlesSystem;
 class TimeProvider;
@@ -17,6 +18,7 @@ public:
         std::shared_ptr<ParticlesGenerator> particlesGenerator;
     };
     
-    static GeneratorInfo createGameParticlesSystem(std::shared_ptr<TimeProvider> timeProvider);
-    static GeneratorInfo createMainMenuParticlesSystem(std::shared_ptr<TimeProvider> timeProvider);
+    static GeneratorInfo createGameParticlesSystem(const std::shared_ptr<TimeProvider>& timeProvider);
+    static GeneratorInfo createMainMenuParticlesSystem(const std::shared_ptr<TimeProvider>& timeProvider);
+    static GeneratorInfo createBombParticles(const std::shared_ptr<TimeProvider>& timeProvider);
 };

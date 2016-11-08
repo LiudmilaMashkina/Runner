@@ -9,4 +9,5 @@ struct Particle
     b2Vec2 velocity;
     float mass = 0;
     float ttl = 0;
+    float startTtl = 0;
 };

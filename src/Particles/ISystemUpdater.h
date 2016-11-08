@@ -6,6 +6,6 @@ class ISystemUpdater
 {
 public:
 	virtual ~ISystemUpdater() {}
-	virtual void update(float delta, ParticlesSystem &system) = 0;
+	virtual void update(float delta, ParticlesSystem& system) = 0;
 };
 

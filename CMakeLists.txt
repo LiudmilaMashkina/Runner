@@ -45,6 +45,8 @@ set(sources
 	src/GameObjects/AnimationObject.h
 	src/GameObjects/Bomb.cpp
 	src/GameObjects/Bomb.h
+	src/GameObjects/ParticlesObject.cpp
+	src/GameObjects/ParticlesObject.h
 	src/GameObjects/GameObjectType.h
 	src/GameObjects/GameLevelGenerator.cpp
 	src/GameObjects/GameLevelGenerator.h
@@ -141,6 +143,7 @@ set(sources
 	src/Utils/MacroCreate.h
 	src/Utils/TimeProvider.cpp
 	src/Utils/TimeProvider.h
+	src/Utils/StrongPtr.h
 )
 
 set(includes

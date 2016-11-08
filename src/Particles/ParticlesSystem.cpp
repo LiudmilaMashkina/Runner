@@ -6,6 +6,11 @@
 #include "ISystemUpdater.h"
 #include "Particle.h"
 
+ParticlesSystem::ParticlesSystem()
+{
+    
+}
+
 void ParticlesSystem::addParticlesUpdater(std::shared_ptr<IParticlesUpdater> pUpdater)
 {
     _pUpdaters.push_back(pUpdater);
@@ -14,6 +19,11 @@ void ParticlesSystem::addParticlesUpdater(std::shared_ptr<IParticlesUpdater> pUp
 void ParticlesSystem::addSystemUpdater(std::shared_ptr<ISystemUpdater> sUpdater)
 {
     _sUpdaters.push_back(sUpdater);
+}
+
+size_t ParticlesSystem::getParticleCount() const
+{
+    return _particles.size();
 }
 
 void ParticlesSystem::addParticle(const Particle &particle)

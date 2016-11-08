@@ -26,6 +26,8 @@
 #include "UpdaterFunc.h"
 #include "GameObjects/GameObjectFactory.h"
 #include "GameObjects/AnimationObject.h"
+#include "GameObjects/Bomb.h"
+
 
 USING_NS_CC;
 
@@ -42,7 +44,10 @@ bool GameScene::init()
     _gameNode = Node::create();
     addChild(_gameNode);
     
-    _world = std::shared_ptr<GameWorld>(new GameWorld(b2Vec2(0, -10), _gameNode));
+    _timeProvider = TimeProvider::create();
+    addUpdatable(_timeProvider);
+    
+    _world = GameWorld::create(b2Vec2(0, -10), _gameNode, _timeProvider);
     addUpdatable(_world);
     
     _levelGenerator = GameLevelGenerator::create(_world.get());
@@ -53,9 +58,6 @@ bool GameScene::init()
     _hero = Hero::create(_levelGenerator.get(), _gameNode, _world.get());
     _hero->setPosition({10, 10});
     _world->addObject(_hero);
-    
-    _timeProvider = TimeProvider::create();
-    addUpdatable(_timeProvider);
     
     auto camera = _camera;
     auto timeProvider = _timeProvider;
@@ -93,6 +95,8 @@ bool GameScene::init()
         gPos = Convert::toMeters(tmpPos);
         particlesSystem.particlesGenerator->setPosition(gPos);
     };
+
+
     addUpdatable(UpdaterFunc::create(moveParticlesGenerator));
     
     auto levelGenerator = _levelGenerator;
@@ -103,7 +107,7 @@ bool GameScene::init()
         levelGenerator->generateUntil(camX + winSizeX * 0.75f);
     };
     addUpdatable(UpdaterFunc::create(sync));
-    
+ 
     
     GameCamera::LayerInfo backgroundLayer;
     backgroundLayer.layer = _background;
@@ -118,7 +122,7 @@ bool GameScene::init()
     particlesLayer.zoomFactor = 0.5f;
     particlesLayer.clamp = false;
     _camera->addLayer(particlesLayer);
-    
+
     GameCamera::LayerInfo gameLayer;
     gameLayer.layer = _gameNode;
     gameLayer.speedFactor = 1.0f;
@@ -128,10 +132,9 @@ bool GameScene::init()
     
     _hud = HeadUpDisplay::create(this);
     
-    
     auto physDebugDraw = B2DebugDrawLayer::create(_world->getPhysics().get(), Environment::getPTMratio());
 	_gameNode->addChild(physDebugDraw, 100);
-    
+ 
     return true;
 }
 

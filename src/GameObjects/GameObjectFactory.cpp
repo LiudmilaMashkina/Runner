@@ -7,7 +7,9 @@
 #include "SimpleGameObject.h"
 #include "Bomb.h"
 #include "AnimationObject.h"
+#include "ParticlesObject.h"
 #include "Utils/Convert.h"
+#include "Particles/ParticlesFactory.h"
 
 USING_NS_CC;
 
@@ -79,7 +81,9 @@ std::shared_ptr<Bomb> GameObjectFactory::createBomb(const b2Vec2 &pos, float ang
     physShape.SetAsBox(size.x / 2, size.y / 2);
     b2Body* body = createSensor(b2BodyType::b2_staticBody, &physShape, pos, angle);
     
-    std::shared_ptr<Bomb> obj = std::shared_ptr<Bomb>(new Bomb(body, _world));
+    auto particles = createBombParticles(pos);
+    
+    std::shared_ptr<Bomb> obj = Bomb::create(body, _world, particles);
     _world->addObject(obj);
     
     IGameObject* ibomb = obj.get();
@@ -108,6 +112,17 @@ std::shared_ptr<AnimationObject> GameObjectFactory::createBombExplosion(const b2
     _world->addObject(animation);
     
     return animation;
+}
+
+std::shared_ptr<ParticlesObject> GameObjectFactory::createBombParticles(const b2Vec2& pos)
+{
+    auto system = ParticlesFactory::createBombParticles(_world->getTimeProvider());
+    std::shared_ptr<ParticlesObject> obj = ParticlesObject::create(system, _world) ;
+    _world->addObject(obj);
+    _world->getGraphics()->addChild(system.particlesNode);
+    system.particlesNode->setPosition(Convert::toPixels(pos));
+    
+    return obj;
 }
 
 b2Body* GameObjectFactory::createBody(b2BodyType type, b2Shape* shape, const b2Vec2& pos, float angle)

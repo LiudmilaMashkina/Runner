@@ -10,6 +10,7 @@
 class SimpleGameObject;
 class Bomb;
 class AnimationObject;
+class ParticlesObject;
 
 class GameObjectFactory 
 {
@@ -20,12 +21,12 @@ public:
 	std::shared_ptr<IGameObject> createCircle(const b2Vec2& pos, float angle, float radius, b2BodyType type, const std::string& fileName);
     std::shared_ptr<Bomb> createBomb(const b2Vec2& pos, float angle, const b2Vec2& size);
     std::shared_ptr<AnimationObject> createBombExplosion(const b2Vec2& pos);
-
 private:
 	b2Body* createBody(b2BodyType type, b2Shape* shape, const b2Vec2& pos, float angle);
     b2Body* createSensor(b2BodyType type, b2Shape* shape, const b2Vec2& pos, float angle);
 	cocos2d::Sprite* createSprite(const std::string& textureName, const b2Vec2& bodySize);
 	cocos2d::Sprite* createSprite(const std::string& textureName);
+    std::shared_ptr<ParticlesObject> createBombParticles(const b2Vec2& pos);
 
 	static void scale(const b2Vec2& size, cocos2d::Sprite* sprite);
 

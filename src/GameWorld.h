@@ -8,14 +8,19 @@
 
 #include "IUpdatable.h"
 #include "ContactListener.h"
+#include "Utils/MacroCreate.h"
 
 class IGameObject;
+class TimeProvider;
 
 class GameWorld : public IUpdatable
 {
 public:
-	GameWorld(const b2Vec2& gravity, cocos2d::Node* rootNode);
-	~GameWorld();
+    CREATE_FUNC_3(GameWorld,
+                  const b2Vec2&, gravity, cocos2d::Node*,
+                  rootNode, const std::shared_ptr<TimeProvider>&,
+                  timeProvider);
+    ~GameWorld();
 
 	void addObject(const std::shared_ptr<IGameObject>& object);
 
@@ -24,9 +29,14 @@ public:
     void removeObject(const std::function<bool (const std::shared_ptr<IGameObject>&)> &predicate);
     void removeObjectLater(IGameObject* objToDelete);
     void addContact(IGameObject* a, IGameObject* b);
+    
 	virtual void update(float delta) override;
 
+    const std::shared_ptr<TimeProvider>& getTimeProvider() { return _timeProvider; }
+    
 private:
+    GameWorld(const b2Vec2& gravity, cocos2d::Node* rootNode, const std::shared_ptr<TimeProvider>& timeProvider);
+    
     std::shared_ptr<b2World> _physics = nullptr;
 	cocos2d::Node* _graphics = nullptr;
 	std::vector<std::shared_ptr<IGameObject>> _objects;
@@ -34,4 +44,6 @@ private:
     std::unordered_map<IGameObject*, std::shared_ptr<IGameObject>> _objectsMap;
     std::vector<std::shared_ptr<IGameObject>> _objectsToRemove;
     ContactListener _contactListener;
+    std::shared_ptr<TimeProvider> _timeProvider;
+
 };

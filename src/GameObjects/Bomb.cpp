@@ -6,12 +6,16 @@
 #include "GameWorld.h"
 #include "Utils/Convert.h"
 #include "GameObjectFactory.h"
+#include "ParticlesObject.h"
 
 USING_NS_CC;
 
-Bomb::Bomb(b2Body* body, GameWorld* world) :
+Bomb::Bomb(b2Body* body,
+           GameWorld* world,
+           const std::shared_ptr<ParticlesObject>& particles) :
 _body(body),
-_world(world)
+_world(world),
+_particles(particles)
 {
     _node = Sprite::create("resources/bomb_0.png");
     _world->getGraphics()->addChild(_node);
@@ -32,6 +36,7 @@ void Bomb::update(float delta)
 
 	_node->setPosition(Convert::toPixels(bodyPos));
 	_node->setRotation(Convert::toDegrees(-bodyAngle));
+    
 }
 
 b2Vec2 Bomb::getPosition()
@@ -44,5 +49,6 @@ void Bomb::onContactBegin(std::shared_ptr<IGameObject> obj)
     GameObjectFactory factory(_world);
     factory.createBombExplosion(getPosition());
     
+    _particles->setPaused(true);
     _world->removeObjectLater(this);
 }

@@ -42,8 +42,7 @@ b2Vec2 GameLevelGenerator::generateComposition(CompositionId compositionId, cons
         case CompositionId::Bridge :
             return generateBridge(startPos);
         //case CompositionId::IceLine :
-          //  generateIceLine(startPos);
-            //break;
+            //return generateIceLine(startPos);
         case CompositionId::BlueStoneLine :
             return generateBlueStoneLine(startPos);
         /*
@@ -67,7 +66,7 @@ b2Vec2 GameLevelGenerator::generateBridge(const b2Vec2& startPos)
     //bridge.startPos.Set(winSize.x / 5, winSize.y * 0.75f);
     bridge.startPos.Set(startPos.x, startPos.y);
     bridge.direction.Set(1.0f, 0);
-    bridge.linkCount = 5;
+    bridge.linkCount = 8;
     bridge.linkSize.Set(0.6f, 0.6f);
     bridge.overlap = 0.14f;
     

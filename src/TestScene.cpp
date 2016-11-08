@@ -25,6 +25,7 @@ USING_NS_CC;
 
 bool TestScene::init()
 {
+    
 	if (!Scene::init())
 		return false;
 
@@ -36,14 +37,14 @@ bool TestScene::init()
     Node* gameNode = Node::create();
     addChild(gameNode);
 
-	_world = std::shared_ptr<GameWorld>(new GameWorld(b2Vec2(0, -10), gameNode));
-    _generator = GameLevelGenerator::create(_world.get());
     _timeProvider = TimeProvider::create();
+    _world = GameWorld::create(b2Vec2(0, -10), gameNode, _timeProvider);
+    _generator = GameLevelGenerator::create(_world.get());
     
     b2Vec2 fieldSize = Environment::getScreenSize();
     auto forceField = ForceFieldFactory::createWindUpField(_timeProvider, fieldSize);
-    auto system = new ParticlesSystem();
-    _system = system;
+    //auto system = new ParticlesSystem();
+    //_system = system;
     
     ParticlesGenerator::Params gParams;
     gParams.fileName = "resources/particle_16x16.png";
