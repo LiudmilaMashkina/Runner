@@ -22,16 +22,15 @@ public:
                   timeProvider);
     ~GameWorld();
 
-	void addObject(const std::shared_ptr<IGameObject>& object);
+    virtual void update(float delta) override;
 
+	void addObject(const std::shared_ptr<IGameObject>& object);
 	std::shared_ptr<b2World> getPhysics() { return _physics; }
 	cocos2d::Node* getGraphics() { return _graphics; }
     void removeObject(const std::function<bool (const std::shared_ptr<IGameObject>&)> &predicate);
     void removeObjectLater(IGameObject* objToDelete);
     void addContact(IGameObject* a, IGameObject* b);
-    
-	virtual void update(float delta) override;
-
+    void forEach(const std::function<void(std::shared_ptr<IGameObject>)>& func);
     const std::shared_ptr<TimeProvider>& getTimeProvider() { return _timeProvider; }
     
 private:

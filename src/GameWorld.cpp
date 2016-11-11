@@ -59,6 +59,12 @@ void GameWorld::addContact(IGameObject *a, IGameObject *b)
     _contacts.push_back(contact);
 }
 
+void GameWorld::forEach(const std::function<void(std::shared_ptr<IGameObject>)> &func)
+{
+    for (auto& object : _objects)
+        func(object);
+}
+
 void GameWorld::update(float delta)
 {
 	int32 velocityIterations = 6;
@@ -88,6 +94,7 @@ void GameWorld::update(float delta)
     {
         auto it = std::find(_objects.begin(), _objects.end(), obj);
         assert(it != _objects.end());
+        assert(it->use_count() == 3);
         _objects.erase(it);
         _objectsMap.erase(obj.get());
     }

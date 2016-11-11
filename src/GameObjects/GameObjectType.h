@@ -6,5 +6,6 @@ enum class GameObjectType
     Bomb,
     Hero,
     Animation,
-    PariclesObject
+    PariclesObject,
+    Timer
 };

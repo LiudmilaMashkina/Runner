@@ -24,6 +24,10 @@ set(sources
 	src/B2DebugDraw/VisibleRect.h
 	src/ContactListener.cpp
 	src/ContactListener.h
+	src/DropController.cpp
+	src/DropController.h
+	src/DelayedDrop.cpp
+	src/DelayedDrop.h
 	src/ForceField/Clamper.cpp
 	src/ForceField/Clamper.h
 	src/ForceField/FieldMixer.cpp

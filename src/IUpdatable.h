@@ -6,5 +6,4 @@ public:
     virtual ~IUpdatable() {}
     
     virtual void update(float delta) = 0;
-
 };

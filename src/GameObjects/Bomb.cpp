@@ -36,7 +36,6 @@ void Bomb::update(float delta)
 
 	_node->setPosition(Convert::toPixels(bodyPos));
 	_node->setRotation(Convert::toDegrees(-bodyAngle));
-    
 }
 
 b2Vec2 Bomb::getPosition()
@@ -46,6 +45,9 @@ b2Vec2 Bomb::getPosition()
 
 void Bomb::onContactBegin(std::shared_ptr<IGameObject> obj)
 {
+    if (obj->getType() != GameObjectType::Hero)
+        return;
+    
     GameObjectFactory factory(_world);
     factory.createBombExplosion(getPosition());
     

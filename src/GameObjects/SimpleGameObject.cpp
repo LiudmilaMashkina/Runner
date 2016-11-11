@@ -35,3 +35,8 @@ b2Vec2 SimpleGameObject::getPosition()
 {
     return Convert::toMeters(_node->getPosition());
 }
+
+void SimpleGameObject::drop()
+{
+    _body->SetType(b2BodyType::b2_dynamicBody);
+}
