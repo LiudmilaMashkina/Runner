@@ -130,6 +130,7 @@ bool GameScene::init()
     _camera->addLayer(gameLayer);
     
     _hud = HeadUpDisplay::create(this);
+    
     _dropController = DropController::create(_world.get());
     addUpdatable(_dropController);
     
@@ -143,7 +144,7 @@ void GameScene::update(float delta)
 {
     GenericScene::update(delta);
     
-    _dropController->setDropPoint(_camera->getPosition().x + 5);
+    _dropController->setDropPoint(_camera->getPosition().x + 8);
     
     auto shouldRemove = [&](const std::shared_ptr<IGameObject>& obj)
     {
