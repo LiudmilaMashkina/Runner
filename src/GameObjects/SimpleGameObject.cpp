@@ -39,4 +39,6 @@ b2Vec2 SimpleGameObject::getPosition()
 void SimpleGameObject::drop()
 {
     _body->SetType(b2BodyType::b2_dynamicBody);
+    _body->SetLinearDamping(0.1f);
+    _body->SetAngularDamping(0.1f);
 }

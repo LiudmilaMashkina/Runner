@@ -26,11 +26,15 @@ public:
     virtual GameObjectType getType() const override { return GameObjectType::Bomb; }
     virtual void onContactBegin(std::shared_ptr<IGameObject> obj) override;
     
+    virtual void drop() override;
+    virtual bool isDroppable() override { return true; }
+    
 private:
     Bomb(b2Body* body,
          GameWorld* world,
          const std::shared_ptr<ParticlesObject>& particles);
-    
+    void explode(const b2Vec2& pos);
+
 	b2Body* _body = nullptr;
 	cocos2d::Node* _node = nullptr;
 	GameWorld* _world = nullptr;

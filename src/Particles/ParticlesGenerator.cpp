@@ -53,6 +53,11 @@ void ParticlesGenerator::setPosition(const b2Vec2 &position)
     _params.position = position;
 }
 
+b2Vec2 ParticlesGenerator::getPosition() const
+{
+    return _params.position;
+}
+
 void ParticlesGenerator::setPaused(bool paused)
 {
     _paused = paused;

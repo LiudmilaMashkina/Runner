@@ -10,11 +10,12 @@
 ParticlesObject::ParticlesObject(const ParticlesFactory::GeneratorInfo& particleSystem, GameWorld* world) :
 _particleSystem(particleSystem),
 _world(world)
-{}
+{
+    assert(_particleSystem.particlesNode == _world->getGraphics());
+}
 
 ParticlesObject::~ParticlesObject()
 {
-    _particleSystem.particlesNode->removeFromParentAndCleanup(true);
 }
 
 void ParticlesObject::update(float delta)
@@ -33,7 +34,7 @@ void ParticlesObject::update(float delta)
 
 b2Vec2 ParticlesObject::getPosition()
 {
-    return Convert::toMeters(_particleSystem.particlesNode->getPosition());
+    return _particleSystem.particlesGenerator->getPosition();
 }
 
 GameObjectType ParticlesObject::getType() const
@@ -44,4 +45,9 @@ GameObjectType ParticlesObject::getType() const
 void ParticlesObject::setPaused(bool paused)
 {
     _particleSystem.particlesGenerator->setPaused(paused);
+}
+
+void ParticlesObject::setPosition(const b2Vec2 &pos)
+{
+    _particleSystem.particlesGenerator->setPosition(pos);
 }
