@@ -18,4 +18,6 @@ public:
     virtual GameObjectType getType() const = 0;
     virtual void onContactBegin(std::shared_ptr<IGameObject> obj) {}
     virtual b2Body* getBody() = 0;
+    virtual void drop() {}
+    virtual bool isDroppable() { return false; }
 };

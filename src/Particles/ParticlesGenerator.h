@@ -36,6 +36,7 @@ public:
     
     void update(float delta, ParticlesSystem& system) override;
     void setPosition(const b2Vec2 &position);
+    b2Vec2 getPosition() const;
     static std::shared_ptr<ParticlesGenerator> create(const Params &params, cocos2d::Node* layerNode);
     void setPaused(bool isPaused);
     bool isPaused() const;

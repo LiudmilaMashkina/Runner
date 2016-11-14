@@ -27,6 +27,7 @@
 #include "GameObjects/GameObjectFactory.h"
 #include "GameObjects/AnimationObject.h"
 #include "GameObjects/Bomb.h"
+#include "DropController.h"
 
 
 USING_NS_CC;
@@ -37,7 +38,7 @@ bool GameScene::init()
 		return false;
 
     _winSize = Environment::getScreenSize();
-    
+
     _background = createBackground("resources/background_square_256x256.png");
     addChild(_background);
 
@@ -52,13 +53,12 @@ bool GameScene::init()
     
     _levelGenerator = GameLevelGenerator::create(_world.get());
     _levelGenerator->generateUntil(Environment::getScreenSize().x * 0.75f);
-    
-    _camera = GameCamera::create();
+     _camera = GameCamera::create();
     
     _hero = Hero::create(_levelGenerator.get(), _gameNode, _world.get());
     _hero->setPosition({10, 10});
     _world->addObject(_hero);
-    
+
     auto camera = _camera;
     auto timeProvider = _timeProvider;
     auto hero = _hero;
@@ -96,7 +96,6 @@ bool GameScene::init()
         particlesSystem.particlesGenerator->setPosition(gPos);
     };
 
-
     addUpdatable(UpdaterFunc::create(moveParticlesGenerator));
     
     auto levelGenerator = _levelGenerator;
@@ -107,7 +106,7 @@ bool GameScene::init()
         levelGenerator->generateUntil(camX + winSizeX * 0.75f);
     };
     addUpdatable(UpdaterFunc::create(sync));
- 
+
     
     GameCamera::LayerInfo backgroundLayer;
     backgroundLayer.layer = _background;
@@ -132,6 +131,9 @@ bool GameScene::init()
     
     _hud = HeadUpDisplay::create(this);
     
+    _dropController = DropController::create(_world.get());
+    addUpdatable(_dropController);
+    
     auto physDebugDraw = B2DebugDrawLayer::create(_world->getPhysics().get(), Environment::getPTMratio());
 	_gameNode->addChild(physDebugDraw, 100);
  
@@ -142,12 +144,14 @@ void GameScene::update(float delta)
 {
     GenericScene::update(delta);
     
+    _dropController->setDropPoint(_camera->getPosition().x + 8);
+    
     auto shouldRemove = [&](const std::shared_ptr<IGameObject>& obj)
     {
         b2Vec2 camPos = _camera->getPosition();
         b2Vec2 objPos = obj->getPosition();
         
-        if (objPos.x < camPos.x + 5)
+        if (objPos.x < camPos.x - 4)
             return true;
         
         return false;

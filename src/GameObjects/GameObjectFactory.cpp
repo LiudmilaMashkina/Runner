@@ -34,7 +34,7 @@ std::shared_ptr<SimpleGameObject> GameObjectFactory::createBox(const b2Vec2& pos
 	return obj;
 }
 
-std::shared_ptr<IGameObject> GameObjectFactory::createStaticStone(const b2Vec2 & topLeftCornerPos, float width, const std::string & fileName)
+std::shared_ptr<IGameObject> GameObjectFactory::createStaticStone(const b2Vec2 & topLeftCornerPos, float width, const std::string & fileName, float* outHeight)
 {
 	Sprite* sprite = createSprite(fileName);
 
@@ -55,6 +55,9 @@ std::shared_ptr<IGameObject> GameObjectFactory::createStaticStone(const b2Vec2 &
 
     IGameObject* iobj = obj.get();
     body->SetUserData(iobj);
+    
+    if (outHeight)
+        *outHeight = bodySize.y;
     
 	return obj;
 }
@@ -79,10 +82,10 @@ std::shared_ptr<Bomb> GameObjectFactory::createBomb(const b2Vec2 &pos, float ang
 {
     b2PolygonShape physShape;
     physShape.SetAsBox(size.x / 2, size.y / 2);
-    b2Body* body = createSensor(b2BodyType::b2_staticBody, &physShape, pos, angle);
+    b2Body* body = createSensor(b2BodyType::b2_dynamicBody, &physShape, pos, angle);
     
     auto particles = createBombParticles(pos);
-    
+  
     std::shared_ptr<Bomb> obj = Bomb::create(body, _world, particles);
     _world->addObject(obj);
     
@@ -116,12 +119,10 @@ std::shared_ptr<AnimationObject> GameObjectFactory::createBombExplosion(const b2
 
 std::shared_ptr<ParticlesObject> GameObjectFactory::createBombParticles(const b2Vec2& pos)
 {
-    auto system = ParticlesFactory::createBombParticles(_world->getTimeProvider());
+    auto system = ParticlesFactory::createBombParticles(_world->getTimeProvider(), _world->getGraphics());
     std::shared_ptr<ParticlesObject> obj = ParticlesObject::create(system, _world) ;
     _world->addObject(obj);
-    _world->getGraphics()->addChild(system.particlesNode);
-    system.particlesNode->setPosition(Convert::toPixels(pos));
-    
+
     return obj;
 }
 

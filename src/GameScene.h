@@ -20,6 +20,7 @@ class ParticlesLayer;
 class ParticlesSystem;
 class Hero;
 class HeadUpDisplay;
+class DropController;
 
 class GameScene : public GenericScene
 {
@@ -43,7 +44,7 @@ private:
     std::shared_ptr<HeadUpDisplay> _hud;
     ParticlesFactory::GeneratorInfo _particlesSystem;
     cocos2d::Sprite* _background = nullptr;
-    
+    std::shared_ptr<DropController> _dropController;
     
     b2Vec2 _winSize = {0.0f, 0.0f};
 };

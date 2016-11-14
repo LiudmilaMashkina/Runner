@@ -93,7 +93,7 @@ ParticlesFactory::GeneratorInfo ParticlesFactory::createMainMenuParticlesSystem(
     return gInfo;
 }
 
-ParticlesFactory::GeneratorInfo ParticlesFactory::createBombParticles(const std::shared_ptr<TimeProvider>& timeProvider)
+ParticlesFactory::GeneratorInfo ParticlesFactory::createBombParticles(const std::shared_ptr<TimeProvider>& timeProvider, Node* partNode)
 {
     auto forceField = StaticForceField::create(b2Vec2(0, 7));
     std::shared_ptr<ParticlesSystem> system = ParticlesSystem::create();
@@ -108,7 +108,7 @@ ParticlesFactory::GeneratorInfo ParticlesFactory::createBombParticles(const std:
     params.ttlRange.set(0.5, 1.0);
     
     ParticlesFactory::GeneratorInfo info;
-    info.particlesNode = Node::create();
+    info.particlesNode = partNode;
     
     auto generator = ParticlesGenerator::create(params, info.particlesNode);
     system->addSystemUpdater(generator);

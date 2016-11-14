@@ -22,6 +22,8 @@ public:
 	virtual b2Body* getBody() override { return _body; }
     virtual b2Vec2 getPosition() override;
     virtual GameObjectType getType() const override { return GameObjectType::SimpleGameObject; }
+    virtual void drop() override;
+    virtual bool isDroppable() override { return true; }
     
 private:
 	b2Body* _body = nullptr;

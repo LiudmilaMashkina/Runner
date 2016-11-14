@@ -22,6 +22,7 @@ public:
     virtual b2Body* getBody() override { return nullptr; }
     
     void setPaused(bool paused);
+    void setPosition(const b2Vec2& pos);
     
 private:
     ParticlesObject(const ParticlesFactory::GeneratorInfo& particleSystem,

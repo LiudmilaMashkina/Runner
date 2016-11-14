@@ -26,7 +26,9 @@ b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
 		const LineDef::Block& block = def.blocks[num];
 		
 		b2Vec2 leftCorner(def.startPos.x + curLength, def.startPos.y);
-		auto stone = factory.createStaticStone(leftCorner, block.width, block.textureName);
+        
+        float height = 0;
+		auto stone = factory.createStaticStone(leftCorner, block.width, block.textureName, &height);
         
         int yesOrNo = Environment::generateIntRand(1, 5);
         
@@ -36,11 +38,11 @@ b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
             bombPos.x += block.width / 2;
             auto bomb = factory.createBomb(bombPos, 0, b2Vec2(0.5, 0.5));
             
-            b2RevoluteJointDef jointDef;
+            b2WeldJointDef jointDef;
             auto stoneBody = stone->getBody();
             (assert(stoneBody));
             jointDef.bodyA = stoneBody;
-            jointDef.localAnchorA.Set(block.width * 0.5f, 0.0f);
+            jointDef.localAnchorA.Set(0.0f, height * 0.5f);
             auto bombBody = bomb->getBody();
             (assert(bombBody));
             jointDef.bodyB = bombBody;
