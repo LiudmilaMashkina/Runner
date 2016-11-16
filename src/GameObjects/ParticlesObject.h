@@ -24,12 +24,15 @@ public:
     void setPaused(bool paused);
     void setPosition(const b2Vec2& pos);
     
+    void shouldBeRemovedOnZeroParticles(bool removeOnZeroParticles) { _removeOnZeroParticles = removeOnZeroParticles; }
+    
 private:
     ParticlesObject(const ParticlesFactory::GeneratorInfo& particleSystem,
                     GameWorld* world);
     
     ParticlesFactory::GeneratorInfo _particleSystem;
     GameWorld* _world = nullptr;
+    bool _removeOnZeroParticles = false;
 };
 
  

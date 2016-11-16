@@ -6,6 +6,7 @@
 #include "IGameObject.h"
 #include "SimpleGameObject.h"
 #include "Bomb.h"
+#include "Grass.h"
 #include "AnimationObject.h"
 #include "ParticlesObject.h"
 #include "Utils/Convert.h"
@@ -85,7 +86,7 @@ std::shared_ptr<Bomb> GameObjectFactory::createBomb(const b2Vec2 &pos, float ang
     b2Body* body = createSensor(b2BodyType::b2_dynamicBody, &physShape, pos, angle);
     
     auto particles = createBombParticles(pos);
-  
+    
     std::shared_ptr<Bomb> obj = Bomb::create(body, _world, particles);
     _world->addObject(obj);
     
@@ -94,6 +95,27 @@ std::shared_ptr<Bomb> GameObjectFactory::createBomb(const b2Vec2 &pos, float ang
     
     return obj;
 }
+
+std::shared_ptr<Grass> GameObjectFactory::createGrass(const b2Vec2 &pos, float angle, const b2Vec2 &size)
+{
+    b2PolygonShape physShape;
+    physShape.SetAsBox(size.x / 2, size.y / 2);
+    
+    b2Body* body = createSensor(b2BodyType::b2_dynamicBody, &physShape, pos, angle);
+    auto sprite = createSprite("resources/grass_1.png", size);
+    auto particles = createGrassParticles(pos, size);
+    
+    std::shared_ptr<Grass> obj = Grass::create(body, _world, sprite, particles);
+    _world->addObject(obj);
+    
+    particles->setPaused(true);
+
+    IGameObject* igrass = obj.get();
+    body->SetUserData(igrass);
+    
+    return obj;
+}
+
 
 std::shared_ptr<AnimationObject> GameObjectFactory::createBombExplosion(const b2Vec2& pos)
 {
@@ -123,6 +145,15 @@ std::shared_ptr<ParticlesObject> GameObjectFactory::createBombParticles(const b2
     std::shared_ptr<ParticlesObject> obj = ParticlesObject::create(system, _world) ;
     _world->addObject(obj);
 
+    return obj;
+}
+
+std::shared_ptr<ParticlesObject> GameObjectFactory::createGrassParticles(const b2Vec2 &pos, const b2Vec2& diapason)
+{
+    auto system = ParticlesFactory::createGrassParticles(_world->getTimeProvider(), _world->getGraphics(), diapason);
+    std::shared_ptr<ParticlesObject> obj = ParticlesObject::create(system, _world);
+    _world->addObject(obj);
+    
     return obj;
 }
 

@@ -20,7 +20,9 @@ ParticlesObject::~ParticlesObject()
 
 void ParticlesObject::update(float delta)
 {
-    if (_particleSystem.particlesGenerator->isPaused())
+    _particleSystem.particlesSystem->update(delta);
+    
+    if (_removeOnZeroParticles)
     {
         size_t count = _particleSystem.particlesSystem->getParticleCount();
         if (count == 0)
@@ -29,7 +31,6 @@ void ParticlesObject::update(float delta)
             return;
         }
     }
-    _particleSystem.particlesSystem->update(delta);
 }
 
 b2Vec2 ParticlesObject::getPosition()

@@ -121,3 +121,32 @@ ParticlesFactory::GeneratorInfo ParticlesFactory::createBombParticles(const std:
     
     return info;
 }
+
+ParticlesFactory::GeneratorInfo ParticlesFactory::createGrassParticles(const std::shared_ptr<TimeProvider> &timeProvider, cocos2d::Node *partNode, const b2Vec2& diapason)
+{
+    auto forceField = StaticForceField::create(b2Vec2(0, 5));
+    std::shared_ptr<ParticlesSystem> system = ParticlesSystem::create();
+    
+    ParticlesGenerator::Params params;
+    params.fileName = "resources/grass_particle.png";
+    params.rate = 20;
+    params.velocityRange.set(b2Vec2(0, 0), b2Vec2(0, 0));
+    params.massRange.set(0.5, 1);
+    params.generationRange.set(b2Vec2(-diapason.x / 2, 0.0f), b2Vec2(diapason.x / 2, 0.0f));
+    params.field = forceField;
+    params.ttlRange.set(0.5, 1.0);
+    
+    ParticlesFactory::GeneratorInfo info;
+    info.particlesNode = partNode;
+    
+    auto generator = ParticlesGenerator::create(params, info.particlesNode);
+    system->addSystemUpdater(generator);
+    
+    auto partMover = ParticlesMover::create(forceField, 0);
+    system->addParticlesUpdater(partMover);
+    
+    info.particlesSystem = system;
+    info.particlesGenerator = generator;
+    
+    return info;
+}

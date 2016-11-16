@@ -6,6 +6,7 @@
 #include "GameObjectFactory.h"
 #include "SimpleGameObject.h"
 #include "Bomb.h"
+#include "Grass.h"
 #include "Utils/Environment.h"
 #include "Utils/Convert.h"
 
@@ -47,6 +48,27 @@ b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
             (assert(bombBody));
             jointDef.bodyB = bombBody;
             jointDef.localAnchorB.Set(0.0f, 0.0f);
+            _world->getPhysics()->CreateJoint(&jointDef);
+            
+        }
+        if (yesOrNo == 2)
+        {
+            b2Vec2 grassSize = {block.width, 0.5};
+            b2Vec2 grassPos = leftCorner;
+            grassPos.x += block.width / 2;
+            grassPos.y += grassSize.y / 2;
+            auto grass = factory.createGrass(grassPos, 0, grassSize);
+            
+            b2WeldJointDef jointDef;
+            auto stoneBody = stone->getBody();
+            (assert(stoneBody));
+            jointDef.bodyA = stoneBody;
+            jointDef.localAnchorA.Set(0.0f, height * 0.5f);
+            auto grassBody = grass->getBody();
+            (assert(grassBody));
+            jointDef.bodyB = grassBody;
+            
+            jointDef.localAnchorB.Set(0.0f, -0.25f);
             _world->getPhysics()->CreateJoint(&jointDef);
         }
         

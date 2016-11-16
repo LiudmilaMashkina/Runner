@@ -21,4 +21,5 @@ public:
     static GeneratorInfo createGameParticlesSystem(const std::shared_ptr<TimeProvider>& timeProvider);
     static GeneratorInfo createMainMenuParticlesSystem(const std::shared_ptr<TimeProvider>& timeProvider);
     static GeneratorInfo createBombParticles(const std::shared_ptr<TimeProvider>& timeProvider, cocos2d::Node* partNode);
+    static GeneratorInfo createGrassParticles(const std::shared_ptr<TimeProvider>& timeProvider, cocos2d::Node* partNode, const b2Vec2& diapason);
 };

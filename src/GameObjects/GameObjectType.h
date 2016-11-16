@@ -7,5 +7,5 @@ enum class GameObjectType
     Hero,
     Animation,
     PariclesObject,
-    Timer
+    Grass
 };
