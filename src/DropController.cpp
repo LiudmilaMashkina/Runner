@@ -28,7 +28,13 @@ void DropController::update(float delta)
             if (object->getPosition().x >= _lastDropPoint &&
                 object->getPosition().x <= _currentDropPoint)
             {
-                float delay = Environment::generateFloatRand(0.1f, 1.0f);
+                float delay = 0.0f;
+                
+                if (object->getType() == GameObjectType::Bulb)
+                    delay = 0.0f;
+                else
+                    delay = Environment::generateFloatRand(0.1f, 1.0f);
+                
                 DelayedDrop d(object, delay);
                 _drops.push_back(d);
             }
