@@ -6,11 +6,13 @@
 #include "IGameObject.h"
 #include "SimpleGameObject.h"
 #include "Bomb.h"
+#include "Bulb.h"
 #include "Grass.h"
 #include "AnimationObject.h"
 #include "ParticlesObject.h"
 #include "Utils/Convert.h"
 #include "Particles/ParticlesFactory.h"
+#include "Utils/Environment.h"
 
 USING_NS_CC;
 
@@ -60,7 +62,11 @@ std::shared_ptr<IGameObject> GameObjectFactory::createStaticStone(const b2Vec2 &
     if (outHeight)
         *outHeight = bodySize.y;
     
-	return obj;
+    int bulbQuantity = Environment::generateIntRand(1, 4);
+    
+    addBulbs(bulbQuantity, bodySize, topLeftCornerPos, body);
+    
+    return obj;
 }
 
 std::shared_ptr<IGameObject> GameObjectFactory::createCircle(const b2Vec2& pos, float angle, float radius, b2BodyType type, const std::string& fileName)
@@ -116,6 +122,22 @@ std::shared_ptr<Grass> GameObjectFactory::createGrass(const b2Vec2 &pos, float a
     return obj;
 }
 
+std::shared_ptr<Bulb> GameObjectFactory::createBulb(const b2Vec2 &pos, const b2Vec2 &size)
+{
+    b2PolygonShape physShape;
+    physShape.SetAsBox(size.x / 2, size.y / 2);
+    
+    b2Body* body = createSensor(b2BodyType::b2_dynamicBody, &physShape, pos, 0);
+    auto sprite = createSprite("resources/spongebob.png", size);
+    
+    std::shared_ptr<Bulb> obj = Bulb::create(body, _world, sprite);
+    _world->addObject(obj);
+    
+    IGameObject* ibulb = obj.get();
+    body->SetUserData(ibulb);
+    
+    return obj;
+}
 
 std::shared_ptr<AnimationObject> GameObjectFactory::createBombExplosion(const b2Vec2& pos)
 {
@@ -210,6 +232,54 @@ Sprite* GameObjectFactory::createSprite(const std::string& textureName)
 	_world->getGraphics()->addChild(sprite);
 
 	return sprite;
+}
+
+void GameObjectFactory::addBulbs(int quantity, const b2Vec2 &bodySize, const b2Vec2 &topLeftCorner, b2Body *body)
+{
+    for (; quantity > 0; --quantity)
+    {
+        int side = Environment::generateIntRand(1, 4);
+        b2Vec2 bulbPos = topLeftCorner;
+        
+        if (side == 1)
+        {
+            float posX = Environment::generateFloatRand(0.0f, bodySize.x);
+            bulbPos.x += posX;
+        }
+        else if (side == 2)
+        {
+            bulbPos.x = topLeftCorner.x + bodySize.x;
+            float posY = Environment::generateFloatRand(0.0f, bodySize.y);
+            bulbPos.y -= posY;
+        }
+        else if (side == 3)
+        {
+            float posX = Environment::generateFloatRand(0.0f, bodySize.x);
+            bulbPos.x += posX;
+            bulbPos.y = topLeftCorner.y - bodySize.y;
+        }
+        else if (side == 4)
+        {
+            float posY = Environment::generateFloatRand(0.0f, bodySize.y);
+            bulbPos.y -= posY;
+        }
+        
+        float bSize = Environment::generateFloatRand(0.15, 0.4);
+        auto bulb = createBulb(bulbPos, b2Vec2(bSize, bSize));
+        
+        bulb->lightOn(false);
+        
+        b2WeldJointDef jointDef;
+        jointDef.bodyA = body;
+        
+        auto localForStone = body->GetLocalPoint(bulbPos);
+        jointDef.localAnchorA.Set(localForStone.x, localForStone.y);
+        auto bulbBody = bulb->getBody();
+        (assert(bulbBody));
+        jointDef.bodyB = bulbBody;
+        jointDef.localAnchorB.Set(0.0f, 0.0f);
+        _world->getPhysics()->CreateJoint(&jointDef);
+    }
 }
 
 void GameObjectFactory::scale(const b2Vec2& size, cocos2d::Sprite * sprite)

@@ -6,6 +6,7 @@
 #include "GameObjectFactory.h"
 #include "SimpleGameObject.h"
 #include "Bomb.h"
+#include "Bulb.h"
 #include "Grass.h"
 #include "Utils/Environment.h"
 #include "Utils/Convert.h"
