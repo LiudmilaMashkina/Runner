@@ -7,6 +7,7 @@
 #include "SimpleGameObject.h"
 #include "Bomb.h"
 #include "Bulb.h"
+#include "BridgeColumn.h"
 #include "Grass.h"
 #include "Utils/Environment.h"
 #include "Utils/Convert.h"
@@ -85,7 +86,13 @@ b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
 b2Vec2 GameObjectComposer::assembleBridge(const BridgeDef & def)
 {
 	GameObjectFactory factory = GameObjectFactory(_world);
-
+    
+    auto column = factory.createColumn("totem_1", def.startPos, 3);
+    auto rm = column->getRightMark();
+    auto lm = column->getLeftMark();
+    auto gloabalO = def.startPos - lm;
+    auto startDynamicPart = gloabalO + rm;
+    
 	b2Vec2 dir = def.direction;
 	dir.Normalize();
 
@@ -93,33 +100,69 @@ b2Vec2 GameObjectComposer::assembleBridge(const BridgeDef & def)
     
     b2Vec2 pos{0.0f, 0.0f};
 
-	b2Body* prev = nullptr;
+	b2Body* prev = column->getBody();
+    //b2Body* lastLink = nullptr;
 	for (int i = 0; i < def.linkCount; ++i)
 	{
-		b2BodyType bodyType = i == 0 || i == def.linkCount - 1 ? b2BodyType::b2_staticBody : b2BodyType::b2_dynamicBody;
-
-		float dist = 0.5f * def.linkSize.x + (1 - def.overlap) * i * def.linkSize.x;
-		pos = def.startPos + dist * dir;
+        b2BodyType bodyType = b2BodyType::b2_dynamicBody;
+        
+        float dist = 0.5f * def.linkSize.x + (1 - def.overlap) * i * def.linkSize.x;
+        pos = startDynamicPart + dist * dir;
         pos.y -= def.linkSize.y / 2; // def.startPos is top left corner
 		auto curObj = factory.createBox(pos, angle, def.linkSize, bodyType, "resources/hanging_bridge_0.png");
 		b2Body* curBody = curObj->getBody();
 
-		if (prev)
+        if (i == 0)
 		{
 			b2RevoluteJointDef jointDef;
 			jointDef.bodyA = prev;
-			jointDef.localAnchorA.Set(def.linkSize.x * 0.45f, 0.0f);
+            auto correctedPos = curObj->getPosition();
+            correctedPos.x -= def.linkSize.x * 0.45f;
+            auto localForColumn = prev->GetLocalPoint(correctedPos);
+			jointDef.localAnchorA.Set(localForColumn.x, localForColumn.y);
 			jointDef.bodyB = curBody;
 			jointDef.localAnchorB.Set(-def.linkSize.x * 0.45f, 0.0f);
 			_world->getPhysics()->CreateJoint(&jointDef);
 		}
+        else
+        {
+            b2RevoluteJointDef jointDef;
+            jointDef.bodyA = prev;
+            jointDef.localAnchorA.Set(def.linkSize.x * 0.45f, 0.0f);
+            jointDef.bodyB = curBody;
+            jointDef.localAnchorB.Set(-def.linkSize.x * 0.45f, 0.0f);
+            _world->getPhysics()->CreateJoint(&jointDef);
+        }
 		prev = curBody;
 	}
     
-    b2Vec2 exitPos = pos;
-    exitPos.x += def.linkSize.x / 2;
-    exitPos.y += def.linkSize.y / 2;
+    b2Vec2 lastLinkExit = pos;
+    lastLinkExit.x += def.linkSize.x * 0.45f;
+    
+    auto endColumn = factory.createColumn("totem_1", lastLinkExit, 3);
+    auto endRm = endColumn->getRightMark();
+    auto exitPos = endColumn->getPosition() + endRm;
+    
+    b2RevoluteJointDef jointDef;
+    jointDef.bodyA = prev;
+    jointDef.localAnchorA.Set(def.linkSize.x * 0.45f, 0.0f);
+    jointDef.bodyB = endColumn->getBody();
+    auto t = endColumn->getLeftMark();
+    jointDef.localAnchorB.Set(t.x, t.y);
+    _world->getPhysics()->CreateJoint(&jointDef);
     
     return exitPos;
 }
 
+b2Vec2 GameObjectComposer::tempAddColumn(const b2Vec2 &startPos)
+{
+    GameObjectFactory factory = GameObjectFactory(_world);
+    
+    auto column = factory.createColumn("totem_1", startPos, 3);
+    auto rm = column->getRightMark();
+    auto lm = column->getLeftMark();
+    auto gloabalO = startPos - lm;
+    auto exitPos = gloabalO + rm;
+    
+    return exitPos;
+}

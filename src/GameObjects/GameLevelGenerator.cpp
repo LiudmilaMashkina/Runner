@@ -41,10 +41,10 @@ b2Vec2 GameLevelGenerator::generateComposition(CompositionId compositionId, cons
     {
         case CompositionId::Bridge :
             return generateBridge(startPos);
-        //case CompositionId::IceLine :
-            //return generateIceLine(startPos);
-        case CompositionId::BlueStoneLine :
-            return generateBlueStoneLine(startPos);
+        //case CompositionId::Column :
+            //return generateColumn(startPos);
+        //case CompositionId::BlueStoneLine :
+          //  return generateBlueStoneLine(startPos);
         /*
         case CompositionId::BrownStoneLine :
             generateBrownStoneLine(startPos);
@@ -95,6 +95,12 @@ b2Vec2 GameLevelGenerator::generateBlueStoneLine(const b2Vec2 &startPos)
     
     GameObjectComposer composer = GameObjectComposer(_world);
     return composer.assembleLine(line);
+}
+
+b2Vec2 GameLevelGenerator::generateColumn(const b2Vec2& startPos)
+{
+    GameObjectComposer composer = GameObjectComposer(_world);
+    return composer.tempAddColumn(startPos);
 }
 
 b2Vec2 GameLevelGenerator::generateBrownStoneLine(const b2Vec2 &startPos)

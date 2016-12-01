@@ -27,6 +27,7 @@
 #include "GameObjects/GameObjectFactory.h"
 #include "GameObjects/AnimationObject.h"
 #include "GameObjects/Bomb.h"
+#include "GameObjects/BridgeColumn.h"
 #include "DropController.h"
 
 
@@ -53,7 +54,12 @@ bool GameScene::init()
     
     _levelGenerator = GameLevelGenerator::create(_world.get());
     _levelGenerator->generateUntil(Environment::getScreenSize().x * 0.75f);
-     _camera = GameCamera::create();
+
+    _camera = GameCamera::create();
+    
+    GameObjectFactory factory(_world.get());
+    
+    //auto column = factory.createColumn("totem_1", b2Vec2(7, 10), 3);
     
     _hero = Hero::create(_levelGenerator.get(), _gameNode, _world.get());
     _hero->setPosition({10, 10});
@@ -62,6 +68,7 @@ bool GameScene::init()
     auto camera = _camera;
     auto timeProvider = _timeProvider;
     auto hero = _hero;
+    
     
     auto moveCamera = [=](float delta)
     {
@@ -107,7 +114,6 @@ bool GameScene::init()
     };
     addUpdatable(UpdaterFunc::create(sync));
 
-    
     GameCamera::LayerInfo backgroundLayer;
     backgroundLayer.layer = _background;
     backgroundLayer.speedFactor = 0.3f;
@@ -121,21 +127,22 @@ bool GameScene::init()
     particlesLayer.zoomFactor = 0.5f;
     particlesLayer.clamp = false;
     _camera->addLayer(particlesLayer);
-
+ 
     GameCamera::LayerInfo gameLayer;
     gameLayer.layer = _gameNode;
     gameLayer.speedFactor = 1.0f;
     gameLayer.zoomFactor = 1.0f;
     gameLayer.clamp = false;
     _camera->addLayer(gameLayer);
-    
+
+
     _hud = HeadUpDisplay::create(this);
     
     _dropController = DropController::create(_world.get());
     addUpdatable(_dropController);
     
-    //auto physDebugDraw = B2DebugDrawLayer::create(_world->getPhysics().get(), Environment::getPTMratio());
-	//_gameNode->addChild(physDebugDraw, 100);
+    auto physDebugDraw = B2DebugDrawLayer::create(_world->getPhysics().get(), Environment::getPTMratio());
+	_gameNode->addChild(physDebugDraw, 100);
  
     return true;
 }
@@ -144,7 +151,7 @@ void GameScene::update(float delta)
 {
     GenericScene::update(delta);
     
-    _dropController->setDropPoint(_camera->getPosition().x + 8);
+    _dropController->setDropPoint(_camera->getPosition().x + 4);
     
     auto shouldRemove = [&](const std::shared_ptr<IGameObject>& obj)
     {
@@ -159,6 +166,7 @@ void GameScene::update(float delta)
     
     _world->removeObject(shouldRemove);
     
+  
     if (_hud && _hero)
     {
         int dist = _hero->getPosition().x;
@@ -167,7 +175,6 @@ void GameScene::update(float delta)
         int lifes = _hero->getLifes();
         _hud->setLifes(lifes);  
     }
-    
 }
 
 Sprite* GameScene::createBackground(const std::string & backgroundName)

@@ -6,6 +6,7 @@
 
 #include "GameWorld.h"
 #include "IGameObject.h"
+#include "json/document.h"
 
 class SimpleGameObject;
 class Bomb;
@@ -13,6 +14,7 @@ class Bulb;
 class Grass;
 class AnimationObject;
 class ParticlesObject;
+class BridgeColumn;
 
 class GameObjectFactory 
 {
@@ -25,16 +27,27 @@ public:
     std::shared_ptr<AnimationObject> createBombExplosion(const b2Vec2& pos);
     std::shared_ptr<Grass> createGrass(const b2Vec2& pos, float angle, const b2Vec2& size);
     std::shared_ptr<Bulb> createBulb(const b2Vec2& pos, const b2Vec2& size);
+    std::shared_ptr<BridgeColumn> createColumn(const std::string& objName, const b2Vec2& pos, float height);
 private:
 	b2Body* createBody(b2BodyType type, b2Shape* shape, const b2Vec2& pos, float angle);
+    b2Body* createBody(cocos2d::V3F_C4B_T2F* vertices, unsigned short* indices, int indicesSize, const b2Vec2& pos);
     b2Body* createSensor(b2BodyType type, b2Shape* shape, const b2Vec2& pos, float angle);
-	cocos2d::Sprite* createSprite(const std::string& textureName, const b2Vec2& bodySize);
+	
+    cocos2d::Sprite* createSprite(const std::string& textureName, const b2Vec2& bodySize);
 	cocos2d::Sprite* createSprite(const std::string& textureName);
+    cocos2d::Sprite* createSprite(const std::string & textureName,
+                                  cocos2d::V3F_C4B_T2F* verts, unsigned short * indices,
+                                  int indexSize,
+                                  int vertSize);
+    
     std::shared_ptr<ParticlesObject> createBombParticles(const b2Vec2& pos);
     std::shared_ptr<ParticlesObject> createGrassParticles(const b2Vec2& pos, const b2Vec2& diapason);
     void addBulbs(int quantity, const b2Vec2& bodySize, const b2Vec2& topLeftCorner, b2Body* body);
 
 	static void scale(const b2Vec2& size, cocos2d::Sprite* sprite);
+    
+    b2Vec2 getLeftMark(const rapidjson::Value &jObject);
+    
 
 	GameWorld* _world = nullptr;
 }; 

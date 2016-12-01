@@ -29,6 +29,8 @@ public:
     virtual void drop() override;
     virtual bool isDroppable() override { return true; }
     
+    //cocos2d::Node* getSprite() {return _node;}
+    
 private:
     Bomb(b2Body* body,
          GameWorld* world,

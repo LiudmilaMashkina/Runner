@@ -87,6 +87,8 @@ Hero::~Hero()
 
 void Hero::update(float delta)
 {
+    _info->getCurrentBottom(getPosition().x); /// delete
+
     b2Vec2 bodyPos = Convert::toMeters(_data.node->getPosition());
     _data.body->SetTransform(bodyPos, 0);
     
@@ -109,6 +111,7 @@ void Hero::update(float delta)
         _currentState = _states[stateId];
     
     _data.animationEngine->update(delta);
+
 }
 
 void Hero::onTap()

@@ -42,6 +42,7 @@ public:
 
 	b2Vec2 assembleLine(const LineDef& def);
 	b2Vec2 assembleBridge(const BridgeDef& def);
+    b2Vec2 tempAddColumn(const b2Vec2& startPos); //temp function, just for test
 
 private:
 	GameWorld* _world = nullptr;

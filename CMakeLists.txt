@@ -49,6 +49,8 @@ set(sources
 	src/GameObjects/AnimationObject.h
 	src/GameObjects/Bomb.cpp
 	src/GameObjects/Bomb.h
+	src/GameObjects/BridgeColumn.cpp
+	src/GameObjects/BridgeColumn.h
 	src/GameObjects/Bulb.cpp
 	src/GameObjects/Bulb.h
 	src/GameObjects/ParticlesObject.cpp
