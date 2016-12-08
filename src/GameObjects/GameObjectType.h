@@ -9,5 +9,7 @@ enum class GameObjectType
     Hero,
     Animation,
     PariclesObject,
-    Grass
+    Grass,
+    WallStone,
+    WallController
 };

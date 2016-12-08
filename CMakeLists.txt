@@ -68,6 +68,10 @@ set(sources
 	src/GameObjects/IGameObject.h
 	src/GameObjects/SimpleGameObject.cpp
 	src/GameObjects/SimpleGameObject.h
+	src/GameObjects/WallController.cpp
+	src/GameObjects/WallController.h
+	src/GameObjects/WallStone.cpp
+	src/GameObjects/WallStone.h
 	src/GameWorld.cpp
 	src/GameWorld.h
 	src/GenericScene.cpp

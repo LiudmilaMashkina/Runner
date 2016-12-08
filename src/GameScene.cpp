@@ -28,6 +28,7 @@
 #include "GameObjects/AnimationObject.h"
 #include "GameObjects/Bomb.h"
 #include "GameObjects/BridgeColumn.h"
+#include "GameObjects/WallController.h"
 #include "DropController.h"
 
 
@@ -51,15 +52,16 @@ bool GameScene::init()
     
     _world = GameWorld::create(b2Vec2(0, -10), _gameNode, _timeProvider);
     addUpdatable(_world);
-    
+
     _levelGenerator = GameLevelGenerator::create(_world.get());
     _levelGenerator->generateUntil(Environment::getScreenSize().x * 0.75f);
 
     _camera = GameCamera::create();
-    
+
+    /*
     GameObjectFactory factory(_world.get());
-    
-    //auto column = factory.createColumn("totem_1", b2Vec2(7, 10), 3);
+    auto wall = factory.createWall("wall_controller", b2Vec2(7, 10), 3);
+    */
     
     _hero = Hero::create(_levelGenerator.get(), _gameNode, _world.get());
     _hero->setPosition({10, 10});
@@ -127,7 +129,7 @@ bool GameScene::init()
     particlesLayer.zoomFactor = 0.5f;
     particlesLayer.clamp = false;
     _camera->addLayer(particlesLayer);
- 
+
     GameCamera::LayerInfo gameLayer;
     gameLayer.layer = _gameNode;
     gameLayer.speedFactor = 1.0f;
@@ -137,10 +139,10 @@ bool GameScene::init()
 
 
     _hud = HeadUpDisplay::create(this);
-    
+
     _dropController = DropController::create(_world.get());
     addUpdatable(_dropController);
-    
+
     auto physDebugDraw = B2DebugDrawLayer::create(_world->getPhysics().get(), Environment::getPTMratio());
 	_gameNode->addChild(physDebugDraw, 100);
  
@@ -151,7 +153,7 @@ void GameScene::update(float delta)
 {
     GenericScene::update(delta);
     
-    _dropController->setDropPoint(_camera->getPosition().x + 4);
+    _dropController->setDropPoint(_camera->getPosition().x + 6);
     
     auto shouldRemove = [&](const std::shared_ptr<IGameObject>& obj)
     {

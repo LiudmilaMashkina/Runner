@@ -11,9 +11,11 @@
 #include "Grass.h"
 #include "AnimationObject.h"
 #include "ParticlesObject.h"
-#include "Utils/Convert.h"
+#include "WallController.h"
+#include "WallStone.h"
 #include "Particles/ParticlesFactory.h"
 #include "Utils/Environment.h"
+#include "Utils/Convert.h"
 #include "json/document.h"
 #include "platform/CCFileUtils.h"
 
@@ -267,6 +269,97 @@ std::shared_ptr<BridgeColumn> GameObjectFactory::createColumn(const std::string 
     
     return column;
 }
+
+std::shared_ptr<WallController> GameObjectFactory::createWall(const std::string& controllerName, const b2Vec2& pos, float height)
+{
+    std::shared_ptr<WallController> controller = WallController::create(_world, pos);
+    std::string content = FileUtils::getInstance()->getStringFromFile("resources/objects.json");
+    rapidjson::Document doc;
+    doc.Parse(content.c_str());
+    
+    const rapidjson::Value &jObject = doc[controllerName.c_str()];
+    float totalHeight = jObject["total_height"].GetDouble();
+    float totalScale = height / totalHeight;
+    
+    const rapidjson::Value &jChildren = jObject["children"];
+    
+    size_t childrenSize = jChildren.Size();
+    for (rapidjson::SizeType i = 0; i < childrenSize; ++i)
+    {
+        const rapidjson::Value &jStone = jChildren[i];
+        
+        std::string texturePath = jStone["texture_path"].GetString();
+        std::size_t found = texturePath.find("/");
+        std::string imageName = texturePath.substr(found + 1, texturePath.size() - 1);
+        std::string texture = "resources/" + imageName;
+        
+        const rapidjson::Value &jLocation = jStone["location"];
+        b2Vec2 globalPos = pos;
+        globalPos.x += jLocation["x"].GetDouble() * totalScale;
+        globalPos.y += jLocation["y"].GetDouble() * totalScale;
+        
+        const rapidjson::Value &jVertices = jStone["vertices"];
+        unsigned int verticesSize = jVertices.Size();
+        V3F_C4B_T2F* vertices = new V3F_C4B_T2F[verticesSize];
+        for (rapidjson::SizeType j = 0; j < verticesSize; ++j)
+        {
+            const rapidjson::Value &jVertex = jVertices[j];
+            
+            V3F_C4B_T2F vert;
+            
+            b2Vec2 vertPos;
+            vertPos.x = jVertex["pos"]["x"].GetDouble() * totalScale;
+            vertPos.y = jVertex["pos"]["y"].GetDouble() * totalScale;
+            
+            b2Vec2 tex_co;
+            tex_co.x = jVertex["tex_co"]["u"].GetDouble();
+            tex_co.y = 1 - jVertex["tex_co"]["v"].GetDouble();
+            
+            vert.vertices.set(vertPos.x, vertPos.y, 0);
+            vert.texCoords = Tex2F(tex_co.x, tex_co.y);
+            vert.colors = Color4B::WHITE;
+            
+            vertices[j] = vert;
+        }
+        
+        const rapidjson::Value &jIndices = jStone["indices"];
+        size_t indicesSize = jIndices.Size();
+        unsigned short* indices = new unsigned short[indicesSize];
+        for (rapidjson::SizeType j = 0; j < indicesSize; ++j)
+        {
+            const rapidjson::Value &jIndex = jIndices[j];
+            indices[j] = jIndex.GetUint();
+        }
+        
+        b2Body* body = createBody(vertices, indices, indicesSize, globalPos);
+        
+        ////////////////////////////////////////
+        
+        // use function createSprite(...)
+        float PTM = Environment::getPTMratio();
+        
+        for (size_t j = 0; j < verticesSize; ++j)
+        {
+            vertices[j].vertices.x *= PTM;
+            vertices[j].vertices.y *= PTM;
+        }
+        Sprite* sprite = createSprite(texture, vertices, indices, indicesSize, verticesSize);
+        _world->getGraphics()->addChild(sprite);
+        
+        std::shared_ptr<WallStone> stone = WallStone::create(body, sprite, _world, controller);
+        
+        _world->addObject(stone);
+        
+        IGameObject* istone = stone.get();
+        body->SetUserData(istone);
+        
+        controller->addStone(stone);
+    }
+    _world->addObject(controller);
+
+    return controller;
+}
+
 
 std::shared_ptr<AnimationObject> GameObjectFactory::createBombExplosion(const b2Vec2& pos)
 {

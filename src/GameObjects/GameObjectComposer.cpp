@@ -53,7 +53,7 @@ b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
             _world->getPhysics()->CreateJoint(&jointDef);
             
         }
-        if (yesOrNo == 2)
+        else if (yesOrNo == 2)
         {
             b2Vec2 grassSize = {block.width, 0.5};
             b2Vec2 grassPos = leftCorner;
@@ -72,6 +72,11 @@ b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
             
             jointDef.localAnchorB.Set(0.0f, -0.25f);
             _world->getPhysics()->CreateJoint(&jointDef);
+        }
+        else if (yesOrNo == 3)
+        {
+            b2Vec2 wallPos = leftCorner;
+            auto wall = factory.createWall("wall_controller", wallPos, 3);
         }
         
         curLength += block.width;

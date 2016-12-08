@@ -15,6 +15,7 @@ class Grass;
 class AnimationObject;
 class ParticlesObject;
 class BridgeColumn;
+class WallController;
 
 class GameObjectFactory 
 {
@@ -28,6 +29,7 @@ public:
     std::shared_ptr<Grass> createGrass(const b2Vec2& pos, float angle, const b2Vec2& size);
     std::shared_ptr<Bulb> createBulb(const b2Vec2& pos, const b2Vec2& size);
     std::shared_ptr<BridgeColumn> createColumn(const std::string& objName, const b2Vec2& pos, float height);
+    std::shared_ptr<WallController> createWall(const std::string& controllerName, const b2Vec2& pos, float height);
 private:
 	b2Body* createBody(b2BodyType type, b2Shape* shape, const b2Vec2& pos, float angle);
     b2Body* createBody(cocos2d::V3F_C4B_T2F* vertices, unsigned short* indices, int indicesSize, const b2Vec2& pos);
