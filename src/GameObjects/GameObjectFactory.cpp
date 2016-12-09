@@ -9,6 +9,7 @@
 #include "Bulb.h"
 #include "BridgeColumn.h"
 #include "Grass.h"
+#include "CollisionCategory.h"
 #include "AnimationObject.h"
 #include "ParticlesObject.h"
 #include "WallController.h"
@@ -414,6 +415,9 @@ b2Body* GameObjectFactory::createBody(b2BodyType type, b2Shape* shape, const b2V
 	b2FixtureDef bodyFixtureDef;
 	bodyFixtureDef.shape = shape;
 	bodyFixtureDef.density = 1;
+    bodyFixtureDef.filter.categoryBits = CollisionCategory::DefaultCategory;
+    bodyFixtureDef.filter.maskBits = CollisionCategory::DefaultCategory | CollisionCategory::HeroCategory;
+    
 	body->CreateFixture(&bodyFixtureDef);
 
 	return body;
@@ -444,6 +448,9 @@ b2Body* GameObjectFactory::createBody(V3F_C4B_T2F* vertices, unsigned short* ind
         fixtureDef.shape = &physShape;
         fixtureDef.density = 1;
         fixtureDef.friction = 0.3;
+        fixtureDef.filter.categoryBits = CollisionCategory::DefaultCategory;
+        fixtureDef.filter.maskBits = CollisionCategory::DefaultCategory | CollisionCategory::HeroCategory;
+        
         body->CreateFixture(&fixtureDef);
     }
     

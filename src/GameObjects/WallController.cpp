@@ -4,6 +4,7 @@
 #include "WallController.h"
 #include "GameWorld.h"
 #include "WallStone.h"
+#include "CollisionCategory.h"
 #include "Utils/b2Vec2Operators.h"
 
 
@@ -55,6 +56,13 @@ void WallController::destroyWall(const b2Vec2 &hitPos, float maxHitImpulse)
         body->SetType(b2BodyType::b2_dynamicBody);
         body->SetLinearDamping(0.1f);
         body->SetAngularDamping(0.1f);
+        
+        for (b2Fixture* fixture = body->GetFixtureList(); fixture; fixture = fixture->GetNext())
+        {
+            b2Filter filter = fixture->GetFilterData();
+            filter.maskBits = CollisionCategory::DefaultCategory;
+            fixture->SetFilterData(filter);
+        }
     }
     
     struct Callback : public b2RayCastCallback

@@ -12,6 +12,7 @@
 #include "AttackState.h"
 #include "DeadState.h"
 #include "GameObjects/IGameLavelInfo.h"
+#include "GameObjects/CollisionCategory.h"
 #include "Utils/MacroCreate.h"
 
 #include <iostream>
@@ -53,6 +54,8 @@ _world(world)
     bodyFixtureDef.shape = &physShape;
     bodyFixtureDef.density = 1;
     bodyFixtureDef.isSensor = true;
+    bodyFixtureDef.filter.categoryBits = CollisionCategory::HeroCategory;
+    bodyFixtureDef.filter.maskBits = CollisionCategory::DefaultCategory;
     _data.body->CreateFixture(&bodyFixtureDef);
     
     IGameObject* ihero = this;
@@ -151,14 +154,13 @@ void Hero::onContactBegin(std::shared_ptr<IGameObject> obj)
 {
     GameObjectType type = obj->getType();
     if (type == GameObjectType::Bomb)
-        decreaseLifes(5);
-    /*
+        decreaseLifes(0);
     else if (type == GameObjectType::WallStone)
     {
-        if (_currentState->getStateId() != HeroStateId::Attack)
+        auto stateID = _currentState->getStateId();
+        if (stateID != HeroStateId::Attack)
             decreaseLifes(10);
     }
-    */
 }
 
 void Hero::decreaseLifes(int num)
