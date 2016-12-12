@@ -48,7 +48,8 @@ void GameWorld::removeObjectLater(IGameObject* objToDelete)
 {
     auto it = _objectsMap.find(objToDelete);
     
-    assert(it != _objectsMap.end());
+    assert(_objectsMap.find(objToDelete) != _objectsMap.end());
+    assert(std::find(_objectsToRemove.begin(), _objectsToRemove.end(), it->second) == _objectsToRemove.end());
     
     _objectsToRemove.push_back(it->second);
 }

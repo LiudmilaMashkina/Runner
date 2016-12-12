@@ -40,6 +40,8 @@ public:
     
     CREATE_FUNC_3(Hero, IGameLavelInfo*, info, cocos2d::Node*, layer, GameWorld*, world);
     
+    std::shared_ptr<IHeroState> getState() { return _currentState; }
+    
 private:
     Hero(IGameLavelInfo* info,
          cocos2d::Node* layer,

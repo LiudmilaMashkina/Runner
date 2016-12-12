@@ -10,9 +10,8 @@ enum class CompositionId
 {
     EnumStart = 0,
     Bridge,
-    //Column,
     //IceLine,
-    //BlueStoneLine,
+    BlueStoneLine,
     //BrownStoneLine,
     //MIxedStoneLine,
     EnumEnd

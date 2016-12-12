@@ -43,7 +43,6 @@ void Grass::update(float delta)
     std::shared_ptr<ParticlesObject> strongPtr = _particles.lock();
     assert(strongPtr);
     strongPtr->setPosition(bodyPos);
-    //_particles->setPosition(bodyPos);
 }
 
 b2Vec2 Grass::getPosition()
@@ -58,5 +57,4 @@ void Grass::onContactBegin(std::shared_ptr<IGameObject> obj)
     
     std::shared_ptr<ParticlesObject> strongPtr = _particles.lock();
     strongPtr->setPaused(false);
-    //_particles->setPaused(false);
 }

@@ -41,10 +41,8 @@ b2Vec2 GameLevelGenerator::generateComposition(CompositionId compositionId, cons
     {
         case CompositionId::Bridge :
             return generateBridge(startPos);
-        //case CompositionId::Column :
-            //return generateColumn(startPos);
-        //case CompositionId::BlueStoneLine :
-          //  return generateBlueStoneLine(startPos);
+        case CompositionId::BlueStoneLine :
+            return generateBlueStoneLine(startPos);
         /*
         case CompositionId::BrownStoneLine :
             generateBrownStoneLine(startPos);
