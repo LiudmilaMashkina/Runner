@@ -36,12 +36,25 @@ def get_wall(obj):
         mins.append(child.location.y + bottom_edge)
         maxs.append(child.location.y + top_edge)
 
+        bulbs = []
+        for bulb in child.children:
+            bulb_location = {
+                "x": bulb.location.x,
+                "y": bulb.location.y
+            }
+            bulbs_ref = {
+                "type": bulb['type'],
+                "location": bulb_location
+            }
+            bulbs.append(bulbs_ref)
+
         child_ref = {
             "type": child['type'],
             "location": location,
             "texture_path": texture_path,
             "indices": indices,
-            "vertices": vertices
+            "vertices": vertices,
+            "bulbs": bulbs
         }
         children.append(child_ref)
     

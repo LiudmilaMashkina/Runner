@@ -346,6 +346,36 @@ std::shared_ptr<WallController> GameObjectFactory::createWall(const std::string&
         }
         Sprite* sprite = createSprite(texture, vertices, indices, indicesSize, verticesSize);
         _world->getGraphics()->addChild(sprite);
+        const rapidjson::Value &jBulbs = jStone["bulbs"];
+        size_t bulbsSize = jBulbs.Size();
+        for (rapidjson::SizeType j = 0; j < bulbsSize; ++j)
+        {
+            int isExist = Environment::generateIntRand(0, 1);
+            if (isExist == 0)
+            {
+                const rapidjson::Value &jBulb = jBulbs[j];
+                const rapidjson::Value &jBulbPos = jBulb["location"];
+                b2Vec2 globalBulbPos = globalPos;
+                globalBulbPos.x += jBulbPos["x"].GetDouble() * totalScale;
+                globalBulbPos.y += jBulbPos["y"].GetDouble() * totalScale;
+                
+                float bulbSize = Environment::generateFloatRand(0.2, 0.6);
+                
+                auto bulb = createBulb(globalBulbPos, b2Vec2(bulbSize, bulbSize));
+                bulb->lightOn(false);
+                
+                b2WeldJointDef jointDef;
+                jointDef.bodyA = body;
+                
+                auto localForStone = body->GetLocalPoint(globalBulbPos);
+                jointDef.localAnchorA.Set(localForStone.x, localForStone.y);
+                auto bulbBody = bulb->getBody();
+                (assert(bulbBody));
+                jointDef.bodyB = bulbBody;
+                jointDef.localAnchorB.Set(0.0f, 0.0f);
+                _world->getPhysics()->CreateJoint(&jointDef);
+            }
+        }
         
         std::shared_ptr<WallStone> stone = WallStone::create(body, sprite, _world, controller);
         
@@ -623,25 +653,3 @@ b2Vec2 GameObjectFactory::getLeftMark(const rapidjson::Value &jObject)
     }
     return {0, 0};
 }
-    
-    /*
-     std::vector<std::string> GameObjectFactory::getListOfGrounds()
-{
-    std::string content = FileUtils::getInstance()->getStringFromFile("objects.json");
-    rapidjson::Document doc;
-    doc.Parse(content.c_str());
-    
-    std::vector<std::string> objects;
-    
-    for (auto it = doc.MemberBegin(); it != doc.MemberEnd(); ++it)
-    {
-        std::string objName = it->name.GetString();
-        objects.push_back(objName);
-    }
-    
-    return objects;
-}
-
-*/
-
-
