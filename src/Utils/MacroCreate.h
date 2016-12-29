@@ -111,18 +111,24 @@ static std::shared_ptr<class_name> create(t1 v1) \
 #define CREATE_FUNC_2(class_name, t1, v1, t2, v2) \
 static std::shared_ptr<class_name> create(t1 v1, t2 v2) \
 { \
-return std::shared_ptr<class_name>(new class_name(v1, v2)); \
+    return std::shared_ptr<class_name>(new class_name(v1, v2)); \
 }
 
 #define CREATE_FUNC_3(class_name, t1, v1, t2, v2, t3, v3) \
 static std::shared_ptr<class_name> create(t1 v1, t2 v2, t3 v3) \
 { \
-return std::shared_ptr<class_name>(new class_name(v1, v2, v3)); \
+    return std::shared_ptr<class_name>(new class_name(v1, v2, v3)); \
 }
 
 #define CREATE_FUNC_4(class_name, t1, v1, t2, v2, t3, v3, t4, v4) \
 static std::shared_ptr<class_name> create(t1 v1, t2 v2, t3 v3, t4 v4) \
 { \
-return std::shared_ptr<class_name>(new class_name(v1, v2, v3, v4)); \
+    return std::shared_ptr<class_name>(new class_name(v1, v2, v3, v4)); \
+}
+
+#define CREATE_FUNC_5(class_name, t1, v1, t2, v2, t3, v3, t4, v4, t5, v5) \
+static std::shared_ptr<class_name> create(t1 v1, t2 v2, t3 v3, t4 v4, t5 v5) \
+{ \
+    return std::shared_ptr<class_name>(new class_name(v1, v2, v3, v4, v5)); \
 }
 

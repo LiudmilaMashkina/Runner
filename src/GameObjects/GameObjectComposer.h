@@ -18,8 +18,9 @@ public:
 	{
 		struct Block
 		{
-			Block(const std::string& texture, float width) : textureName(texture), width(width) {}
+			Block(const std::string& texture, const std::string& lighting, float width) : textureName(texture), lightingName(lighting), width(width) {}
 			std::string textureName;
+            std::string lightingName;
 			float width = 0;
 		};
 
@@ -41,9 +42,9 @@ public:
 	GameObjectComposer(GameWorld* world);
 
 	b2Vec2 assembleLine(const LineDef& def);
+    b2Vec2 assembleLightingLine(const LineDef& def);
 	b2Vec2 assembleBridge(const BridgeDef& def);
-    b2Vec2 tempAddColumn(const b2Vec2& startPos); //temp function, just for test
-
+    
 private:
 	GameWorld* _world = nullptr;
 };

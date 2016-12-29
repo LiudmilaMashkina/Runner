@@ -43,6 +43,8 @@ b2Vec2 GameLevelGenerator::generateComposition(CompositionId compositionId, cons
             return generateBridge(startPos);
         case CompositionId::BlueStoneLine :
             return generateBlueStoneLine(startPos);
+        case CompositionId::LightingLine :
+            return generateLightingLine(startPos);
         /*
         case CompositionId::BrownStoneLine :
             generateBrownStoneLine(startPos);
@@ -80,13 +82,13 @@ b2Vec2 GameLevelGenerator::generateIceLine(const b2Vec2 &startPos)
 b2Vec2 GameLevelGenerator::generateBlueStoneLine(const b2Vec2 &startPos)
 {
     GameObjectComposer::LineDef line;
-    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_0.png", 0.5f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_1.png", 0.75f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_2.png", 1.0f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_3.png", 2.0f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_4.png", 1.5f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_5.png", 0.5f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_6.png", 0.5f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_0.png", "", 0.5f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_1.png", "", 0.75f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_2.png", "", 1.0f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_3.png", "", 2.0f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_4.png", "", 1.5f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_5.png", "", 0.5f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_6.png", "", 0.5f));
     line.length = 10;
     line.maxOverlap = 0;
     line.startPos.Set(startPos.x, startPos.y);
@@ -95,10 +97,19 @@ b2Vec2 GameLevelGenerator::generateBlueStoneLine(const b2Vec2 &startPos)
     return composer.assembleLine(line);
 }
 
-b2Vec2 GameLevelGenerator::generateColumn(const b2Vec2& startPos)
+b2Vec2 GameLevelGenerator::generateLightingLine(const b2Vec2 &startPos)
 {
+    GameObjectComposer::LineDef line;
+    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/lighting_stone_0.png", "resources/lighting_stone_light_0.png", 0.5f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/lighting_stone_1.png", "resources/lighting_stone_light_1.png", 0.75f));
+    
+    int len = Environment::generateIntRand(6, 15);
+    line.length = len;
+    line.maxOverlap = 0;
+    line.startPos.Set(startPos.x, startPos.y);
+    
     GameObjectComposer composer = GameObjectComposer(_world);
-    return composer.tempAddColumn(startPos);
+    return composer.assembleLightingLine(line);
 }
 
 b2Vec2 GameLevelGenerator::generateBrownStoneLine(const b2Vec2 &startPos)

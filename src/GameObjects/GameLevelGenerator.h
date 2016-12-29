@@ -12,6 +12,7 @@ enum class CompositionId
     Bridge,
     //IceLine,
     BlueStoneLine,
+    LightingLine,
     //BrownStoneLine,
     //MIxedStoneLine,
     EnumEnd
@@ -30,9 +31,9 @@ public:
     b2Vec2 generateBridge(const b2Vec2& startPos);
     b2Vec2 generateIceLine(const b2Vec2& startPos);
     b2Vec2 generateBlueStoneLine(const b2Vec2& startPos);
+    b2Vec2 generateLightingLine(const b2Vec2& startPos);
     b2Vec2 generateBrownStoneLine(const b2Vec2& startPos);
     b2Vec2 generateMixedStoneLine(const b2Vec2& startPos);
-    b2Vec2 generateColumn(const b2Vec2& startPos);
     
     
 private:

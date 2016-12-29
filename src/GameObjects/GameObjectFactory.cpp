@@ -9,6 +9,7 @@
 #include "Bulb.h"
 #include "BridgeColumn.h"
 #include "Grass.h"
+#include "LightingStone.h"
 #include "CollisionCategory.h"
 #include "AnimationObject.h"
 #include "ParticlesObject.h"
@@ -74,6 +75,41 @@ std::shared_ptr<IGameObject> GameObjectFactory::createStaticStone(const b2Vec2 &
     
     return obj;
 }
+
+std::shared_ptr<IGameObject> GameObjectFactory::createLightingStone(const b2Vec2 & topLeftCornerPos, float width, const std::string& fileName, const std::string & lightingName, float* outHeight)
+{
+    Sprite* sprite = createSprite(fileName);
+    Sprite* lighting = Sprite::create(lightingName);
+    
+    Vec2 spriteSize = sprite->getContentSize();
+    float scale = width / Convert::toMeters(spriteSize.x);
+    
+    sprite->setScale(scale);
+    lighting->setOpacity(0);
+    Vec2 lightingPos = sprite->getContentSize() / 2;
+    lighting->setPosition(lightingPos);
+    sprite->addChild(lighting);
+    
+    b2Vec2 bodySize = Convert::toMeters(spriteSize * scale);
+    b2Vec2 bodyCenter = topLeftCornerPos + b2Vec2(bodySize.x / 2, -bodySize.y / 2);
+    
+    b2PolygonShape physShape;
+    physShape.SetAsBox(bodySize.x / 2, bodySize.y / 2);
+    b2Body* body = createBody(b2BodyType::b2_staticBody, &physShape, bodyCenter, 0);
+    
+    std::shared_ptr<LightingStone> stone = LightingStone::create(body, sprite, lighting, _world);
+    
+    _world->addObject(stone);
+    
+    IGameObject* istone = stone.get();
+    body->SetUserData(istone);
+    
+    if (outHeight)
+        *outHeight = bodySize.y;
+    
+    return stone;
+}
+
 
 std::shared_ptr<IGameObject> GameObjectFactory::createCircle(const b2Vec2& pos, float angle, float radius, b2BodyType type, const std::string& fileName)
 {

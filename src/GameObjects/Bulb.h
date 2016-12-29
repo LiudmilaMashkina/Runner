@@ -39,7 +39,6 @@ private:
     GameWorld* _world = nullptr;
     cocos2d::Node* _node = nullptr;
     float _targetOpacity = 0.0f;
-    //bool _switchedOn = true;
 };
 
  

@@ -33,9 +33,10 @@ b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
         float height = 0;
 		auto stone = factory.createStaticStone(leftCorner, block.width, block.textureName, &height);
         
-        int yesOrNo = Environment::generateIntRand(1, 5);
+        int randNumber = Environment::generateIntRand(1, 5);
+        b2Vec2 jointPos = leftCorner + b2Vec2(block.width / 2, 0);
         
-        if (yesOrNo == 1)
+        if (randNumber == 1)
         {
             b2Vec2 bombPos = leftCorner;
             bombPos.x += block.width / 2;
@@ -45,15 +46,17 @@ b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
             auto stoneBody = stone->getBody();
             (assert(stoneBody));
             jointDef.bodyA = stoneBody;
-            jointDef.localAnchorA.Set(0.0f, height * 0.5f);
+            
+            jointDef.localAnchorA = stoneBody->GetLocalPoint(jointPos);
             auto bombBody = bomb->getBody();
             (assert(bombBody));
             jointDef.bodyB = bombBody;
-            jointDef.localAnchorB.Set(0.0f, 0.0f);
+            jointDef.localAnchorB = bombBody->GetLocalPoint(jointPos);
+            
             _world->getPhysics()->CreateJoint(&jointDef);
             
         }
-        else if (yesOrNo == 2)
+        else if (randNumber == 2)
         {
             b2Vec2 grassSize = {block.width, 0.5};
             b2Vec2 grassPos = leftCorner;
@@ -65,15 +68,15 @@ b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
             auto stoneBody = stone->getBody();
             (assert(stoneBody));
             jointDef.bodyA = stoneBody;
-            jointDef.localAnchorA.Set(0.0f, height * 0.5f);
+            jointDef.localAnchorA = stoneBody->GetLocalPoint(jointPos);
             auto grassBody = grass->getBody();
             (assert(grassBody));
             jointDef.bodyB = grassBody;
             
-            jointDef.localAnchorB.Set(0.0f, -0.25f);
+            jointDef.localAnchorB = grassBody->GetLocalPoint(jointPos);
             _world->getPhysics()->CreateJoint(&jointDef);
         }
-        else if (yesOrNo == 3)
+        else if (randNumber == 3)
         {
             b2Vec2 wallPos = leftCorner;
             auto wall = factory.createWall("wall_controller", wallPos, 3);
@@ -81,6 +84,78 @@ b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
         
         curLength += block.width;
 	}
+    
+    b2Vec2 exitPos = def.startPos;
+    exitPos.x += curLength;
+    
+    return exitPos;
+}
+
+b2Vec2 GameObjectComposer::assembleLightingLine(const LineDef& def)
+{
+    GameObjectFactory factory = GameObjectFactory(_world);
+    
+    float curLength = 0.0f;
+    for ( ; curLength < def.length; )
+    {
+        int num = Environment::generateIntRand(0, def.blocks.size() - 1);
+        const LineDef::Block& block = def.blocks[num];
+        
+        b2Vec2 leftCorner(def.startPos.x + curLength, def.startPos.y);
+        
+        auto stone = factory.createLightingStone(leftCorner, block.width, block.textureName, block.lightingName);
+        
+        int randNumber = Environment::generateIntRand(1, 9);
+        b2Vec2 jointPos = leftCorner + b2Vec2(block.width / 2, 0);
+        
+        if (randNumber == 1)
+        {
+            b2Vec2 bombPos = leftCorner;
+            bombPos.x += block.width / 2;
+            auto bomb = factory.createBomb(bombPos, 0, b2Vec2(0.5, 0.5));
+            
+            b2WeldJointDef jointDef;
+            auto stoneBody = stone->getBody();
+            (assert(stoneBody));
+            jointDef.bodyA = stoneBody;
+
+            jointDef.localAnchorA = stoneBody->GetLocalPoint(jointPos);
+            auto bombBody = bomb->getBody();
+            (assert(bombBody));
+            jointDef.bodyB = bombBody;
+            jointDef.localAnchorB = bombBody->GetLocalPoint(jointPos);
+            
+            _world->getPhysics()->CreateJoint(&jointDef);
+            
+        }
+        else if (randNumber == 2)
+        {
+            b2Vec2 grassSize = {block.width, 0.5};
+            b2Vec2 grassPos = leftCorner;
+            grassPos.x += block.width / 2;
+            grassPos.y += grassSize.y / 2;
+            auto grass = factory.createGrass(grassPos, 0, grassSize);
+            
+            b2WeldJointDef jointDef;
+            auto stoneBody = stone->getBody();
+            (assert(stoneBody));
+            jointDef.bodyA = stoneBody;
+            jointDef.localAnchorA = stoneBody->GetLocalPoint(jointPos);
+            auto grassBody = grass->getBody();
+            (assert(grassBody));
+            jointDef.bodyB = grassBody;
+            
+            jointDef.localAnchorB = grassBody->GetLocalPoint(jointPos);
+            _world->getPhysics()->CreateJoint(&jointDef);
+        }
+        else if (randNumber == 3)
+        {
+            b2Vec2 wallPos = leftCorner;
+            auto wall = factory.createWall("wall_controller", wallPos, 3);
+        }
+        
+        curLength += block.width;
+    }
     
     b2Vec2 exitPos = def.startPos;
     exitPos.x += curLength;
@@ -106,15 +181,14 @@ b2Vec2 GameObjectComposer::assembleBridge(const BridgeDef & def)
     b2Vec2 pos{0.0f, 0.0f};
 
 	b2Body* prev = column->getBody();
-    //b2Body* lastLink = nullptr;
-	for (int i = 0; i < def.linkCount; ++i)
+    
+    for (int i = 0; i < def.linkCount; ++i)
 	{
         b2BodyType bodyType = b2BodyType::b2_dynamicBody;
         
         float dist = 0.5f * def.linkSize.x + (1 - def.overlap) * i * def.linkSize.x;
         pos = startDynamicPart + dist * dir;
-        pos.y -= def.linkSize.y / 2; // def.startPos is top left corner
-		auto curObj = factory.createBox(pos, angle, def.linkSize, bodyType, "resources/hanging_bridge_0.png");
+        auto curObj = factory.createBox(pos, angle, def.linkSize, bodyType, "resources/hanging_bridge_0.png");
 		b2Body* curBody = curObj->getBody();
 
         if (i == 0)
@@ -159,15 +233,3 @@ b2Vec2 GameObjectComposer::assembleBridge(const BridgeDef & def)
     return exitPos;
 }
 
-b2Vec2 GameObjectComposer::tempAddColumn(const b2Vec2 &startPos)
-{
-    GameObjectFactory factory = GameObjectFactory(_world);
-    
-    auto column = factory.createColumn("totem_1", startPos, 3);
-    auto rm = column->getRightMark();
-    auto lm = column->getLeftMark();
-    auto gloabalO = startPos - lm;
-    auto exitPos = gloabalO + rm;
-    
-    return exitPos;
-}

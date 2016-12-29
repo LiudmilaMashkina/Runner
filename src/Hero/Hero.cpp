@@ -154,7 +154,7 @@ void Hero::onContactBegin(std::shared_ptr<IGameObject> obj)
 {
     GameObjectType type = obj->getType();
     if (type == GameObjectType::Bomb)
-        decreaseLifes(0);
+        decreaseLifes(5);
     else if (type == GameObjectType::WallStone)
     {
         auto stateID = _currentState->getStateId();
