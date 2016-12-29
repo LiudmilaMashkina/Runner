@@ -75,7 +75,6 @@ set(sources
 	src/GameObjects/WallController.h
 	src/GameObjects/WallStone.cpp
 	src/GameObjects/WallStone.h
-	LightingStone
 	src/GameWorld.cpp
 	src/GameWorld.h
 	src/GenericScene.cpp
