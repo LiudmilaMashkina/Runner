@@ -33,7 +33,7 @@ void SimpleGameObject::update(float delta)
 
 b2Vec2 SimpleGameObject::getPosition()
 {
-    return Convert::toMeters(_node->getPosition());
+    return _body->GetPosition();
 }
 
 void SimpleGameObject::drop()
