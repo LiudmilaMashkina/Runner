@@ -45,7 +45,12 @@ HeadUpDisplay::HeadUpDisplay(GenericScene* scene) : gui::ViewPort(scene)
     distPos.x = progressPos.x + _progressBar->getSize().x;
     distPos.y = progressPos.y;
     _distanceBar->setPosition(distPos);
-    //_distanceBar->setDistance(1);
+    
+    _coinsBar = gui::Label::create("resources/coins_bar.png", "0", "resources/Monster_AG.ttf", 65);
+    addView(_coinsBar);
+    Vec2 coinsPos = distPos;
+    coinsPos.x += _distanceBar->getSize().x;
+    _coinsBar->setPosition(coinsPos);
 }
 
 HeadUpDisplay::~HeadUpDisplay()
@@ -88,13 +93,20 @@ void HeadUpDisplay::onMainMenuClicked(gui::Button *sender)
 void HeadUpDisplay::setDistance(int dist)
 {
     assert(_distanceBar);
-    _distanceBar->setDistance(dist);
+    _distanceBar->setNum
+    (dist);
 }
 
 void HeadUpDisplay::setLifes(int lifes)
 {
     assert(_progressBar);
     _progressBar->setLifes(lifes);
+}
+
+void HeadUpDisplay::setCoins(int coins)
+{
+    assert(_coinsBar);
+    _coinsBar->setNum(coins);
 }
 
 void HeadUpDisplay::createPauseMenu()
@@ -147,6 +159,80 @@ void HeadUpDisplay::createPauseMenu()
 	decoreImage->setPosition({ menuPos.x + 60, menuPos.y + 20 });
 	*/
 	_pauseMenu = pauseMenu;
+}
+
+void HeadUpDisplay::createDeathMenu(int distance, int coins)
+{
+    const std::shared_ptr<gui::Image> deathMenu = gui::Image::create("resources/pause_menu_background.png", gui::ScalePolicy::Stretch);
+    addView(deathMenu);
+    deathMenu->setSize(cocos2d::Size(500, 500));
+    
+    auto verticalLayout = gui::BoxLayout::create(gui::Orientation::Vertical, gui::Alignment::Center);
+    deathMenu->setLayout(verticalLayout);
+    
+    // buttons
+    std::shared_ptr<gui::View> buttons = gui::View::create();
+    auto horizotalLayout = gui::BoxLayout::create(gui::Orientation::Horizontal, gui::Alignment::Center);
+    buttons->setLayout(horizotalLayout);
+    
+    std::shared_ptr<gui::Button> menuButton = gui::Button::create("resources/menu_button_normal.png", "resources/menu_button_pressed.png");
+    buttons->addView(menuButton);
+    menuButton->setMargin(0, 20, 0, 0);
+    menuButton->setCallback(std::bind(&HeadUpDisplay::onMainMenuClicked, this, std::placeholders::_1));
+    
+    std::shared_ptr<gui::Button> restartButton = gui::Button::create("resources/restart_button_normal.png", "resources/restart_button_pressed.png");
+    buttons->addView(restartButton);
+    restartButton->setMargin(0, 0, 0, 0);
+    restartButton->setCallback(std::bind(&HeadUpDisplay::onRestartClicked, this, std::placeholders::_1));
+    
+    horizotalLayout->doLayout(buttons, false);
+    buttons->setMargin(30, 30, 30, 30);
+    
+    deathMenu->addView(buttons);
+    
+    
+    //distance
+    std::shared_ptr<gui::View> dist = gui::View::create();
+    auto distHorizotalLayout = gui::BoxLayout::create(gui::Orientation::Horizontal, gui::Alignment::Center);
+    dist->setLayout(distHorizotalLayout);
+   
+    auto distHeader = gui::Label::create("resources/dist_bar.png", "DISTANCE:", "resources/Monster_AG.ttf", 30);
+    dist->addView(distHeader);
+    distHeader->setMargin(0, 20, 0, 0);
+    
+    auto distValue = gui::Label::create("resources/dist_bar.png", std::to_string(distance), "resources/Monster_AG.ttf", 45);
+    dist->addView(distValue);
+    distValue->setMargin(0, 0, 0, 0);
+    
+    distHorizotalLayout->doLayout(dist, false);
+    dist->setMargin(30, 30, 30, 30);
+    
+    deathMenu->addView(dist);
+    
+    //coins
+    std::shared_ptr<gui::View> co = gui::View::create();
+    auto coinsHorizotalLayout = gui::BoxLayout::create(gui::Orientation::Horizontal, gui::Alignment::Center);
+    co->setLayout(coinsHorizotalLayout);
+    
+    auto coinsHeader = gui::Label::create("resources/dist_bar.png", "COINS:", "resources/Monster_AG.ttf", 40);
+    co->addView(coinsHeader);
+    coinsHeader->setMargin(0, 20, 0, 0);
+    
+    auto coinsValue = gui::Label::create("resources/dist_bar.png", std::to_string(coins), "resources/Monster_AG.ttf", 45);
+    co->addView(coinsValue);
+    distValue->setMargin(0, 0, 0, 0);
+    
+    coinsHorizotalLayout->doLayout(co, false);
+    co->setMargin(30, 30, 30, 30);
+    
+    deathMenu->addView(co);
+    
+    verticalLayout->doLayout(deathMenu, false);
+    
+    Vec2 menuPos;
+    menuPos.x = Convert::toPixels(Environment::getScreenSize().x / 2) - deathMenu->getSize().x / 2;
+    menuPos.y = Convert::toPixels(Environment::getScreenSize().y / 2) - deathMenu->getSize().y / 2;
+    deathMenu->setPosition(menuPos);
 }
 
 

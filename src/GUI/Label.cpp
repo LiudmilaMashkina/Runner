@@ -45,11 +45,11 @@ namespace gui
 		return std::shared_ptr<Label>(new Label(node, base, text, ttfFile, textSize));
 	}
     
-    void Label::setDistance(int distance)
+    void Label::setNum(int val)
     {
         assert(_label);
         
-        std::string text = std::to_string(distance);
+        std::string text = std::to_string(val);
         _label->setString(text);
     }
 }

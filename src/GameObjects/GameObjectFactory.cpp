@@ -8,10 +8,12 @@
 #include "Bomb.h"
 #include "Bulb.h"
 #include "BridgeColumn.h"
+#include "Coin.h"
 #include "Grass.h"
 #include "LightingStone.h"
 #include "CollisionCategory.h"
 #include "AnimationObject.h"
+#include "AnimationEngine/Animation.h"
 #include "ParticlesObject.h"
 #include "WallController.h"
 #include "WallStone.h"
@@ -427,6 +429,50 @@ std::shared_ptr<WallController> GameObjectFactory::createWall(const std::string&
     return controller;
 }
 
+std::shared_ptr<Coin> GameObjectFactory::createCoin(const b2Vec2 &pos)
+{
+    b2Vec2 coinSize = b2Vec2(0.5, 0.5);
+    b2PolygonShape physShape;
+    physShape.SetAsBox(0.25, 0.25);
+    
+    b2Body* body = createSensor(b2BodyType::b2_staticBody, &physShape, pos, 0);
+    //auto sprite = createSprite("resources/coin_0.png", coinSize);
+    
+    Vector<SpriteFrame*> frames;
+    
+    /// move to helping function
+    for (int i = 0; i < 4; ++i)
+    {
+        std::string fString = "resources/coin_" + std::to_string(i) + ".png";
+        Rect fRect;
+        fRect.size = Size(256, 256);
+        fRect.origin = Vec2(0, 0);
+        SpriteFrame* frame = SpriteFrame::create(fString, fRect);
+        frames.pushBack(frame);
+
+    }
+    
+    assert(!frames.empty());
+    IAnimationPtr animation = std::shared_ptr<::Animation>(new ::Animation(frames, 10, true));
+    
+    StrongPtr<cocos2d::Sprite> sprite;
+    sprite.reset(cocos2d::Sprite::createWithSpriteFrame(frames.at(0)));
+    assert(sprite.get());
+    animation->setTarget(sprite.get());
+    _world->getGraphics()->addChild(sprite.get());
+    
+    float scale = Convert::toPixels(coinSize.x) / sprite->getContentSize().width;
+    sprite->setScale(scale);
+    sprite->setPosition(Convert::toPixels(pos));
+    
+    std::shared_ptr<Coin> coin = Coin::create(body, sprite.get(), _world, animation);
+    _world->addObject(coin);
+    
+    IGameObject* icoin = coin.get();
+    body->SetUserData(icoin);
+    
+    return coin;
+}
 
 std::shared_ptr<AnimationObject> GameObjectFactory::createBombExplosion(const b2Vec2& pos)
 {

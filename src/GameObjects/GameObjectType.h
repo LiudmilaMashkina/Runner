@@ -6,6 +6,7 @@ enum class GameObjectType
     Bomb,
     Bulb,
     BridgeColumn,
+    Coin,
     Hero,
     Animation,
     PariclesObject,

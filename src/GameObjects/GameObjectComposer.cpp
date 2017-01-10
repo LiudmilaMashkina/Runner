@@ -33,10 +33,10 @@ b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
         float height = 0;
 		auto stone = factory.createStaticStone(leftCorner, block.width, block.textureName, &height);
         
-        int randNumber = Environment::generateIntRand(1, 5);
+        int randNumber = Environment::generateIntRand(1, 30);
         b2Vec2 jointPos = leftCorner + b2Vec2(block.width / 2, 0);
         
-        if (randNumber == 1)
+        if (randNumber >= 1 && randNumber <= 3)
         {
             b2Vec2 bombPos = leftCorner;
             bombPos.x += block.width / 2;
@@ -56,7 +56,7 @@ b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
             _world->getPhysics()->CreateJoint(&jointDef);
             
         }
-        else if (randNumber == 2)
+        else if (randNumber >= 4 && randNumber <= 10)
         {
             b2Vec2 grassSize = {block.width, 0.5};
             b2Vec2 grassPos = leftCorner;
@@ -76,7 +76,7 @@ b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
             jointDef.localAnchorB = grassBody->GetLocalPoint(jointPos);
             _world->getPhysics()->CreateJoint(&jointDef);
         }
-        else if (randNumber == 3)
+        else if (randNumber == 11)
         {
             b2Vec2 wallPos = leftCorner;
             auto wall = factory.createWall("wall_controller", wallPos, 3);
@@ -104,11 +104,15 @@ b2Vec2 GameObjectComposer::assembleLightingLine(const LineDef& def)
         b2Vec2 leftCorner(def.startPos.x + curLength, def.startPos.y);
         
         auto stone = factory.createLightingStone(leftCorner, block.width, block.textureName, block.lightingName);
+        b2Vec2 coinPos = leftCorner;
+        coinPos.x += block.width / 2;
+        coinPos.y += 0.5;
+        auto coin = factory.createCoin(coinPos);
         
-        int randNumber = Environment::generateIntRand(1, 9);
+        int randNumber = Environment::generateIntRand(1, 20);
         b2Vec2 jointPos = leftCorner + b2Vec2(block.width / 2, 0);
         
-        if (randNumber == 1)
+        if (randNumber >= 1 && randNumber <= 4)
         {
             b2Vec2 bombPos = leftCorner;
             bombPos.x += block.width / 2;
@@ -128,7 +132,7 @@ b2Vec2 GameObjectComposer::assembleLightingLine(const LineDef& def)
             _world->getPhysics()->CreateJoint(&jointDef);
             
         }
-        else if (randNumber == 2)
+        else if (randNumber >= 5 && randNumber <= 18)
         {
             b2Vec2 grassSize = {block.width, 0.5};
             b2Vec2 grassPos = leftCorner;
@@ -148,7 +152,7 @@ b2Vec2 GameObjectComposer::assembleLightingLine(const LineDef& def)
             jointDef.localAnchorB = grassBody->GetLocalPoint(jointPos);
             _world->getPhysics()->CreateJoint(&jointDef);
         }
-        else if (randNumber == 3)
+        else if (randNumber == 19)
         {
             b2Vec2 wallPos = leftCorner;
             auto wall = factory.createWall("wall_controller", wallPos, 3);

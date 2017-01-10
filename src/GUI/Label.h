@@ -10,7 +10,7 @@ namespace gui
 	public:
 		~Label();
 		static std::shared_ptr<Label> create(const std::string &base, const std::string &text, const std::string &ttfFile, float textSize);
-        void setDistance(int distance);
+        void setNum(int val);
         
 		
 	private:

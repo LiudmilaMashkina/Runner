@@ -26,7 +26,10 @@ public:
     
     void setDistance(int dist);
     void setLifes(int lifes);
-	
+    void setCoins(int coins);
+    
+    void createDeathMenu(int distance, int coins);
+
 	CREATE_FUNC_1(HeadUpDisplay, GenericScene*, scene);
 
 private:
@@ -34,10 +37,11 @@ private:
     
     //void createStatsMenu();
     void createPauseMenu();
-	
+    
 	std::shared_ptr<gui::Button> _pauseButton;
 	std::shared_ptr<gui::View> _pauseMenu;
     std::shared_ptr<gui::ProgressBar> _progressBar;
     std::shared_ptr<gui::Label> _distanceBar;
+    std::shared_ptr<gui::Label> _coinsBar;
     GenericScene* _scene = nullptr;
 };

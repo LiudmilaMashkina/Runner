@@ -161,6 +161,10 @@ void Hero::onContactBegin(std::shared_ptr<IGameObject> obj)
         if (stateID != HeroStateId::Attack)
             decreaseLifes(10);
     }
+    else if (type == GameObjectType::Coin)
+    {
+        collectCoin();
+    }
 }
 
 void Hero::decreaseLifes(int num)
@@ -172,6 +176,11 @@ void Hero::decreaseLifes(int num)
         _currentState = _states[HeroStateId::Dead];
         _currentState->onEnter();
     }
+}
+
+void Hero::collectCoin()
+{
+    ++_coins;
 }
 
 

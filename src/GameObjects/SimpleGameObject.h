@@ -25,7 +25,7 @@ public:
     virtual void drop() override;
     virtual bool isDroppable() override { return true; }
     
-private:
+protected:
 	b2Body* _body = nullptr;
 	cocos2d::Node* _node = nullptr;
 	GameWorld* _world = nullptr;

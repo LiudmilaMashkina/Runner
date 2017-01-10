@@ -63,10 +63,10 @@ b2Vec2 GameLevelGenerator::generateComposition(CompositionId compositionId, cons
 b2Vec2 GameLevelGenerator::generateBridge(const b2Vec2& startPos)
 {
     GameObjectComposer::BridgeDef bridge;
-    //bridge.startPos.Set(winSize.x / 5, winSize.y * 0.75f);
     bridge.startPos.Set(startPos.x, startPos.y);
-    bridge.direction.Set(1.0f, 0);
-    bridge.linkCount = 8;
+    float dirY = Environment::generateFloatRand(-1.0f, 1.0f);
+    bridge.direction.Set(1.0f, dirY);
+    bridge.linkCount = Environment::generateIntRand(7, 14);
     bridge.linkSize.Set(0.6f, 0.6f);
     bridge.overlap = 0.14f;
     
