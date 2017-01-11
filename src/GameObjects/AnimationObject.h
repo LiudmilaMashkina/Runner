@@ -20,6 +20,8 @@ public:
     virtual GameObjectType getType() const override;
     virtual b2Body* getBody() override { return nullptr; }
     virtual void setPosition(const b2Vec2& pos);
+    
+    StrongPtr<cocos2d::Sprite> getSprite() { return _sprite; }
 
 private:
     IAnimationPtr _animation = nullptr;

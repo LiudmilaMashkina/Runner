@@ -58,11 +58,6 @@ bool GameScene::init()
 
     _camera = GameCamera::create();
 
-    /*
-    GameObjectFactory factory(_world.get());
-    auto wall = factory.createWall("wall_controller", b2Vec2(7, 10), 3);
-    */
-    
     _hero = Hero::create(_levelGenerator.get(), _gameNode, _world.get());
     _hero->setPosition({10, 10});
     _world->addObject(_hero);
@@ -71,6 +66,14 @@ bool GameScene::init()
     auto timeProvider = _timeProvider;
     auto hero = _hero;
     
+    /*
+    auto moveCamera = [=](float delta)
+    {
+        b2Vec2 camPos = camera->getPosition();
+        camPos.x += 5;
+        camera->setPosition(camPos);
+    };
+    */
     
     auto moveCamera = [=](float delta)
     {
@@ -175,7 +178,18 @@ void GameScene::update(float delta)
         _hud->setDistance(dist);
         
         int lifes = _hero->getLifes();
-        _hud->setLifes(lifes);  
+        _hud->setLifes(lifes);
+        
+        int coins = _hero->getCoins();
+        _hud->setCoins(coins);
+        
+        //auto stateID = _currentState->getStateId();
+        auto stateID = _hero->getState()->getStateId();
+        if (_isDeathMenu == false && stateID == HeroStateId::Dead)
+        {
+            _hud->createDeathMenu(dist, coins);
+            _isDeathMenu = true;
+        }
     }
 }
 

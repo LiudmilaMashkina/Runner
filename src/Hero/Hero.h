@@ -36,6 +36,8 @@ public:
     virtual b2Body* getBody() override { return _data.body; }
     
     int getLifes();
+    int getCoins() { return _coins; }
+    
     virtual void onContactBegin(std::shared_ptr<IGameObject> obj) override;
     
     CREATE_FUNC_3(Hero, IGameLavelInfo*, info, cocos2d::Node*, layer, GameWorld*, world);
@@ -48,6 +50,7 @@ private:
          GameWorld* world);
 
     void decreaseLifes(int num);
+    void collectCoin();
     
     IGameLavelInfo* _info;
     GameWorld* _world;
@@ -55,6 +58,7 @@ private:
     std::map<HeroStateId, std::shared_ptr<IHeroState>> _states;
     std::shared_ptr<IHeroState> _currentState;
     int _lifes = 100;
+    int _coins = 0;
     
     // world pointer
     // states + current state

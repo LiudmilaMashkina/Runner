@@ -47,5 +47,6 @@ private:
     std::shared_ptr<DropController> _dropController;
     
     b2Vec2 _winSize = {0.0f, 0.0f};
+    bool _isDeathMenu = false;
 };
  

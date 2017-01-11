@@ -53,6 +53,8 @@ set(sources
 	src/GameObjects/BridgeColumn.h
 	src/GameObjects/Bulb.cpp
 	src/GameObjects/Bulb.h
+	src/GameObjects/Coin.cpp
+	src/GameObjects/Coin.h
 	src/GameObjects/CollisionCategory.h
 	src/GameObjects/ParticlesObject.cpp
 	src/GameObjects/ParticlesObject.h
