@@ -172,7 +172,7 @@ std::shared_ptr<Bulb> GameObjectFactory::createBulb(const b2Vec2 &pos, const b2V
     physShape.SetAsBox(size.x / 2, size.y / 2);
     
     b2Body* body = createSensor(b2BodyType::b2_dynamicBody, &physShape, pos, 0);
-    auto sprite = createSprite("resources/spongebob.png", size);
+    auto sprite = createSprite("resources/bulb_64x64.png", size);
     
     std::shared_ptr<Bulb> obj = Bulb::create(body, _world, sprite);
     _world->addObject(obj);
@@ -190,7 +190,16 @@ std::shared_ptr<BridgeColumn> GameObjectFactory::createColumn(const std::string 
     doc.Parse(content.c_str());
     
     const rapidjson::Value &jObject = doc[objName.c_str()];
-    std::string texturePath = jObject["texture_path"].GetString(); // don't use yet
+    std::string texturePath = jObject["texture_path"].GetString();
+    
+    std::string tex;
+    std::size_t found = texturePath.find('/');
+    if (found!=std::string::npos)
+    {
+        tex = texturePath.substr (found,texturePath.size() - 1);
+    }
+    
+    texturePath = "resources" + tex;
     
     const rapidjson::Value &jSize = jObject["original_size"];
     b2Vec2 originalSize;
@@ -250,7 +259,8 @@ std::shared_ptr<BridgeColumn> GameObjectFactory::createColumn(const std::string 
         vertices[i].vertices.x *= PTM;
         vertices[i].vertices.y *= PTM;
     }
-    Sprite* sprite = createSprite("resources/totem-pole.png", vertices, indices, indicesSize, verticesSize);
+    
+    Sprite* sprite = createSprite(texturePath, vertices, indices, indicesSize, verticesSize);
     _world->getGraphics()->addChild(sprite);
     
     std::shared_ptr<BridgeColumn> column = BridgeColumn::create(body, sprite, _world);
@@ -278,7 +288,6 @@ std::shared_ptr<BridgeColumn> GameObjectFactory::createColumn(const std::string 
             rightMark.y = jLocation["y"].GetDouble() * scale;
             column->setRightMark(rightMark);
         }
-        
         else if (childType == "bomb")
         {
             const rapidjson::Value &jLocation = jChild["location"];
@@ -299,6 +308,36 @@ std::shared_ptr<BridgeColumn> GameObjectFactory::createColumn(const std::string 
             jointDef.bodyB = bombBody;
             jointDef.localAnchorB.Set(0.0f, 0.0f);
             _world->getPhysics()->CreateJoint(&jointDef);
+        }
+        else if (childType == "bulb")
+        {
+            int isExist = Environment::generateIntRand(0, 1);
+            
+            // 
+            if (isExist == 0)
+            {
+                const rapidjson::Value &jBulbPos = jChild["location"];
+                b2Vec2 bulbPos;
+                bulbPos.x = jBulbPos["x"].GetDouble() * scale;
+                bulbPos.y = jBulbPos["y"].GetDouble() * scale;
+                bulbPos += globOriginPos;
+                
+                float bulbSize = Environment::generateFloatRand(0.2, 0.6);
+                
+                auto bulb = createBulb(bulbPos, b2Vec2(bulbSize, bulbSize));
+                bulb->lightOn(false);
+                
+                b2WeldJointDef jointDef;
+                jointDef.bodyA = body;
+                
+                auto localForColumn = body->GetLocalPoint(bulbPos);
+                jointDef.localAnchorA.Set(localForColumn.x, localForColumn.y);
+                auto bulbBody = bulb->getBody();
+                (assert(bulbBody));
+                jointDef.bodyB = bulbBody;
+                jointDef.localAnchorB.Set(0.0f, 0.0f);
+                _world->getPhysics()->CreateJoint(&jointDef);
+            }
         }
     }
     _world->addObject(column);
@@ -436,7 +475,6 @@ std::shared_ptr<Coin> GameObjectFactory::createCoin(const b2Vec2 &pos)
     physShape.SetAsBox(0.25, 0.25);
     
     b2Body* body = createSensor(b2BodyType::b2_staticBody, &physShape, pos, 0);
-    //auto sprite = createSprite("resources/coin_0.png", coinSize);
     
     Vector<SpriteFrame*> frames;
     

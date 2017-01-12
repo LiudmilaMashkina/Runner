@@ -171,7 +171,12 @@ b2Vec2 GameObjectComposer::assembleBridge(const BridgeDef & def)
 {
 	GameObjectFactory factory = GameObjectFactory(_world);
     
-    auto column = factory.createColumn("totem_1", def.startPos, 3);
+    //std::vector<std::string> totemNames;
+    //totemNames.push_back("totem_ice");
+    //totemNames.push_back("")
+    
+    
+    auto column = factory.createColumn("totem_ice", def.startPos, 3);
     auto rm = column->getRightMark();
     auto lm = column->getLeftMark();
     auto gloabalO = def.startPos - lm;
@@ -222,7 +227,7 @@ b2Vec2 GameObjectComposer::assembleBridge(const BridgeDef & def)
     b2Vec2 lastLinkExit = pos;
     lastLinkExit.x += def.linkSize.x * 0.45f;
     
-    auto endColumn = factory.createColumn("totem_1", lastLinkExit, 3);
+    auto endColumn = factory.createColumn("totem_ice", lastLinkExit, 3);
     auto endRm = endColumn->getRightMark();
     auto exitPos = endColumn->getPosition() + endRm;
     

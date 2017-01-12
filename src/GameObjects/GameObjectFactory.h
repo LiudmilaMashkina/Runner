@@ -52,7 +52,7 @@ private:
     std::shared_ptr<ParticlesObject> createBombParticles(const b2Vec2& pos);
     std::shared_ptr<ParticlesObject> createGrassParticles(const b2Vec2& pos, const b2Vec2& diapason);
     void addBulbs(int quantity, const b2Vec2& bodySize, const b2Vec2& topLeftCorner, b2Body* body);
-
+    
 	static void scale(const b2Vec2& size, cocos2d::Sprite* sprite);
     
     b2Vec2 getLeftMark(const rapidjson::Value &jObject);
