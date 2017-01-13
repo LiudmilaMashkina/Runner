@@ -36,18 +36,8 @@ def get_wall(obj):
         mins.append(child.location.y + bottom_edge)
         maxs.append(child.location.y + top_edge)
 
-        bulbs = []
-        for bulb in child.children:
-            bulb_location = {
-                "x": bulb.location.x,
-                "y": bulb.location.y
-            }
-            bulbs_ref = {
-                "type": bulb['type'],
-                "location": bulb_location
-            }
-            bulbs.append(bulbs_ref)
-
+        bulbs = utils.get_bulbs(child)
+        
         child_ref = {
             "type": child['type'],
             "location": location,
@@ -73,6 +63,7 @@ def get_column(obj):
     texture_path = utils.get_texture(obj)
     indices = utils.get_indices(obj)
     vertices = utils.get_vertices(obj, indices)
+    bulbs = utils.get_bulbs(obj)
 
     left_edge = min(vertices, key=lambda v: v["pos"]["x"])["pos"]["x"]
     bottom_edge = min(vertices, key=lambda v: v["pos"]["y"])["pos"]["y"]
@@ -107,6 +98,7 @@ def get_column(obj):
         "vertices": vertices,
         "indices": indices,
         "texture_path": texture_path,
+        "bulbs": bulbs,
         "children": children
     }
     return obj_ref

@@ -73,6 +73,8 @@ set(sources
 	src/GameObjects/SimpleGameObject.h
 	src/GameObjects/LightingStone.cpp
 	src/GameObjects/LightingStone.h
+	src/GameObjects/ObjectThemer.cpp
+	src/GameObjects/ObjectThemer.h
 	src/GameObjects/WallController.cpp
 	src/GameObjects/WallController.h
 	src/GameObjects/WallStone.cpp

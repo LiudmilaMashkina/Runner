@@ -43,6 +43,20 @@ def get_vertices(obj, indices):
 
     return vertices
 
+def get_bulbs(obj):
+    bulbs = []
+    for child in obj.children:
+        if child['type'] == "bulb":
+            bulb_location = {
+                "x": child.location.x,
+                "y": child.location.y
+            }
+            bulbs_ref = {
+                "type": child['type'],
+                "location": bulb_location
+            }
+            bulbs.append(bulbs_ref)
+    return bulbs
 
 
         

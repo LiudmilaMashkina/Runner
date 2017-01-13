@@ -11,33 +11,13 @@ USING_NS_CC;
 
 BridgeColumn::BridgeColumn(b2Body* body,
                            Node* node,
-                           GameWorld* world) :
-_body(body),
-_node(node),
-_world(world)
+                           GameWorld* world) : SimpleGameObject::SimpleGameObject(body, node, world)
 {
     update(0);
 }
 
 BridgeColumn::~BridgeColumn()
-{
-    _node->removeFromParentAndCleanup(true);
-    _world->getPhysics()->DestroyBody(_body);
-}
-
-void BridgeColumn::update(float delta)
-{
-    b2Vec2 bodyPos = _body->GetPosition();
-    float bodyAngle = _body->GetAngle();
-    
-    _node->setPosition(Convert::toPixels(bodyPos));
-    _node->setRotation(Convert::toDegrees(-bodyAngle));
-}
-
-b2Vec2 BridgeColumn::getPosition()
-{
-    return _body->GetPosition();
-}
+{}
 
 void BridgeColumn::drop()
 {

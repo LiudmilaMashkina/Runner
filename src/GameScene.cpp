@@ -146,8 +146,8 @@ bool GameScene::init()
     _dropController = DropController::create(_world.get());
     addUpdatable(_dropController);
 
-    auto physDebugDraw = B2DebugDrawLayer::create(_world->getPhysics().get(), Environment::getPTMratio());
-	_gameNode->addChild(physDebugDraw, 100);
+    //auto physDebugDraw = B2DebugDrawLayer::create(_world->getPhysics().get(), Environment::getPTMratio());
+	//_gameNode->addChild(physDebugDraw, 100);
  
     return true;
 }
