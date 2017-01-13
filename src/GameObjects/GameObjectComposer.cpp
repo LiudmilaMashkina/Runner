@@ -11,6 +11,8 @@
 #include "Grass.h"
 #include "Utils/Environment.h"
 #include "Utils/Convert.h"
+#include "ObjectThemer.h"
+
 
 USING_NS_CC;
 
@@ -167,16 +169,18 @@ b2Vec2 GameObjectComposer::assembleLightingLine(const LineDef& def)
     return exitPos;
 }
 
-b2Vec2 GameObjectComposer::assembleBridge(const BridgeDef & def)
+b2Vec2 GameObjectComposer::assembleBridge(const BridgeDef & def, ObjectThemer::ThemeId theme)
 {
+    std::string themePrefix;
+    if (theme == ObjectThemer::ThemeId::Stone)
+        themePrefix = "stone";
+    else
+        themePrefix = "ice";
+    std::string objName = themePrefix + "_totem";
+    
 	GameObjectFactory factory = GameObjectFactory(_world);
     
-    //std::vector<std::string> totemNames;
-    //totemNames.push_back("totem_ice");
-    //totemNames.push_back("")
-    
-    
-    auto column = factory.createColumn("totem_ice", def.startPos, 3);
+    auto column = factory.createColumn(objName, def.startPos, 3);
     auto rm = column->getRightMark();
     auto lm = column->getLeftMark();
     auto gloabalO = def.startPos - lm;
@@ -227,7 +231,7 @@ b2Vec2 GameObjectComposer::assembleBridge(const BridgeDef & def)
     b2Vec2 lastLinkExit = pos;
     lastLinkExit.x += def.linkSize.x * 0.45f;
     
-    auto endColumn = factory.createColumn("totem_ice", lastLinkExit, 3);
+    auto endColumn = factory.createColumn(objName, lastLinkExit, 3);
     auto endRm = endColumn->getRightMark();
     auto exitPos = endColumn->getPosition() + endRm;
     

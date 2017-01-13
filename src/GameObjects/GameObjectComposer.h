@@ -7,6 +7,7 @@
 #include <Box2d/Box2D.h>
 #pragma warning(pop)
 #include "IGameObject.h"
+#include "ObjectThemer.h"
 
 namespace cocos2d { class Node; }
 class GameWorld;
@@ -43,7 +44,7 @@ public:
 
 	b2Vec2 assembleLine(const LineDef& def);
     b2Vec2 assembleLightingLine(const LineDef& def);
-	b2Vec2 assembleBridge(const BridgeDef& def);
+	b2Vec2 assembleBridge(const BridgeDef& def, ObjectThemer::ThemeId theme);
     
 private:
 	GameWorld* _world = nullptr;

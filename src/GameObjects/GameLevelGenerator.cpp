@@ -9,12 +9,15 @@
 #include <cassert>
 #include "GameLevelGenerator.h"
 #include "Utils/Environment.h"
+#include "ObjectThemer.h"
 
 GameLevelGenerator::GameLevelGenerator(GameWorld* world) :
 _world(world)
 {
     _exitPos.x = 0.2f * Environment::getScreenSize().x;
     _exitPos.y = 0.5f * Environment::getScreenSize().y;
+    
+    _themer = new ObjectThemer();
 }
 
 float GameLevelGenerator::getCurrentBottom(float valueX)
@@ -37,14 +40,16 @@ void GameLevelGenerator::generateUntil(const float frontier)
 
 b2Vec2 GameLevelGenerator::generateComposition(CompositionId compositionId, const b2Vec2& startPos)
 {
+    ObjectThemer::ThemeId theme = _themer->getTheme();
+    
     switch (compositionId)
     {
         case CompositionId::Bridge :
-            return generateBridge(startPos);
-        case CompositionId::BlueStoneLine :
-            return generateBlueStoneLine(startPos);
-        case CompositionId::LightingLine :
-            return generateLightingLine(startPos);
+            return generateBridge(startPos, theme);
+        case CompositionId::Line :
+            return generateLine(startPos, theme);
+        //case CompositionId::LightingLine :
+            //return generateLightingLine(startPos);
         /*
         case CompositionId::BrownStoneLine :
             generateBrownStoneLine(startPos);
@@ -60,7 +65,7 @@ b2Vec2 GameLevelGenerator::generateComposition(CompositionId compositionId, cons
     return {0.0f, 0.0f};
 }
 
-b2Vec2 GameLevelGenerator::generateBridge(const b2Vec2& startPos)
+b2Vec2 GameLevelGenerator::generateBridge(const b2Vec2& startPos, ObjectThemer::ThemeId theme)
 {
     GameObjectComposer::BridgeDef bridge;
     bridge.startPos.Set(startPos.x, startPos.y);
@@ -71,7 +76,7 @@ b2Vec2 GameLevelGenerator::generateBridge(const b2Vec2& startPos)
     bridge.overlap = 0.14f;
     
     GameObjectComposer composer = GameObjectComposer(_world);
-    return composer.assembleBridge(bridge);
+    return composer.assembleBridge(bridge, theme);
 }
 
 b2Vec2 GameLevelGenerator::generateIceLine(const b2Vec2 &startPos)
@@ -79,16 +84,19 @@ b2Vec2 GameLevelGenerator::generateIceLine(const b2Vec2 &startPos)
     return {0.0f, 0.0f};
 }
 
-b2Vec2 GameLevelGenerator::generateBlueStoneLine(const b2Vec2 &startPos)
+b2Vec2 GameLevelGenerator::generateLine(const b2Vec2 &startPos, ObjectThemer::ThemeId theme)
 {
+    std::string themePrefix = "stone";
+    std::string fileName = "resources/" + themePrefix + "_line_blue_";
+    
     GameObjectComposer::LineDef line;
-    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_0.png", "", 0.5f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_1.png", "", 0.75f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_2.png", "", 1.0f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_3.png", "", 2.0f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_4.png", "", 1.5f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_5.png", "", 0.5f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/stone_line_blue_6.png", "", 0.5f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "0.png", "", 0.5f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "1.png", "", 0.75f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "2.png", "", 1.0f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "3.png", "", 2.0f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "4.png", "", 1.5f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "5.png", "", 0.5f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "6.png", "", 0.5f));
     line.length = 10;
     line.maxOverlap = 0;
     line.startPos.Set(startPos.x, startPos.y);
