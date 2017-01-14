@@ -99,13 +99,14 @@ ParticlesFactory::GeneratorInfo ParticlesFactory::createBombParticles(const std:
     std::shared_ptr<ParticlesSystem> system = ParticlesSystem::create();
     
     ParticlesGenerator::Params params;
-    params.fileName = "resources/bomb_particle.png";
-    params.rate = 7;
+    params.fileName = "resources/fire_particle_16x16.png";
+    params.rate = 14;
     params.velocityRange.set(b2Vec2(0, 0), b2Vec2(0, 0));
     params.massRange.set(0.5, 1);
     params.generationRange.set(b2Vec2(-0.25f, 0.0f), b2Vec2(0.25f, 0.0f));
     params.field = forceField;
     params.ttlRange.set(0.5, 1.0);
+    params.widthRange.set(0.1, 0.4);
     
     ParticlesFactory::GeneratorInfo info;
     info.particlesNode = partNode;
@@ -135,6 +136,7 @@ ParticlesFactory::GeneratorInfo ParticlesFactory::createGrassParticles(const std
     params.generationRange.set(b2Vec2(-diapason.x / 2, 0.0f), b2Vec2(diapason.x / 2, 0.0f));
     params.field = forceField;
     params.ttlRange.set(0.5, 1.0);
+    params.widthRange.set(0.04, 0.1);
     
     ParticlesFactory::GeneratorInfo info;
     info.particlesNode = partNode;

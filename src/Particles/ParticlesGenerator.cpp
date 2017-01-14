@@ -35,6 +35,9 @@ void ParticlesGenerator::update(float delta, ParticlesSystem& system)
         float ttl = Environment::generateFloatRand(_params.ttlRange.min, _params.ttlRange.max);
         particle.ttl = ttl;
         particle.startTtl = ttl;
+        particle.width = Environment::generateFloatRand(_params.widthRange.min, _params.widthRange.max);
+        float scale = particle.width / Convert::toMeters(particle.sprite->getContentSize().width);
+        particle.sprite->setScale(scale);
         //particle.sprite->setColor(cocos2d::Color3B::YELLOW);
         b2Vec2 partPos = _params.position;
         partPos.x += Environment::generateFloatRand(_params.generationRange.min.x, _params.generationRange.max.x);

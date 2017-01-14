@@ -136,8 +136,25 @@ std::shared_ptr<Bomb> GameObjectFactory::createBomb(const b2Vec2 &pos, float ang
     b2Body* body = createSensor(b2BodyType::b2_dynamicBody, &physShape, pos, angle);
     
     auto particles = createBombParticles(pos);
+     
+    Vector<SpriteFrame*> frames = createFramesForAnimation(7, "resources/fire_", Size(57, 64));
     
-    std::shared_ptr<Bomb> obj = Bomb::create(body, _world, particles);
+    assert(!frames.empty());
+    IAnimationPtr animation = std::shared_ptr<::Animation>(new ::Animation(frames, 10, true));
+     
+    StrongPtr<cocos2d::Sprite> sprite;
+    sprite.reset(cocos2d::Sprite::createWithSpriteFrame(frames.at(0)));
+    assert(sprite.get());
+    animation->setTarget(sprite.get());
+    
+    _world->getGraphics()->addChild(sprite.get());
+     
+    float scale = Convert::toPixels(size.x) / sprite->getContentSize().width;
+    sprite->setScale(scale);
+    sprite->setAnchorPoint(Vec2(0.5, 0.1));
+    sprite->setPosition(Convert::toPixels(pos));
+    
+    std::shared_ptr<Bomb> obj = Bomb::create(body, _world, sprite.get(), animation, particles);
     _world->addObject(obj);
     
     IGameObject* ibomb = obj.get();
@@ -476,19 +493,7 @@ std::shared_ptr<Coin> GameObjectFactory::createCoin(const b2Vec2 &pos)
     
     b2Body* body = createSensor(b2BodyType::b2_staticBody, &physShape, pos, 0);
     
-    Vector<SpriteFrame*> frames;
-    
-    /// move to helping function
-    for (int i = 0; i < 4; ++i)
-    {
-        std::string fString = "resources/coin_" + std::to_string(i) + ".png";
-        Rect fRect;
-        fRect.size = Size(256, 256);
-        fRect.origin = Vec2(0, 0);
-        SpriteFrame* frame = SpriteFrame::create(fString, fRect);
-        frames.pushBack(frame);
-
-    }
+    Vector<SpriteFrame*> frames = createFramesForAnimation(4, "resources/coin_", Size(256,256));
     
     assert(!frames.empty());
     IAnimationPtr animation = std::shared_ptr<::Animation>(new ::Animation(frames, 10, true));
@@ -550,6 +555,23 @@ std::shared_ptr<ParticlesObject> GameObjectFactory::createGrassParticles(const b
     _world->addObject(obj);
     
     return obj;
+}
+
+Vector<SpriteFrame*> GameObjectFactory::createFramesForAnimation(int numFrames, std::string namePrefix, const Size& frameSize)
+{
+    Vector<SpriteFrame*> frames;
+    
+    for (int i = 0; i < numFrames; ++i)
+    {
+        std::string fString = namePrefix + std::to_string(i) + ".png";
+        Rect fRect;
+        fRect.size = frameSize;
+        fRect.origin = Vec2(0, 0);
+        SpriteFrame* frame = SpriteFrame::create(fString, fRect);
+        frames.pushBack(frame);
+    }
+    
+    return frames;
 }
 
 b2Body* GameObjectFactory::createBody(b2BodyType type, b2Shape* shape, const b2Vec2& pos, float angle)
