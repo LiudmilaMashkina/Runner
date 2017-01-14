@@ -12,7 +12,7 @@ class ParticlesSystem;
 class ParticlesObject : public IGameObject
 {
 public:
-    CREATE_FUNC_2(ParticlesObject, const ParticlesFactory::GeneratorInfo&, particlesSystem, GameWorld*, world);
+    CREATE_FUNC_2(ParticlesObject, const ParticlesFactory::ParticleSystemControls&, particlesSystem, GameWorld*, world);
     
     virtual ~ParticlesObject();
   
@@ -27,10 +27,10 @@ public:
     void shouldBeRemovedOnZeroParticles(bool removeOnZeroParticles) { _removeOnZeroParticles = removeOnZeroParticles; }
     
 private:
-    ParticlesObject(const ParticlesFactory::GeneratorInfo& particleSystem,
+    ParticlesObject(const ParticlesFactory::ParticleSystemControls& particleSystem,
                     GameWorld* world);
     
-    ParticlesFactory::GeneratorInfo _particleSystem;
+    ParticlesFactory::ParticleSystemControls _particleSystem;
     GameWorld* _world = nullptr;
     bool _removeOnZeroParticles = false;
 };

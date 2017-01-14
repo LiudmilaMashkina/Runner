@@ -4,10 +4,11 @@
 
 #include "ParticlesObject.h"
 #include "Particles/ParticlesSystem.h"
+#include "Particles/ParticleGeneratorGroup.h"
 #include "Utils/Convert.h"
 #include "GameWorld.h"
 
-ParticlesObject::ParticlesObject(const ParticlesFactory::GeneratorInfo& particleSystem, GameWorld* world) :
+ParticlesObject::ParticlesObject(const ParticlesFactory::ParticleSystemControls& particleSystem, GameWorld* world) :
 _particleSystem(particleSystem),
 _world(world)
 {
@@ -35,7 +36,7 @@ void ParticlesObject::update(float delta)
 
 b2Vec2 ParticlesObject::getPosition()
 {
-    return _particleSystem.particlesGenerator->getPosition();
+    return _particleSystem.generatorGroup->getPosition();
 }
 
 GameObjectType ParticlesObject::getType() const
@@ -45,10 +46,10 @@ GameObjectType ParticlesObject::getType() const
 
 void ParticlesObject::setPaused(bool paused)
 {
-    _particleSystem.particlesGenerator->setPaused(paused);
+    _particleSystem.generatorGroup->setPaused(paused);
 }
 
 void ParticlesObject::setPosition(const b2Vec2 &pos)
 {
-    _particleSystem.particlesGenerator->setPosition(pos);
+    _particleSystem.generatorGroup->setPosition(pos);
 }

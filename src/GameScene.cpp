@@ -17,6 +17,7 @@
 #include "GameObjects/GameLevelGenerator.h"
 #include "Particles/ParticlesSystem.h"
 #include "Particles/ParticlesGenerator.h"
+#include "Particles/ParticleGeneratorGroup.h"
 #include "Particles/ParticlesMover.h"
 #include "Particles/ParticlesReplacer.h"
 #include "GameCamera.h"
@@ -105,7 +106,7 @@ bool GameScene::init()
         gPos.y = -0.5f;
         Vec2 tmpPos = particlesSystem.particlesNode->convertToNodeSpace(Convert::toPixels(gPos));
         gPos = Convert::toMeters(tmpPos);
-        particlesSystem.particlesGenerator->setPosition(gPos);
+        particlesSystem.generatorGroup->setPosition(gPos);
     };
 
     addUpdatable(UpdaterFunc::create(moveParticlesGenerator));
