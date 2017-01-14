@@ -29,6 +29,7 @@ ParticlesFactory::GeneratorInfo ParticlesFactory::createGameParticlesSystem(cons
     gParams.generationRange.set(b2Vec2(-7.0f , 0.0f), b2Vec2(7.0f, 0.0f));
     gParams.field = forceField;
     gParams.ttlRange.set(7, 15);
+    gParams.widthRange.set(0.1, 0.5);
     
     ParticlesFactory::GeneratorInfo gInfo;
     gInfo.particlesNode = Node::create();
@@ -69,6 +70,7 @@ ParticlesFactory::GeneratorInfo ParticlesFactory::createMainMenuParticlesSystem(
     gParams.generationRange.set(b2Vec2(-7.0f , 0.0f), b2Vec2(7.0f, 0.0f));
     gParams.field = forceField;
     gParams.ttlRange.set(7, 15);
+    gParams.widthRange.set(0.1, 0.5);
     
     ParticlesFactory::GeneratorInfo gInfo;
     gInfo.particlesNode = Node::create();
