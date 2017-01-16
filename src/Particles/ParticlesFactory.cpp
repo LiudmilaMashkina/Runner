@@ -135,7 +135,7 @@ ParticlesFactory::ParticleSystemControls ParticlesFactory::createBombParticles(c
     params.rate = 14;
     params.velocityRange.set(b2Vec2(0, 0), b2Vec2(0, 0));
     params.massRange.set(0.5, 1);
-    params.generationRange.set(b2Vec2(-0.25f, 0.0f), b2Vec2(0.25f, 0.0f));
+    params.generationRange.set(b2Vec2(-0.25f, 0.2f), b2Vec2(0.25f, 0.3f));
     params.field = forceField;
     params.ttlRange.set(0.5, 1.0);
     params.widthRange.set(0.1, 0.4);
