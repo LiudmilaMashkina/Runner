@@ -10,4 +10,5 @@ struct Particle
     float mass = 0;
     float ttl = 0;
     float startTtl = 0;
+    float width = 0;
 };

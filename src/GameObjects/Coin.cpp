@@ -30,7 +30,6 @@ void Coin::update(float delta)
     }
     */
     _animation->update(delta);
-    
 }
 
 void Coin::onContactBegin(std::shared_ptr<IGameObject> obj)

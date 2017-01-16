@@ -42,7 +42,7 @@ private:
     std::shared_ptr<GameLevelGenerator> _levelGenerator;
     std::shared_ptr<TimeProvider> _timeProvider;
     std::shared_ptr<HeadUpDisplay> _hud;
-    ParticlesFactory::GeneratorInfo _particlesSystem;
+    ParticlesFactory::ParticleSystemControls _particlesSystem;
     cocos2d::Sprite* _background = nullptr;
     std::shared_ptr<DropController> _dropController;
     

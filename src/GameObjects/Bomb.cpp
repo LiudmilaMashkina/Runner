@@ -10,27 +10,27 @@
 #include "Utils/b2Vec2Operators.h"
 #include "GameObjectFactory.h"
 #include "ParticlesObject.h"
+#include "AnimationEngine/IAnimation.h"
+
 
 USING_NS_CC;
 
 Bomb::Bomb(b2Body* body,
-           GameWorld* world,
+           GameWorld* world, Node* node, IAnimationPtr animation,
            const std::shared_ptr<ParticlesObject>& particles) :
-_body(body),
-_world(world),
+SimpleGameObject::SimpleGameObject(body, node, world),
+_animation(animation),
 _particles(particles)
 {
-    _node = Sprite::create("resources/bomb_0.png");
-    _world->getGraphics()->addChild(_node);
+    //_node = Sprite::create("resources/bomb_0.png");
+    //_world->getGraphics()->addChild(_node);
     
-	update(0);
+    
+    update(0);
 }
 
 Bomb::~Bomb()
-{
-	_node->removeFromParentAndCleanup(true);
-	_world->getPhysics()->DestroyBody(_body);
-}
+{}
 
 void Bomb::update(float delta)
 {
@@ -40,11 +40,7 @@ void Bomb::update(float delta)
 	_node->setPosition(Convert::toPixels(bodyPos));
 	_node->setRotation(Convert::toDegrees(-bodyAngle));
     _particles->setPosition(bodyPos);
-}
-
-b2Vec2 Bomb::getPosition()
-{
-    return Convert::toMeters(_node->getPosition());
+    _animation->update(delta);
 }
 
 void Bomb::onContactBegin(std::shared_ptr<IGameObject> obj)

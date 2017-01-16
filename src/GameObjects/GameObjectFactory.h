@@ -7,6 +7,8 @@
 #include "GameWorld.h"
 #include "IGameObject.h"
 #include "json/document.h"
+#include "AnimationEngine/IAnimation.h"
+
 
 class SimpleGameObject;
 class Bomb;
@@ -51,6 +53,8 @@ private:
     
     std::shared_ptr<ParticlesObject> createBombParticles(const b2Vec2& pos);
     std::shared_ptr<ParticlesObject> createGrassParticles(const b2Vec2& pos, const b2Vec2& diapason);
+    cocos2d::Vector<cocos2d::SpriteFrame*> createFramesForAnimation(int numFrames, std::string namePrefix, const cocos2d::Size& frameSize);
+    
     void addBulbs(int quantity, const b2Vec2& bodySize, const b2Vec2& topLeftCorner, b2Body* body);
     
 	static void scale(const b2Vec2& size, cocos2d::Sprite* sprite);

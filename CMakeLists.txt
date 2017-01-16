@@ -140,6 +140,8 @@ set(sources
 	src/Particles/ParticlesFactory.h
 	src/Particles/ParticlesGenerator.cpp
 	src/Particles/ParticlesGenerator.h
+	src/Particles/ParticleGeneratorGroup.cpp
+	src/Particles/ParticleGeneratorGroup.h
 	src/Particles/ParticlesMover.cpp
 	src/Particles/ParticlesMover.h
 	src/Particles/ParticlesReplacer.cpp
