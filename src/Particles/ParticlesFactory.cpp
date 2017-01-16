@@ -21,36 +21,51 @@ ParticlesFactory::ParticleSystemControls ParticlesFactory::createGameParticlesSy
     
     std::shared_ptr<ParticlesSystem> system = ParticlesSystem::create();
     
-    ParticlesGenerator::Params gParams;
-    gParams.fileName = "resources/dust_16x16.png";
-    gParams.rate = 5;
-    gParams.velocityRange.set(b2Vec2(0, 1), b2Vec2(0, 2));
-    gParams.massRange.set(0.5, 1);
-    gParams.position = b2Vec2(Environment::getScreenSize().x / 2.0f, -0.5);
-    gParams.generationRange.set(b2Vec2(-7.0f , 0.0f), b2Vec2(7.0f, 0.0f));
-    gParams.field = forceField;
-    gParams.ttlRange.set(7, 15);
-    gParams.widthRange.set(0.1, 0.5);
-    
     ParticlesGenerator::Params gParams1;
-    gParams1.fileName = "resources/dust_32x32.png";
-    gParams1.rate = 10  ;
+    gParams1.fileName = "resources/dust_16x16.png";
+    gParams1.rate = 5;
     gParams1.velocityRange.set(b2Vec2(0, 1), b2Vec2(0, 2));
     gParams1.massRange.set(0.5, 1);
     gParams1.position = b2Vec2(Environment::getScreenSize().x / 2.0f, -0.5);
     gParams1.generationRange.set(b2Vec2(-7.0f , 0.0f), b2Vec2(7.0f, 0.0f));
     gParams1.field = forceField;
     gParams1.ttlRange.set(7, 15);
-    gParams1.widthRange.set(0.2, 0.7);
+    gParams1.widthRange.set(0.1, 0.5);
+    
+    ParticlesGenerator::Params gParams2;
+    gParams2.fileName = "resources/dust_32x32.png";
+    gParams2.rate = 3  ;
+    gParams2.velocityRange.set(b2Vec2(0, 1), b2Vec2(0, 2));
+    gParams2.massRange.set(0.5, 1);
+    gParams2.position = b2Vec2(Environment::getScreenSize().x / 2.0f, -0.5);
+    gParams2.generationRange.set(b2Vec2(-7.0f , 0.0f), b2Vec2(7.0f, 0.0f));
+    gParams2.field = forceField;
+    gParams2.ttlRange.set(7, 15);
+    gParams2.widthRange.set(0.2, 0.6);
+    
+    ParticlesGenerator::Params gParams3;
+    gParams3.fileName = "resources/dust_64x64.png";
+    gParams3.rate = 1  ;
+    gParams3.velocityRange.set(b2Vec2(0, 1), b2Vec2(0, 2));
+    gParams3.massRange.set(0.5, 1);
+    gParams3.position = b2Vec2(Environment::getScreenSize().x / 2.0f, -0.5);
+    gParams3.generationRange.set(b2Vec2(-7.0f , 0.0f), b2Vec2(7.0f, 0.0f));
+    gParams3.field = forceField;
+    gParams3.ttlRange.set(7, 15);
+    gParams3.widthRange.set(0.5, 0.8);
+    
     
     ParticlesFactory::ParticleSystemControls gInfo;
     gInfo.particlesNode = Node::create();
     
-    auto pGenerator1 = ParticlesGenerator::create(gParams, gInfo.particlesNode);
+    auto pGenerator1 = ParticlesGenerator::create(gParams1, gInfo.particlesNode);
     system->addSystemUpdater(pGenerator1);
     
-    auto pGenerator2 = ParticlesGenerator::create(gParams1, gInfo.particlesNode);
+    auto pGenerator2 = ParticlesGenerator::create(gParams2, gInfo.particlesNode);
     system->addSystemUpdater(pGenerator2);
+    
+    auto pGenerator3 = ParticlesGenerator::create(gParams3, gInfo.particlesNode);
+    system->addSystemUpdater(pGenerator3);
     
     auto pMover = ParticlesMover::create(forceField, 2);
     system->addParticlesUpdater(pMover);
@@ -64,7 +79,7 @@ ParticlesFactory::ParticleSystemControls ParticlesFactory::createGameParticlesSy
     pReplacer->setBounds(bounds);
     
     gInfo.particlesSystem = system;
-    gInfo.generatorGroup = ParticleGeneratorGroup::create({pGenerator1, pGenerator2});
+    gInfo.generatorGroup = ParticleGeneratorGroup::create({pGenerator1, pGenerator2, pGenerator3});
     
     return gInfo;
 }

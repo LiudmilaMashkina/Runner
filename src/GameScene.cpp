@@ -101,8 +101,9 @@ bool GameScene::init()
     auto particlesSystem = _particlesSystem;
     auto moveParticlesGenerator = [=](float delta)
     {
+        float screenWidth = Environment::getScreenSize().x;
         b2Vec2 gPos;
-        gPos.x = Environment::getScreenSize().x / 2.0f;
+        gPos.x = screenWidth / 2.0f + screenWidth / 4.0f;
         gPos.y = -0.5f;
         Vec2 tmpPos = particlesSystem.particlesNode->convertToNodeSpace(Convert::toPixels(gPos));
         gPos = Convert::toMeters(tmpPos);
