@@ -81,7 +81,7 @@ b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
         else if (randNumber == 11)
         {
             b2Vec2 wallPos = leftCorner;
-            auto wall = factory.createWall("wall_controller", wallPos, 3);
+            auto wall = factory.createWall("ice_wall_controller", wallPos, 3);
         }
         
         curLength += block.width;
@@ -157,7 +157,7 @@ b2Vec2 GameObjectComposer::assembleLightingLine(const LineDef& def)
         else if (randNumber == 19)
         {
             b2Vec2 wallPos = leftCorner;
-            auto wall = factory.createWall("wall_controller", wallPos, 3);
+            auto wall = factory.createWall("ice_wall_controller", wallPos, 3);
         }
         
         curLength += block.width;
