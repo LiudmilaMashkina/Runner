@@ -53,7 +53,8 @@ private:
     
     std::shared_ptr<ParticlesObject> createBombParticles(const b2Vec2& pos);
     std::shared_ptr<ParticlesObject> createGrassParticles(const b2Vec2& pos, const b2Vec2& diapason);
-    void createStoneHeap(const b2Vec2& pos, int quantity);
+    std::shared_ptr<ParticlesObject> createChippingParticles(const std::vector<std::string>& fileNames);
+    void createStoneHeap(const b2Vec2& pos, int quantity, const std::string& imageName);
     cocos2d::Vector<cocos2d::SpriteFrame*> createFramesForAnimation(int numFrames, std::string namePrefix, const cocos2d::Size& frameSize);
     
     void addBulbs(int quantity, const b2Vec2& bodySize, const b2Vec2& topLeftCorner, b2Body* body);
