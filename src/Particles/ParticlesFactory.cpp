@@ -184,3 +184,40 @@ ParticlesFactory::ParticleSystemControls ParticlesFactory::createGrassParticles(
     
     return info;
 }
+
+ParticlesFactory::ParticleSystemControls ParticlesFactory::createChippingParticles(const std::shared_ptr<TimeProvider>& timeProvider, cocos2d::Node* partNode, const std::vector<std::string>& fileNames)
+{
+    auto forceField = StaticForceField::create(b2Vec2(0, -2));
+    std::shared_ptr<ParticlesSystem> system = ParticlesSystem::create();
+    
+    std::vector<std::shared_ptr<ParticlesGenerator>> generators;
+    
+    ParticlesFactory::ParticleSystemControls info;
+    info.particlesNode = partNode;
+    
+    for (int i = 0; i < fileNames.size(); ++i)
+    {
+        ParticlesGenerator::Params params;
+        params.fileName = fileNames[i];
+        params.rate = 5;
+        params.velocityRange.set(b2Vec2(0, 0), b2Vec2(0, 0));
+        params.massRange.set(0.5, 1);
+        params.generationRange.set(b2Vec2(-0.1, 0.0f), b2Vec2(0.1, 0.0f));
+        params.field = forceField;
+        params.ttlRange.set(0.5, 1.0);
+        params.widthRange.set(0.1, 0.3);
+        
+        auto generator = ParticlesGenerator::create(params, info.particlesNode);
+        system->addSystemUpdater(generator);
+        generators.push_back(generator);
+    }
+    
+    auto partMover = ParticlesMover::create(forceField, 0);
+    system->addParticlesUpdater(partMover);
+    
+    info.particlesSystem = system;
+    info.generatorGroup = ParticleGeneratorGroup::create(generators);
+    
+    return info;
+}
+

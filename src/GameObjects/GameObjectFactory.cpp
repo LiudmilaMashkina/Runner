@@ -125,7 +125,10 @@ std::shared_ptr<IGameObject> GameObjectFactory::createCircle(const b2Vec2& pos, 
 
 	std::shared_ptr<SimpleGameObject> obj = std::shared_ptr<SimpleGameObject>(new SimpleGameObject(body, sprite, _world));
 	_world->addObject(obj);
-
+    
+    IGameObject* icircle = obj.get();
+    body->SetUserData(icircle);
+    
 	return obj;
 }
 
@@ -179,6 +182,12 @@ std::shared_ptr<Grass> GameObjectFactory::createGrass(const b2Vec2 &pos, float a
 
     IGameObject* igrass = obj.get();
     body->SetUserData(igrass);
+    
+    ///////// testing with stone heaps
+    b2Vec2 heapPos = pos;
+    heapPos.x += 0.5;
+    int q = Environment::generateIntRand(0, 5);
+    createStoneHeap(heapPos, q, "resources/ice_dynamic_stone.png");
     
     return obj;
 }
@@ -481,6 +490,17 @@ std::shared_ptr<WallController> GameObjectFactory::createWall(const std::string&
         controller->addStone(stone);
     }
     _world->addObject(controller);
+    
+    b2Vec2 heapPos1 = pos;
+    heapPos1.x += 0.2;
+    int q1 = Environment::generateIntRand(0, 5);
+    createStoneHeap(heapPos1, q1, "resources/ice_dynamic_stone.png");
+    
+    b2Vec2 heapPos2 = pos;
+    heapPos2.x -= 0.3;
+    int q2 = Environment::generateIntRand(0, 5);
+    createStoneHeap(heapPos2, q2, "resources/ice_dynamic_stone.png");
+    
 
     return controller;
 }
@@ -557,7 +577,38 @@ std::shared_ptr<ParticlesObject> GameObjectFactory::createGrassParticles(const b
     return obj;
 }
 
+std::shared_ptr<ParticlesObject> GameObjectFactory::createChippingParticles(const std::vector<std::string>& fileNames)
+{
+    auto system = ParticlesFactory::createChippingParticles(_world->getTimeProvider(), _world->getGraphics(), fileNames);
+    std::shared_ptr<ParticlesObject> obj = ParticlesObject::create(system, _world);
+    _world->addObject(obj);
+    
+    return obj;
+}
 
+void GameObjectFactory::createStoneHeap(const b2Vec2 &pos, int quantity, const std::string& imageName)
+{
+    //int q = 6; // tmp quantity. just for testing
+    int inRow = quantity;
+    if (quantity > 3)
+        inRow = quantity / 3;
+        
+    b2Vec2 stonePos = pos;
+    
+    for (int i = 0; i < quantity;)
+    {
+        float randRadius = 0.1;
+        for (int j = 0; j < inRow; ++j)
+        {
+            randRadius = Environment::generateFloatRand(0.05, 0.15);
+            auto stone = createCircle(stonePos, 0, randRadius, b2BodyType::b2_dynamicBody, imageName);
+            stonePos.x += randRadius * 0.5;
+            ++i;
+        }
+        stonePos.x = pos.x + randRadius * 0.5;
+        stonePos.y += randRadius * 0.5;
+    }
+}
 
 Vector<SpriteFrame*> GameObjectFactory::createFramesForAnimation(int numFrames, std::string namePrefix, const Size& frameSize)
 {

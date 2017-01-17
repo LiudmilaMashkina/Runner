@@ -90,14 +90,14 @@ b2Vec2 GameLevelGenerator::generateLine(const b2Vec2 &startPos, ObjectThemer::Th
     std::string fileName = "resources/" + themePrefix + "_line_blue_";
     
     GameObjectComposer::LineDef line;
-    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "0.png", "", 0.5f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "1.png", "", 0.75f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "2.png", "", 1.0f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "3.png", "", 2.0f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "4.png", "", 1.5f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "5.png", "", 0.5f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "6.png", "", 0.5f));
-    line.length = 10;
+    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "0.png", "", 0.25f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "1.png", "", 0.35f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "2.png", "", 0.5f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "3.png", "", 1.0f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "4.png", "", 0.75f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "5.png", "", 0.25f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "6.png", "", 0.25f));
+    line.length = 18;
     line.maxOverlap = 0;
     line.startPos.Set(startPos.x, startPos.y);
     
