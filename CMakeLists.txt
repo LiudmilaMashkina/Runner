@@ -67,6 +67,8 @@ set(sources
 	src/GameObjects/GameObjectFactory.h
 	src/GameObjects/Grass.cpp
 	src/GameObjects/Grass.h
+	src/GameObjects/GroundStone.cpp
+	src/GameObjects/GroundStone.h
 	src/GameObjects/IGameLavelInfo.h
 	src/GameObjects/IGameObject.h
 	src/GameObjects/SimpleGameObject.cpp

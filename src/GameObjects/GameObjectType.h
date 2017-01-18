@@ -11,6 +11,7 @@ enum class GameObjectType
     Animation,
     PariclesObject,
     Grass,
+    GroundStone,
     LightingStone,
     WallStone,
     WallController

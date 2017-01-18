@@ -10,6 +10,7 @@
 #include "BridgeColumn.h"
 #include "Coin.h"
 #include "Grass.h"
+#include "GroundStone.h"
 #include "LightingStone.h"
 #include "CollisionCategory.h"
 #include "AnimationObject.h"
@@ -48,6 +49,14 @@ std::shared_ptr<SimpleGameObject> GameObjectFactory::createBox(const b2Vec2& pos
 
 std::shared_ptr<IGameObject> GameObjectFactory::createStaticStone(const b2Vec2 & topLeftCornerPos, float width, const std::string & fileName, float* outHeight)
 {
+    //just for testing
+    std::vector<std::string> names;
+    names.push_back("resources/stone_chipping_blue_0.png");
+    names.push_back("resources/stone_chipping_blue_1.png");
+    
+    auto particles = createChippingParticles(names);
+    particles->setPaused(true);
+    
 	Sprite* sprite = createSprite(fileName);
 
 	Vec2 spriteSize = sprite->getContentSize();
@@ -62,7 +71,7 @@ std::shared_ptr<IGameObject> GameObjectFactory::createStaticStone(const b2Vec2 &
 	physShape.SetAsBox(bodySize.x / 2, bodySize.y / 2);
 	b2Body* body = createBody(b2BodyType::b2_staticBody, &physShape, bodyCenter, 0);
     
-	std::shared_ptr<SimpleGameObject> obj = std::shared_ptr<SimpleGameObject>(new SimpleGameObject(body, sprite, _world));
+    std::shared_ptr<GroundStone> obj = GroundStone::create(body, _world, sprite, particles);
 	_world->addObject(obj);
 
     IGameObject* iobj = obj.get();
