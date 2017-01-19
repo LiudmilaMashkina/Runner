@@ -26,10 +26,11 @@ public:
 		};
 
 		std::vector<Block> blocks;
+        std::string chippingNamePrefix;
 		b2Vec2 startPos;
 		float length = 0;
 		float maxOverlap = 0;
-	};
+    };
 
 	struct BridgeDef
 	{
@@ -42,7 +43,7 @@ public:
 
 	GameObjectComposer(GameWorld* world);
 
-	b2Vec2 assembleLine(const LineDef& def);
+    b2Vec2 assembleLine(const LineDef& def);
     b2Vec2 assembleLightingLine(const LineDef& def);
 	b2Vec2 assembleBridge(const BridgeDef& def, ObjectThemer::ThemeId theme);
     

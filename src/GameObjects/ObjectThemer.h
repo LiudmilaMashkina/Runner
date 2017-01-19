@@ -19,7 +19,7 @@ public:
 	ObjectThemer();
     ~ObjectThemer();
 
-    ThemeId getTheme() { return _currentTheme; }
+    ThemeId getTheme();
     
 private:
     ThemeId _currentTheme = ThemeId::Stone;

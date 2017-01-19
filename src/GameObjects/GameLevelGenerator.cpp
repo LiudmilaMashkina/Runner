@@ -44,8 +44,8 @@ b2Vec2 GameLevelGenerator::generateComposition(CompositionId compositionId, cons
     
     switch (compositionId)
     {
-        case CompositionId::Bridge :
-            return generateBridge(startPos, theme);
+        //case CompositionId::Bridge :
+            //return generateBridge(startPos, theme);
         case CompositionId::Line :
             return generateLine(startPos, theme);
         //case CompositionId::LightingLine :
@@ -87,7 +87,23 @@ b2Vec2 GameLevelGenerator::generateIceLine(const b2Vec2 &startPos)
 b2Vec2 GameLevelGenerator::generateLine(const b2Vec2 &startPos, ObjectThemer::ThemeId theme)
 {
     std::string themePrefix = "stone";
-    std::string fileName = "resources/" + themePrefix + "_line_blue_";
+    std::string typeSuffix = "default_";
+    
+    if (theme == ObjectThemer::ThemeId::Ice)
+        themePrefix = "ice";
+    else if (theme == ObjectThemer::ThemeId::Wood)
+        themePrefix = "wood";
+    else if (theme == ObjectThemer::ThemeId::Stone)
+    {
+        int rand = Environment::generateIntRand(0, 1);
+        if (rand == 0)
+            typeSuffix = "blue_";
+        else
+            typeSuffix = "brown_";
+    }
+    
+    std::string fileName = "resources/" + themePrefix + "_line_" + typeSuffix;
+    std::string chippingName = "resources/" + themePrefix + "_chipping_" + typeSuffix;
     
     GameObjectComposer::LineDef line;
     line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "0.png", "", 0.25f));
@@ -97,11 +113,13 @@ b2Vec2 GameLevelGenerator::generateLine(const b2Vec2 &startPos, ObjectThemer::Th
     line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "4.png", "", 0.75f));
     line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "5.png", "", 0.25f));
     line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "6.png", "", 0.25f));
+    line.chippingNamePrefix = chippingName;
     line.length = 18;
     line.maxOverlap = 0;
     line.startPos.Set(startPos.x, startPos.y);
     
     GameObjectComposer composer = GameObjectComposer(_world);
+    
     return composer.assembleLine(line);
 }
 

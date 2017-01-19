@@ -47,12 +47,12 @@ std::shared_ptr<SimpleGameObject> GameObjectFactory::createBox(const b2Vec2& pos
 	return obj;
 }
 
-std::shared_ptr<IGameObject> GameObjectFactory::createStaticStone(const b2Vec2 & topLeftCornerPos, float width, const std::string & fileName, float* outHeight)
+std::shared_ptr<IGameObject> GameObjectFactory::createStaticStone(const b2Vec2 & topLeftCornerPos, float width, const std::string & fileName, const std::string& chippingPrefix, float* outHeight)
 {
     //just for testing
     std::vector<std::string> names;
-    names.push_back("resources/stone_chipping_blue_0.png");
-    names.push_back("resources/stone_chipping_blue_1.png");
+    names.push_back(chippingPrefix + "0.png");
+    names.push_back(chippingPrefix + "1.png");
     
     auto particles = createChippingParticles(names);
     particles->setPaused(true);

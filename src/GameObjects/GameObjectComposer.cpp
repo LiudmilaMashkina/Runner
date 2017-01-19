@@ -33,7 +33,7 @@ b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
 		b2Vec2 leftCorner(def.startPos.x + curLength, def.startPos.y);
         
         float height = 0;
-		auto stone = factory.createStaticStone(leftCorner, block.width, block.textureName, &height);
+		auto stone = factory.createStaticStone(leftCorner, block.width, block.textureName, def.chippingNamePrefix, &height);
         
         int randNumber = Environment::generateIntRand(1, 30);
         b2Vec2 jointPos = leftCorner + b2Vec2(block.width / 2, 0);
