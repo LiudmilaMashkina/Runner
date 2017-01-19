@@ -22,10 +22,6 @@ SimpleGameObject::SimpleGameObject(body, node, world),
 _animation(animation),
 _particles(particles)
 {
-    //_node = Sprite::create("resources/bomb_0.png");
-    //_world->getGraphics()->addChild(_node);
-    
-    
     update(0);
 }
 

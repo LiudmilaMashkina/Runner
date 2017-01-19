@@ -191,20 +191,20 @@ ParticlesFactory::ParticleSystemControls ParticlesFactory::createChippingParticl
     std::shared_ptr<ParticlesSystem> system = ParticlesSystem::create();
     
     std::vector<std::shared_ptr<ParticlesGenerator>> generators;
-    
     ParticlesFactory::ParticleSystemControls info;
     info.particlesNode = partNode;
+    
     
     for (int i = 0; i < fileNames.size(); ++i)
     {
         ParticlesGenerator::Params params;
         params.fileName = fileNames[i];
-        params.rate = 5;
-        params.velocityRange.set(b2Vec2(0, 0), b2Vec2(0, 0));
+        params.rate = 0.8;
+        params.velocityRange.set(b2Vec2(0, -1), b2Vec2(0, -2));
         params.massRange.set(0.5, 1);
-        params.generationRange.set(b2Vec2(-0.1, 0.0f), b2Vec2(0.1, 0.0f));
+        params.generationRange.set(b2Vec2(-0.05, 0.0f), b2Vec2(0.05, 0.0f));
         params.field = forceField;
-        params.ttlRange.set(0.5, 1.0);
+        params.ttlRange.set(2.0, 5.0);
         params.widthRange.set(0.1, 0.3);
         
         auto generator = ParticlesGenerator::create(params, info.particlesNode);
@@ -217,7 +217,7 @@ ParticlesFactory::ParticleSystemControls ParticlesFactory::createChippingParticl
     
     info.particlesSystem = system;
     info.generatorGroup = ParticleGeneratorGroup::create(generators);
-    
+
     return info;
 }
 

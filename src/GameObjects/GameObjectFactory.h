@@ -26,7 +26,7 @@ public:
 	GameObjectFactory(GameWorld* world);
 	std::shared_ptr<SimpleGameObject> createBox(const b2Vec2& pos, float angle, const b2Vec2& size, b2BodyType type, const std::string& fileName);
 	
-    std::shared_ptr<IGameObject> createStaticStone(const b2Vec2& topLeftCornerPos, float width, const std::string& fileName, float* outHeight = nullptr);
+    std::shared_ptr<IGameObject> createStaticStone(const b2Vec2& topLeftCornerPos, float width, const std::string& fileName, const std::string& chippingPrefix, float* outHeight = nullptr);
     
     std::shared_ptr<IGameObject> createLightingStone(const b2Vec2& topLeftCorner, float width, const std::string& fileName, const std::string& lightingName, float* outHeight = nullptr);
 	

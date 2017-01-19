@@ -18,19 +18,14 @@ Grass::Grass(b2Body* body,
            GameWorld* world,
              Node* node,
              const std::weak_ptr<ParticlesObject>& particles) :
-_body(body),
-_world(world),
-_node(node),
+SimpleGameObject::SimpleGameObject(body, node, world),
 _particles(particles)
 {
 	update(0);
 }
 
 Grass::~Grass()
-{
-	_node->removeFromParentAndCleanup(true);
-	_world->getPhysics()->DestroyBody(_body);
-}
+{}
 
 void Grass::update(float delta)
 {
@@ -43,11 +38,6 @@ void Grass::update(float delta)
     std::shared_ptr<ParticlesObject> strongPtr = _particles.lock();
     assert(strongPtr);
     strongPtr->setPosition(bodyPos);
-}
-
-b2Vec2 Grass::getPosition()
-{
-    return Convert::toMeters(_node->getPosition());
 }
 
 void Grass::onContactBegin(std::shared_ptr<IGameObject> obj)
