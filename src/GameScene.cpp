@@ -45,6 +45,12 @@ bool GameScene::init()
     _background = createBackground("resources/background_square_256x256.png");
     addChild(_background);
 
+    _backgroundTrees = createBackground("resources/background_trees_1024x1024.png");
+    
+    //_backgroundTrees = createSecondPlan("resources/background_trees_1024x1024.png", 2);
+    addChild(_backgroundTrees);
+    
+    
     _gameNode = Node::create();
     addChild(_gameNode);
     
@@ -128,6 +134,13 @@ bool GameScene::init()
     backgroundLayer.clamp = true;
     _camera->addLayer(backgroundLayer);
 
+    GameCamera::LayerInfo backgroundTreesLayer;
+    backgroundTreesLayer.layer = _backgroundTrees;
+    backgroundTreesLayer.speedFactor = 0.4f;
+    backgroundTreesLayer.zoomFactor = 0.4f;
+    backgroundTreesLayer.clamp = true;
+    _camera->addLayer(backgroundTreesLayer);
+    
     GameCamera::LayerInfo particlesLayer;
     particlesLayer.layer = _particlesSystem.particlesNode;
     particlesLayer.speedFactor = 0.5f;
@@ -206,5 +219,17 @@ Sprite* GameScene::createBackground(const std::string & backgroundName)
     background->setAnchorPoint(Vec2(0, 0));
     
     return background;
+}
+
+Sprite* GameScene::createSecondPlan(const std::string &planName, float ratioToScreenSize)
+{
+    auto plan = Sprite::create(planName);
+    
+    float scale = ratioToScreenSize * Convert::toPixels(_winSize.x) / plan->getContentSize().width;
+    
+    plan->setScale(scale);
+    plan->setAnchorPoint(Vec2(0, 0));
+    
+    return plan;
 }
 

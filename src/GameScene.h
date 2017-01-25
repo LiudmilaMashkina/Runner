@@ -34,6 +34,7 @@ public:
 private:
 	GameScene() {}
     cocos2d::Sprite* createBackground(const std::string & backgroundName);
+    cocos2d::Sprite* createSecondPlan(const std::string& planName, float ratioToScreenSize);
     
     cocos2d::Node* _gameNode = nullptr;
 	std::shared_ptr<GameWorld> _world;
@@ -44,6 +45,7 @@ private:
     std::shared_ptr<HeadUpDisplay> _hud;
     ParticlesFactory::ParticleSystemControls _particlesSystem;
     cocos2d::Sprite* _background = nullptr;
+    cocos2d::Sprite* _backgroundTrees = nullptr;
     std::shared_ptr<DropController> _dropController;
     
     b2Vec2 _winSize = {0.0f, 0.0f};

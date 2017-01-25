@@ -171,11 +171,13 @@ b2Vec2 GameObjectComposer::assembleLightingLine(const LineDef& def)
 
 b2Vec2 GameObjectComposer::assembleBridge(const BridgeDef & def, ObjectThemer::ThemeId theme)
 {
-    std::string themePrefix;
-    if (theme == ObjectThemer::ThemeId::Stone)
-        themePrefix = "stone";
-    else
+    std::string themePrefix = "stone";
+    
+    if (theme == ObjectThemer::ThemeId::Wood)
+        themePrefix = "wood";
+    else if (theme == ObjectThemer::ThemeId::Ice)
         themePrefix = "ice";
+    
     std::string objName = themePrefix + "_totem";
     
 	GameObjectFactory factory = GameObjectFactory(_world);

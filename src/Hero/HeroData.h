@@ -14,8 +14,8 @@ namespace cocos2d
  */
 struct HeroData
 {
-    b2Vec2 acceleration;
-    b2Vec2 velocity;
+    b2Vec2 acceleration = {0, 0};
+    b2Vec2 velocity = {0, 0};
     cocos2d::Node* node = nullptr;
     b2Body* body = nullptr;
     AnimationEnginePtr animationEngine;

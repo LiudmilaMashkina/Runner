@@ -27,6 +27,12 @@ float GameLevelGenerator::getCurrentBottom(float valueX)
 
 void GameLevelGenerator::generateUntil(const float frontier)
 {
+    if (frontier > _exitPos.x + 1000)
+    {
+        assert(false);
+        return;
+    }
+    
     while (_exitPos.x <= frontier)
     {
         int start = static_cast<int>(CompositionId::EnumStart) + 1;
@@ -44,8 +50,8 @@ b2Vec2 GameLevelGenerator::generateComposition(CompositionId compositionId, cons
     
     switch (compositionId)
     {
-        //case CompositionId::Bridge :
-            //return generateBridge(startPos, theme);
+        case CompositionId::Bridge :
+            return generateBridge(startPos, theme);
         case CompositionId::Line :
             return generateLine(startPos, theme);
         //case CompositionId::LightingLine :
