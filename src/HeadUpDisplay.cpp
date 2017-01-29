@@ -37,34 +37,37 @@ bool HeadUpDisplay::initWithScene(GenericScene* scene)
         return false;
     
     auto winSize = Convert::toPixels(Environment::getScreenSize());
+    float winOffset = winSize.x * 0.005;
     
     _scene = scene;
     
-    auto referenceTexture = TextureCache::getInstance()->addImage("resources/hud_lives_base.png");
-    float uiScale = winSize.y * 0.13 / referenceTexture->getContentSize().height;
-    float gap = winSize.y * 0.003;
+    auto livesTexture = TextureCache::getInstance()->addImage("resources/hud_lives_base.png");
+    auto labelBackgroundTexture = TextureCache::getInstance()->addImage("resources/hud_dist_coins_base.png");
     
-    createPauseButton(uiScale);
-    createLifesBar(uiScale);
-    createDistanceLabel(uiScale, gap);
-    createCoinsLabel(uiScale, gap);
+    float uiScale = winSize.y * 0.13 / livesTexture->getContentSize().height;
+    float horizontalOffset = uiScale * (livesTexture->getContentSize().height - labelBackgroundTexture->getContentSize().height * 2);
+    
+    createPauseButton(uiScale, winOffset);
+    createLifesBar(uiScale, winOffset);
+    createDistanceLabel(uiScale, horizontalOffset, winOffset);
+    createCoinsLabel(uiScale, horizontalOffset, winOffset);
     
     return true;
 }
 
-void HeadUpDisplay::createPauseButton(float scale)
+void HeadUpDisplay::createPauseButton(float scale, float winOffset)
 {
-    _pauseButton.reset(gui2::Button::create("resources/button-pause-normal.png",
-                                            "resources/button-pause-pressed.png"));
+    _pauseButton.reset(gui2::Button::create("resources/hud_pause_button.png",
+                                            "resources/hud_pause_button_pressed.png"));
     addChild(_pauseButton.get());
     _pauseButton->setAnchorPoint({1, 1});
-    _pauseButton->setPosition(Convert::toPixels(Environment::getScreenSize()));
+    _pauseButton->setPosition(Convert::toPixels(Environment::getScreenSize()) - Vec2(winOffset, winOffset));
     _pauseButton->setScale(scale);
     _pauseButton->setCallback(std::bind(&HeadUpDisplay::onPauseClicked,
                                         this, std::placeholders::_1));
 }
 
-void HeadUpDisplay::createLifesBar(float scale)
+void HeadUpDisplay::createLifesBar(float scale, float winOffset)
 {
     auto winSize = Convert::toPixels(Environment::getScreenSize());
 
@@ -78,12 +81,12 @@ void HeadUpDisplay::createLifesBar(float scale)
     _livesBar->setScale(scale);
     _livesBar->setRotation(-90);
     _livesBar->setAnchorPoint({1, 1});
-    _livesBar->setPosition(0, winSize.y);
+    _livesBar->setPosition(winOffset, winSize.y - winOffset);
     _livesBar->setScale(scale);
     setLifes(100);
 }
 
-void HeadUpDisplay::createDistanceLabel(float scale, float gap)
+void HeadUpDisplay::createDistanceLabel(float scale, float horizontalOffset, float winOffset)
 {
     auto winSize = Convert::toPixels(Environment::getScreenSize());
 
@@ -91,7 +94,7 @@ void HeadUpDisplay::createDistanceLabel(float scale, float gap)
     addChild(distBase);
     distBase->setScale(scale);
     distBase->setAnchorPoint({0, 1});
-    distBase->setPosition(NodeUtils::getScaledSize(_livesBar.get()).x + gap, winSize.y);
+    distBase->setPosition(NodeUtils::getScaledSize(_livesBar.get()).x + horizontalOffset + winOffset, winSize.y - winOffset);
     _distanceLabel.reset(Label::createWithTTF("0", "resources/Monster_AG.ttf", 65)); // TODO: change font size
     distBase->addChild(_distanceLabel.get());
     _distanceLabel->setAnchorPoint({0, 0.5});
@@ -100,7 +103,7 @@ void HeadUpDisplay::createDistanceLabel(float scale, float gap)
     _distanceLabel->setColor(Color3B(139, 197, 63));
 }
 
-void HeadUpDisplay::createCoinsLabel(float scale, float gap)
+void HeadUpDisplay::createCoinsLabel(float scale, float horizontalOffset, float winOffset)
 {
     auto winSize = Convert::toPixels(Environment::getScreenSize());
 
@@ -108,8 +111,8 @@ void HeadUpDisplay::createCoinsLabel(float scale, float gap)
     addChild(coinsBase);
     coinsBase->setScale(scale);
     coinsBase->setAnchorPoint({0, 0});
-    coinsBase->setPosition(NodeUtils::getScaledSize(_livesBar.get()).x + gap,
-                           winSize.y - NodeUtils::getScaledSize(_livesBar.get()).y);
+    coinsBase->setPosition(NodeUtils::getScaledSize(_livesBar.get()).x + horizontalOffset + winOffset,
+                           winSize.y - NodeUtils::getScaledSize(_livesBar.get()).y - winOffset);
     
     auto coinsSign = Sprite::create("resources/hud_coin_sign.png");
     coinsBase->addChild(coinsSign);

@@ -44,10 +44,10 @@ public:
 private:
     bool initWithScene(GenericScene* scene);
     
-    void createPauseButton(float scale);
-    void createLifesBar(float scale);
-    void createDistanceLabel(float scale, float gap);
-    void createCoinsLabel(float scale, float gap);
+    void createPauseButton(float scale, float winOffset);
+    void createLifesBar(float scale, float winOffset);
+    void createDistanceLabel(float scale, float horizontalOffset, float winOffset);
+    void createCoinsLabel(float scale, float horizontalOffset, float winOffset);
     
     StrongPtr<gui2::Button> _pauseButton;
     StrongPtr<PauseMenu> _pauseMenu;
