@@ -1,6 +1,7 @@
 #include <2d/CCScene.h>
 #include <2d/CCAction.h>
 #include <2d/CCActionEase.h>
+#include <2d/CCLabel.h>
 #include "TestScene.h"
 #include "HeadUpDisplay.h"
 #include "Utils/Convert.h"
@@ -12,6 +13,7 @@
 #include "GUI/Button.h"
 #include "GUI2/Button.h"
 #include "GUI2/CheckBox.h"
+#include "GUI2/ProgressBar.h"
 #include "GUI/BoxLayout.h"
 #include "GUI/View.h"
 #include "GUI/CheckBox.h"
@@ -33,50 +35,93 @@ bool HeadUpDisplay::initWithScene(GenericScene* scene)
 {
     if (!Node::init())
         return false;
-        
+    
+    auto winSize = Convert::toPixels(Environment::getScreenSize());
+    
     _scene = scene;
     
+    auto referenceTexture = TextureCache::getInstance()->addImage("resources/hud_lives_base.png");
+    float uiScale = winSize.y * 0.13 / referenceTexture->getContentSize().height;
+    float gap = winSize.y * 0.003;
+    
+    createPauseButton(uiScale);
+    createLifesBar(uiScale);
+    createDistanceLabel(uiScale, gap);
+    createCoinsLabel(uiScale, gap);
+    
+    return true;
+}
+
+void HeadUpDisplay::createPauseButton(float scale)
+{
     _pauseButton.reset(gui2::Button::create("resources/button-pause-normal.png",
                                             "resources/button-pause-pressed.png"));
     addChild(_pauseButton.get());
     _pauseButton->setAnchorPoint({1, 1});
     _pauseButton->setPosition(Convert::toPixels(Environment::getScreenSize()));
-    _pauseButton->setCallback(std::bind(&HeadUpDisplay::onPauseClicked, this, std::placeholders::_1));
+    _pauseButton->setScale(scale);
+    _pauseButton->setCallback(std::bind(&HeadUpDisplay::onPauseClicked,
+                                        this, std::placeholders::_1));
+}
+
+void HeadUpDisplay::createLifesBar(float scale)
+{
+    auto winSize = Convert::toPixels(Environment::getScreenSize());
+
+    _livesBar.reset(gui2::ProgressBar::create("resources/hud_lives_base.png",
+                                              "resources/hud_lives_filling.png"));
+    addChild(_livesBar.get());
+    auto outline = Sprite::create("resources/hud_lives_outline.png");
+    outline->setPosition(Vec2(_livesBar->getContentSize()) / 2);
+    _livesBar->addChild(outline);
     
+    _livesBar->setScale(scale);
+    _livesBar->setRotation(-90);
+    _livesBar->setAnchorPoint({1, 1});
+    _livesBar->setPosition(0, winSize.y);
+    _livesBar->setScale(scale);
+    setLifes(100);
+}
+
+void HeadUpDisplay::createDistanceLabel(float scale, float gap)
+{
+    auto winSize = Convert::toPixels(Environment::getScreenSize());
+
+    auto distBase = Sprite::create("resources/hud_dist_coins_base.png");
+    addChild(distBase);
+    distBase->setScale(scale);
+    distBase->setAnchorPoint({0, 1});
+    distBase->setPosition(NodeUtils::getScaledSize(_livesBar.get()).x + gap, winSize.y);
+    _distanceLabel.reset(Label::createWithTTF("0", "resources/Monster_AG.ttf", 65)); // TODO: change font size
+    distBase->addChild(_distanceLabel.get());
+    _distanceLabel->setAnchorPoint({0, 0.5});
+    _distanceLabel->setPosition(distBase->getContentSize().width * 0.05,
+                                distBase->getContentSize().height / 2);
+    _distanceLabel->setColor(Color3B(139, 197, 63));
+}
+
+void HeadUpDisplay::createCoinsLabel(float scale, float gap)
+{
+    auto winSize = Convert::toPixels(Environment::getScreenSize());
+
+    auto coinsBase = Sprite::create("resources/hud_dist_coins_base.png");
+    addChild(coinsBase);
+    coinsBase->setScale(scale);
+    coinsBase->setAnchorPoint({0, 0});
+    coinsBase->setPosition(NodeUtils::getScaledSize(_livesBar.get()).x + gap,
+                           winSize.y - NodeUtils::getScaledSize(_livesBar.get()).y);
     
-    /*
-    _pauseButton = gui::Button::create("resources/button-pause-normal.png", "resources/button-pause-pressed.png");
-    addView(_pauseButton);
-    _pauseButton->setMargin(5, 5, 5, 5);
-    _pauseButton->setCallback(std::bind(&HeadUpDisplay::onPauseClicked, this, std::placeholders::_1));
+    auto coinsSign = Sprite::create("resources/hud_coin_sign.png");
+    coinsBase->addChild(coinsSign);
+    coinsSign->setAnchorPoint({0, 0.5});
+    coinsSign->setPosition(coinsBase->getContentSize().width * 0.05,
+                           coinsBase->getContentSize().height / 2);
     
-    Vec2 pausePos;
-    pausePos.x = Convert::toPixels(Environment::getScreenSize().x) - _pauseButton->getSize().x;
-    pausePos.y = Convert::toPixels(Environment::getScreenSize().y) - _pauseButton->getSize().y;
-    _pauseButton->setPosition(pausePos);
-    
-    _progressBar = gui::ProgressBar::create("resources/life_bar_base.png", "resources/life_bar_progress.png");
-    addView(_progressBar);
-    Vec2 progressPos;
-    progressPos.x = 0.0f;
-    progressPos.y = Convert::toPixels(Environment::getScreenSize().y) - _progressBar->getSize().y;
-    _progressBar->setPosition(progressPos);
-    
-    _distanceBar = gui::Label::create("resources/dist_bar.png", "0", "resources/Monster_AG.ttf", 65);
-    addView(_distanceBar);
-    Vec2 distPos;
-    distPos.x = progressPos.x + _progressBar->getSize().x;
-    distPos.y = progressPos.y;
-    _distanceBar->setPosition(distPos);
-    
-    _coinsBar = gui::Label::create("resources/coins_bar.png", "0", "resources/Monster_AG.ttf", 65);
-    addView(_coinsBar);
-    Vec2 coinsPos = distPos;
-    coinsPos.x += _distanceBar->getSize().x;
-    _coinsBar->setPosition(coinsPos);
-    */
-     
-    return true;
+    _coinsLabel.reset(Label::createWithTTF("0", "resources/Monster_AG.ttf", 65)); // TODO: change font size
+    coinsBase->addChild(_coinsLabel.get());
+    _coinsLabel->setAnchorPoint({0, 0.5});
+    _coinsLabel->setPosition(coinsSign->getPosition().x + coinsSign->getContentSize().width, coinsBase->getContentSize().height / 2);
+    _coinsLabel->setColor(Color3B(139, 197, 63));
 }
 
 HeadUpDisplay::~HeadUpDisplay()
@@ -122,20 +167,28 @@ void HeadUpDisplay::onMainMenuClicked()
 
 void HeadUpDisplay::setDistance(int dist)
 {
-//    assert(_distanceBar);
-//    _distanceBar->setNum(dist);
+    std::string text = std::to_string(dist);
+    _distanceLabel->setString(text);
 }
 
 void HeadUpDisplay::setLifes(int lifes)
 {
-//    assert(_progressBar);
-//    _progressBar->setLifes(lifes);
+    if (lifes <= 25)
+        _livesBar->setProgressColor(Color3B(200, 37, 44));
+    else if (lifes <= 50)
+        _livesBar->setProgressColor(Color3B(204, 126, 45));
+    else if (lifes <= 75)
+        _livesBar->setProgressColor(Color3B(212, 222, 37));
+    else
+        _livesBar->setProgressColor(Color3B(139, 197, 63));
+    
+    _livesBar->setProgress(lifes);
 }
 
 void HeadUpDisplay::setCoins(int coins)
 {
-//    assert(_coinsBar);
-//    _coinsBar->setNum(coins);
+    std::string text = std::to_string(coins);
+    _coinsLabel->setString(text);
 }
 
 void HeadUpDisplay::createDeathMenu(int distance, int coins)

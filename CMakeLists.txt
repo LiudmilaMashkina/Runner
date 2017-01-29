@@ -113,6 +113,8 @@ set(sources
 	src/GUI2/Button.h
 	src/GUI2/CheckBox.cpp
 	src/GUI2/CheckBox.h
+	src/GUI2/ProgressBar.cpp
+	src/GUI2/ProgressBar.h
 	src/HeadUpDisplay.cpp
 	src/HeadUpDisplay.h
 	src/PauseMenu.h

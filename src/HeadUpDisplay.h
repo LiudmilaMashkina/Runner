@@ -15,6 +15,7 @@ namespace gui
 namespace gui2
 {
     class Button;
+    class ProgressBar;
 }
 
 class GenericScene;
@@ -43,13 +44,15 @@ public:
 private:
     bool initWithScene(GenericScene* scene);
     
-    //void createStatsMenu();
-    void createPauseMenu();
+    void createPauseButton(float scale);
+    void createLifesBar(float scale);
+    void createDistanceLabel(float scale, float gap);
+    void createCoinsLabel(float scale, float gap);
     
     StrongPtr<gui2::Button> _pauseButton;
     StrongPtr<PauseMenu> _pauseMenu;
-    std::shared_ptr<gui::ProgressBar> _progressBar;
-    std::shared_ptr<gui::Label> _distanceBar;
-    std::shared_ptr<gui::Label> _coinsBar;
+    StrongPtr<gui2::ProgressBar> _livesBar;
+    StrongPtr<cocos2d::Label> _distanceLabel;
+    StrongPtr<cocos2d::Label> _coinsLabel;
     GenericScene* _scene = nullptr;
 };
