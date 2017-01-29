@@ -109,6 +109,8 @@ set(sources
 	src/GUI/ProgressBar.h
 	src/GUI/Placer.cpp
 	src/GUI/Placer.h
+	src/GUI2/Button.cpp
+	src/GUI2/Button.h
 	src/HeadUpDisplay.cpp
 	src/HeadUpDisplay.h
 	src/Hero/AttackState.cpp
