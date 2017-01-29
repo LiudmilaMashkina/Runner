@@ -32,7 +32,6 @@
 #include "GameObjects/WallController.h"
 #include "DropController.h"
 
-
 USING_NS_CC;
 
 bool GameScene::init()
@@ -156,7 +155,8 @@ bool GameScene::init()
     _camera->addLayer(gameLayer);
 
 
-    _hud = HeadUpDisplay::create(this);
+    _hud.reset(HeadUpDisplay::create(this));
+    addChild(_hud.get());
 
     _dropController = DropController::create(_world.get());
     addUpdatable(_dropController);
@@ -165,6 +165,16 @@ bool GameScene::init()
 	//_gameNode->addChild(physDebugDraw, 100);
  
     return true;
+}
+
+GameScene::GameScene()
+{
+    
+}
+
+GameScene::~GameScene()
+{
+    
 }
 
 void GameScene::update(float delta)

@@ -30,9 +30,17 @@ namespace gui
 
 		setNode(node);
 	}
+    
+    void Button::setEnabled(bool enabled)
+    {
+        _enabled = enabled;
+    }
 
 	bool Button::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * event)
 	{
+        if (!_enabled)
+            return false;
+        
 		Vec2 touchPos =	getNode()->convertTouchToNodeSpace(touch);
 
 		cocos2d::Vec2 size = getSize();

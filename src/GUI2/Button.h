@@ -1,7 +1,7 @@
 #pragma once
 
 #include "2d/CCSprite.h"
-#include "utils/MacroCreate.h"
+#include "Utils/MacroCreate.h"
 
 namespace gui2
 {
@@ -13,6 +13,10 @@ namespace gui2
                          const std::string&, pressed);
         
 		void setCallback(const std::function<void(Button*)> callback);
+        
+        void setEnabled(bool enabled) {_enabled = enabled;}
+        
+        virtual void setOpacity(GLubyte opacity) override;
 
 	private:
 		bool initWith(const std::string &normal, const std::string &pressed);
@@ -25,6 +29,8 @@ namespace gui2
 		cocos2d::Sprite* _pressed = nullptr;
 
 		std::function<void(Button*)> _callback;
+        
+        bool _enabled = true;
 	};
 
 }

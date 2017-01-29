@@ -3,10 +3,22 @@
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventDispatcher.h"
 
-namespace gui
+USING_NS_CC;
+
+namespace gui2
 {
-	CheckBox::CheckBox(cocos2d::Node* node, const std::string &normal, const std::string &checked)
+    void CheckBox::setOpacity(GLubyte opacity)
+    {
+        Node::setOpacity(opacity);
+        _normal->setOpacity(opacity);
+        _checked->setOpacity(opacity);
+    }
+    
+	bool CheckBox::initWith(const std::string &normal, const std::string &checked)
 	{
+        if (!Node::init())
+            return false;
+        
 		cocos2d::Sprite* normalSprite = cocos2d::Sprite::create(normal);
 		normalSprite->setAnchorPoint(Vec2(0, 0));
 		normalSprite->setVisible(true);
@@ -17,17 +29,17 @@ namespace gui
 		checkedSprite->setVisible(false);
 		_checked = checkedSprite;
 
-		node->setContentSize(normalSprite->getContentSize());
-		node->addChild(normalSprite);
-		node->addChild(checkedSprite);
+		setContentSize(normalSprite->getContentSize());
+		addChild(normalSprite);
+		addChild(checkedSprite);
 
 		auto touchListener = cocos2d::EventListenerTouchOneByOne::create();
 		touchListener->onTouchBegan = CC_CALLBACK_2(CheckBox::onTouchBegan, this);
 		touchListener->onTouchMoved = CC_CALLBACK_2(CheckBox::onTouchMoved, this);
 		touchListener->onTouchEnded = CC_CALLBACK_2(CheckBox::onTouchEnded, this);
-		node->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, node);
+		getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
 
-		setNode(node);
+        return true;
 	}
 
 	bool CheckBox::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * event)
@@ -35,13 +47,13 @@ namespace gui
         if (!_enabled)
             return false;
         
-		Vec2 touchPos =	getNode()->convertTouchToNodeSpace(touch);
+		Vec2 touchPos =	convertTouchToNodeSpace(touch);
 
-		cocos2d::Vec2 size = getSize();
+		cocos2d::Vec2 size = getContentSize();
 		if (touchPos.x < 0 || touchPos.x > size.x || touchPos.y < 0 || touchPos.y > size.y)
 			return false;
 
-		if (getNode()->isVisible() == false)
+		if (isVisible() == false)
 			return false;
         
         if (_isChecked == false)
@@ -73,23 +85,19 @@ namespace gui
         */
         if (_callback)
             _callback(this);
-        
     }
 
-
+    CheckBox::CheckBox()
+    {
+        
+    }
+    
 	CheckBox::~CheckBox()
 	{
-	}
-
-	std::shared_ptr<CheckBox> CheckBox::create(const std::string &normal, const std::string &pressed)
-	{
-		auto node = BorderdNode::create();
-		return std::shared_ptr<CheckBox>(new CheckBox(node, normal, pressed));
 	}
 	
 	void CheckBox::setCallback(const std::function<void(CheckBox*)> callback)
 	{
 		_callback = callback;
 	}
-
 }

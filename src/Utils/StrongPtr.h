@@ -5,7 +5,11 @@ template<typename T>
 class StrongPtr
 {
 public:
-    StrongPtr(T* object = nullptr) : _object(object)
+    StrongPtr() : _object(nullptr)
+    {
+    }
+    
+    StrongPtr(T* object) : _object(object)
     {
         retain();
     }
@@ -58,6 +62,11 @@ public:
     {
         assert(_object);
         return _object;
+    }
+    
+    operator bool() const
+    {
+        return _object != nullptr;
     }
     
     StrongPtr(StrongPtr<T>&& other) = delete;

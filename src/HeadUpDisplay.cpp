@@ -1,12 +1,17 @@
 #include <2d/CCScene.h>
+#include <2d/CCAction.h>
+#include <2d/CCActionEase.h>
 #include "TestScene.h"
 #include "HeadUpDisplay.h"
 #include "Utils/Convert.h"
 #include "Utils/b2Vec2Operators.h"
 #include "Utils/Environment.h"
+#include "Utils/NodeUtils.h"
 #include "GUI/ViewPort.h"
 #include "GUI/Image.h"
 #include "GUI/Button.h"
+#include "GUI2/Button.h"
+#include "GUI2/CheckBox.h"
 #include "GUI/BoxLayout.h"
 #include "GUI/View.h"
 #include "GUI/CheckBox.h"
@@ -14,14 +19,32 @@
 #include "GUI/Label.h"
 #include "IUpdatable.h"
 #include "GenericScene.h"
+#include "PauseMenu.h"
 
 
 USING_NS_CC;
 
-HeadUpDisplay::HeadUpDisplay(GenericScene* scene) : gui::ViewPort(scene)
+HeadUpDisplay::HeadUpDisplay()
 {
+    
+}
+
+bool HeadUpDisplay::initWithScene(GenericScene* scene)
+{
+    if (!Node::init())
+        return false;
+        
     _scene = scene;
     
+    _pauseButton.reset(gui2::Button::create("resources/button-pause-normal.png",
+                                            "resources/button-pause-pressed.png"));
+    addChild(_pauseButton.get());
+    _pauseButton->setAnchorPoint({1, 1});
+    _pauseButton->setPosition(Convert::toPixels(Environment::getScreenSize()));
+    _pauseButton->setCallback(std::bind(&HeadUpDisplay::onPauseClicked, this, std::placeholders::_1));
+    
+    
+    /*
     _pauseButton = gui::Button::create("resources/button-pause-normal.png", "resources/button-pause-pressed.png");
     addView(_pauseButton);
     _pauseButton->setMargin(5, 5, 5, 5);
@@ -51,6 +74,9 @@ HeadUpDisplay::HeadUpDisplay(GenericScene* scene) : gui::ViewPort(scene)
     Vec2 coinsPos = distPos;
     coinsPos.x += _distanceBar->getSize().x;
     _coinsBar->setPosition(coinsPos);
+    */
+     
+    return true;
 }
 
 HeadUpDisplay::~HeadUpDisplay()
@@ -63,28 +89,32 @@ void HeadUpDisplay::update(float delta)
 
 }
 
-void HeadUpDisplay::onPauseClicked(gui::Button * sender)
+void HeadUpDisplay::onPauseClicked(gui2::Button *sender)
 {
 	_scene->setPaused(true);
 	sender->setVisible(false);
-	createPauseMenu();
+    
+    assert(!_pauseMenu);
+    _pauseMenu.reset(PauseMenu::create(this));
+    addChild(_pauseMenu.get());
 }
 
 
-void HeadUpDisplay::onContinueClicked(gui::Button* sender) 
+void HeadUpDisplay::onContinueClicked()
 {
 	_scene->setPaused(false);
-	_pauseMenu->setVisible(false);
+    _pauseMenu->removeFromParentAndCleanup(true);
+    _pauseMenu.reset();
 	_pauseButton->setVisible(true);
 }
 
-void HeadUpDisplay::onRestartClicked(gui::Button* sender)
+void HeadUpDisplay::onRestartClicked()
 {
     auto manager = SceneManager::getInstance();
     manager->showGameScene();
 }
 
-void HeadUpDisplay::onMainMenuClicked(gui::Button *sender)
+void HeadUpDisplay::onMainMenuClicked()
 {
     auto manager = SceneManager::getInstance();
     manager->showMainMenu();
@@ -92,77 +122,25 @@ void HeadUpDisplay::onMainMenuClicked(gui::Button *sender)
 
 void HeadUpDisplay::setDistance(int dist)
 {
-    assert(_distanceBar);
-    _distanceBar->setNum
-    (dist);
+//    assert(_distanceBar);
+//    _distanceBar->setNum(dist);
 }
 
 void HeadUpDisplay::setLifes(int lifes)
 {
-    assert(_progressBar);
-    _progressBar->setLifes(lifes);
+//    assert(_progressBar);
+//    _progressBar->setLifes(lifes);
 }
 
 void HeadUpDisplay::setCoins(int coins)
 {
-    assert(_coinsBar);
-    _coinsBar->setNum(coins);
-}
-
-void HeadUpDisplay::createPauseMenu()
-{
-	const std::shared_ptr<gui::Image> pauseMenu = gui::Image::create("resources/pause_menu_background.png", gui::ScalePolicy::Stretch);
-	addView(pauseMenu);
-	pauseMenu->setSize(cocos2d::Size(500, 500));
-	
-	std::shared_ptr<gui::Button> menuButton = gui::Button::create("resources/menu_button_normal.png", "resources/menu_button_pressed.png");
-	pauseMenu->addView(menuButton);
-	menuButton->setMargin(0, 0, 0, 0);
-	menuButton->setCallback(std::bind(&HeadUpDisplay::onMainMenuClicked, this, std::placeholders::_1));
-
-    // adding sound buttons
-    std::shared_ptr<gui::View> settingsButtons = gui::View::create();
-    auto settingsLayout = gui::BoxLayout::create(gui::Orientation::Horizontal, gui::Alignment::Center);
-    settingsButtons->setLayout(settingsLayout);
-    auto soundOff = gui::CheckBox::create("resources/check_box_on.png", "resources/check_box_off.png");
-    auto musicOff = gui::CheckBox::create("resources/music_check_box_on.png", "resources/music_check_box_off.png");
-    settingsButtons->addView(soundOff);
-    settingsButtons->addView(musicOff);
-    settingsLayout->doLayout(settingsButtons, false);
-    pauseMenu->addView(settingsButtons);
-    // end
-    
-	std::shared_ptr<gui::Button> restartButton = gui::Button::create("resources/restart_button_normal.png", "resources/restart_button_pressed.png");
-	pauseMenu->addView(restartButton);
-	restartButton->setMargin(0, 0, 0, 0);
-	restartButton->setCallback(std::bind(&HeadUpDisplay::onRestartClicked, this, std::placeholders::_1));
-
-	std::shared_ptr<gui::Button> continueButton = gui::Button::create("resources/continue_button_normal.png", "resources/continue_button_pressed.png");
-	pauseMenu->addView(continueButton);
-	continueButton->setMargin(0, 0, 0, 30);
-	continueButton->setCallback(std::bind(&HeadUpDisplay::onContinueClicked, this, std::placeholders::_1));
-
-    std::shared_ptr<gui::ILayout> layout = gui::BoxLayout::create(gui::Orientation::Vertical, gui::Alignment::Center);
-	pauseMenu->setLayout(layout);
-
-	layout->doLayout(pauseMenu, true);
-
-	Vec2 menuPos;
-    menuPos.x = Convert::toPixels(Environment::getScreenSize().x / 2) - pauseMenu->getSize().x / 2;
-	menuPos.y = Convert::toPixels(Environment::getScreenSize().y / 2) - pauseMenu->getSize().y / 2;
-	pauseMenu->setPosition(menuPos);
-
-	/*
-	Vec2 decorPos;
-	decorPos.x = GameUtils::convertToPixels(GameUtils::getScreenSize().x / 2) - decoreImage->getSize().width / 2;
-	decorPos.y = GameUtils::convertToPixels(GameUtils::getScreenSize().y / 2) - decoreImage->getSize().height / 2;
-	decoreImage->setPosition({ menuPos.x + 60, menuPos.y + 20 });
-	*/
-	_pauseMenu = pauseMenu;
+//    assert(_coinsBar);
+//    _coinsBar->setNum(coins);
 }
 
 void HeadUpDisplay::createDeathMenu(int distance, int coins)
 {
+    /*
     const std::shared_ptr<gui::Image> deathMenu = gui::Image::create("resources/pause_menu_background.png", gui::ScalePolicy::Stretch);
     addView(deathMenu);
     deathMenu->setSize(cocos2d::Size(500, 500));
@@ -233,6 +211,7 @@ void HeadUpDisplay::createDeathMenu(int distance, int coins)
     menuPos.x = Convert::toPixels(Environment::getScreenSize().x / 2) - deathMenu->getSize().x / 2;
     menuPos.y = Convert::toPixels(Environment::getScreenSize().y / 2) - deathMenu->getSize().y / 2;
     deathMenu->setPosition(menuPos);
+     */
 }
 
 

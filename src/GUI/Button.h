@@ -11,6 +11,8 @@ namespace gui
 		~Button();
 		static std::shared_ptr<Button> create(const std::string &normal, const std::string &pressed);
 		void setCallback(const std::function<void(Button*)> callback);
+        
+        void setEnabled(bool enabled);
 
 	private:
 		Button(cocos2d::Node* node, const std::string &normal, const std::string &pressed);
@@ -23,6 +25,7 @@ namespace gui
 		cocos2d::Sprite* _pressed = nullptr;
 
 		std::function<void(Button*)> _callback;
+        bool _enabled = true;
 	};
 
 }

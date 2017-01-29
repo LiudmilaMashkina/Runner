@@ -1,12 +1,18 @@
 #include "Button.h"
 #include "2d/CCSprite.h"
-#include "gui/BorderdNode.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventDispatcher.h"
 
 namespace gui2
 {
     USING_NS_CC;
+    
+    void Button::setOpacity(GLubyte opacity)
+    {
+        Node::setOpacity(opacity);
+        _normal->setOpacity(opacity);
+        _pressed->setOpacity(opacity);
+    }
     
 	bool Button::initWith(const std::string &normal, const std::string &pressed)
 	{
@@ -38,6 +44,9 @@ namespace gui2
 
 	bool Button::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * event)
 	{
+        if (!_enabled)
+            return false;
+        
 		Vec2 touchPos =	convertTouchToNodeSpace(touch);
 
 		cocos2d::Vec2 size = getContentSize();
@@ -62,7 +71,8 @@ namespace gui2
 	{
 		_normal->setVisible(true);
 		_pressed->setVisible(false);
-		_callback(this);
+        if (_callback)
+            _callback(this);
 	}
 
 	void Button::setCallback(const std::function<void(Button*)> callback)
