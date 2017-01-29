@@ -26,12 +26,15 @@ void WallStone::onContactBegin(std::shared_ptr<IGameObject> obj)
     {
         Hero* hero = dynamic_cast<Hero*>(obj.get());
         std::shared_ptr<WallController> strongPtr = _wController.lock();
-        if (strongPtr)
+        if (strongPtr && !strongPtr->getIsWallDestroyed())
         {
             if (hero->getState()->getStateId() == HeroStateId::Attack)
                 strongPtr->destroyWall(obj->getPosition(), 10);
             else
+            {
                 strongPtr->destroyWall(obj->getPosition(), 1);
+                static_cast<Hero*>(obj.get())->collideWall();
+            }
         }
     }
 }

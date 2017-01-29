@@ -150,21 +150,24 @@ int Hero::getLifes()
     return _lifes;
 }
 
-void Hero::onContactBegin(std::shared_ptr<IGameObject> obj)
+void Hero::collideWall()
 {
-    GameObjectType type = obj->getType();
-    if (type == GameObjectType::Bomb)
-        decreaseLifes(5);
-    else if (type == GameObjectType::WallStone)
-    {
-        auto stateID = _currentState->getStateId();
-        if (stateID != HeroStateId::Attack)
-            decreaseLifes(10);
-    }
-    else if (type == GameObjectType::Coin)
-    {
-        collectCoin();
-    }
+    decreaseLifes(10);
+}
+
+void Hero::collideBomb()
+{
+    decreaseLifes(5);
+}
+
+void Hero::collideTotem()
+{
+    /// to be continued
+}
+
+void Hero::collectCoin()
+{
+    ++_coins;
 }
 
 void Hero::decreaseLifes(int num)
@@ -177,11 +180,5 @@ void Hero::decreaseLifes(int num)
         _currentState->onEnter();
     }
 }
-
-void Hero::collectCoin()
-{
-    ++_coins;
-}
-
 
 

@@ -37,5 +37,6 @@ void Coin::onContactBegin(std::shared_ptr<IGameObject> obj)
     if (obj->getType() != GameObjectType::Hero)
         return;
     
+    static_cast<Hero*>(obj.get())->collectCoin();
     _world->removeObjectLater(this);
 }

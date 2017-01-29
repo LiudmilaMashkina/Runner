@@ -5,6 +5,7 @@
 #include <set>
 #include <math.h>
 #include "Bomb.h"
+#include "Hero/Hero.h"
 #include "GameWorld.h"
 #include "Utils/Convert.h"
 #include "Utils/b2Vec2Operators.h"
@@ -43,6 +44,8 @@ void Bomb::onContactBegin(std::shared_ptr<IGameObject> obj)
 {
     if (obj->getType() != GameObjectType::Hero)
         return;
+    
+    static_cast<Hero*>(obj.get())->collideBomb();
     
     explode(getPosition());
 }

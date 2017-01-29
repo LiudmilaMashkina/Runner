@@ -9,10 +9,10 @@
 #include "Bulb.h"
 #include "BridgeColumn.h"
 #include "Coin.h"
+#include "CollisionCategory.h"
 #include "Grass.h"
 #include "GroundStone.h"
 #include "LightingStone.h"
-#include "CollisionCategory.h"
 #include "AnimationObject.h"
 #include "AnimationEngine/Animation.h"
 #include "ParticlesObject.h"
@@ -128,7 +128,7 @@ std::shared_ptr<IGameObject> GameObjectFactory::createCircle(const b2Vec2& pos, 
 	physShape.m_p.Set(0, 0);
 	physShape.m_radius = radius;
 
-	b2Body* body = createBody(b2BodyType::b2_dynamicBody, &physShape, pos, angle);
+	b2Body* body = createDecorativeBody(b2BodyType::b2_dynamicBody, &physShape, pos, angle);
 
 	Sprite* sprite = createSprite(fileName, b2Vec2(radius * 2, radius * 2));
 
@@ -181,7 +181,7 @@ std::shared_ptr<Grass> GameObjectFactory::createGrass(const b2Vec2 &pos, float a
     physShape.SetAsBox(size.x / 2, size.y / 2);
     
     b2Body* body = createSensor(b2BodyType::b2_dynamicBody, &physShape, pos, angle);
-    auto sprite = createSprite("resources/grass_1.png", size);
+    auto sprite = createSprite("resources/black_grass.png", size);
     auto particles = createGrassParticles(pos, size);
     
     std::shared_ptr<Grass> obj = Grass::create(body, _world, sprite, particles);
@@ -655,6 +655,27 @@ b2Body* GameObjectFactory::createBody(b2BodyType type, b2Shape* shape, const b2V
 	body->CreateFixture(&bodyFixtureDef);
 
 	return body;
+}
+
+b2Body* GameObjectFactory::createDecorativeBody(b2BodyType type, b2Shape* shape, const b2Vec2& pos, float angle)
+{
+    b2BodyDef bodyDef;
+    bodyDef.type = type;
+    bodyDef.position = pos;
+    bodyDef.angle = angle;
+    bodyDef.linearDamping = 5;
+    bodyDef.angularDamping = 5;
+    b2Body* body = _world->getPhysics()->CreateBody(&bodyDef);
+    
+    b2FixtureDef bodyFixtureDef;
+    bodyFixtureDef.shape = shape;
+    bodyFixtureDef.density = 1;
+    bodyFixtureDef.filter.categoryBits = CollisionCategory::DefaultCategory;
+    bodyFixtureDef.filter.maskBits = CollisionCategory::DefaultCategory;
+    
+    body->CreateFixture(&bodyFixtureDef);
+    
+    return body;
 }
 
 b2Body* GameObjectFactory::createBody(V3F_C4B_T2F* vertices, unsigned short* indices, int indicesSize, const b2Vec2& pos)

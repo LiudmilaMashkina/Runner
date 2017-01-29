@@ -9,7 +9,6 @@
 #include "json/document.h"
 #include "AnimationEngine/IAnimation.h"
 
-
 class SimpleGameObject;
 class Bomb;
 class Bulb;
@@ -19,6 +18,7 @@ class ParticlesObject;
 class BridgeColumn;
 class WallController;
 class Coin;
+
 
 class GameObjectFactory 
 {
@@ -40,8 +40,9 @@ public:
     std::shared_ptr<WallController> createWall(const std::string& controllerName, const b2Vec2& pos, float height);
     std::shared_ptr<Coin> createCoin(const b2Vec2& pos);
 private:
-	b2Body* createBody(b2BodyType type, b2Shape* shape, const b2Vec2& pos, float angle);
+    b2Body* createBody(b2BodyType type, b2Shape* shape, const b2Vec2& pos, float angle);
     b2Body* createBody(cocos2d::V3F_C4B_T2F* vertices, unsigned short* indices, int indicesSize, const b2Vec2& pos);
+    b2Body* createDecorativeBody(b2BodyType type, b2Shape* shape, const b2Vec2& pos, float angle);
     b2Body* createSensor(b2BodyType type, b2Shape* shape, const b2Vec2& pos, float angle);
 	
     cocos2d::Sprite* createSprite(const std::string& textureName, const b2Vec2& bodySize);

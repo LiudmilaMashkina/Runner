@@ -34,7 +34,7 @@ HeroStateId RunState::update(float delta)
     
     float hitDistance = b2Utils::raycast(_world->getPhysics(),
                                              b2Vec2(pos.x, pos.y + 0.5),
-                                             b2Vec2(0, -1));
+                                             b2Vec2(0, -1), _data->collisionFilter);
     
     if (hitDistance < 1.2)
     {

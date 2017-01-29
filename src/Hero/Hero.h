@@ -38,7 +38,10 @@ public:
     int getLifes();
     int getCoins() { return _coins; }
     
-    virtual void onContactBegin(std::shared_ptr<IGameObject> obj) override;
+    void collideWall();
+    void collideBomb();
+    void collideTotem();
+    void collectCoin();
     
     CREATE_FUNC_3(Hero, IGameLavelInfo*, info, cocos2d::Node*, layer, GameWorld*, world);
     
@@ -50,7 +53,6 @@ private:
          GameWorld* world);
 
     void decreaseLifes(int num);
-    void collectCoin();
     
     IGameLavelInfo* _info;
     GameWorld* _world;

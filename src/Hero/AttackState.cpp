@@ -25,7 +25,7 @@ void AttackState::onEnter()
     b2Vec2 pos = Convert::toMeters(_data->node->getPosition());
     float hitDistance = b2Utils::raycast(_world->getPhysics(),
                                               b2Vec2(pos.x, pos.y + 0.5),
-                                              b2Vec2(0, -1));
+                                              b2Vec2(0, -1), _data->collisionFilter);
     
     if (hitDistance > 1.1)
     {
@@ -43,7 +43,7 @@ HeroStateId AttackState::update(float delta)
     b2Vec2 pos = Convert::toMeters(_data->node->getPosition());
     float32 hitDistance =  b2Utils::raycast(_world->getPhysics(),
                                               b2Vec2(pos.x, pos.y + 0.5),
-                                              b2Vec2(0, -1));
+                                              b2Vec2(0, -1), _data->collisionFilter);
     
     if (hitDistance > 1.1 && _attackTime > 0)
     {
