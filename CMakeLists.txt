@@ -26,6 +26,8 @@ set(sources
 	src/ContactListener.h
 	src/DropController.cpp
 	src/DropController.h
+	src/DeathMenu.h
+	src/DeathMenu.cpp
 	src/DelayedDrop.cpp
 	src/DelayedDrop.h
 	src/ForceField/Clamper.cpp

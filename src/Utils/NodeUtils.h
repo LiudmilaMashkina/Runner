@@ -18,5 +18,7 @@ public:
                        const cocos2d::Vec2 posPercent,
                        int zOrder = 0);
     static cocos2d::Vec2 getScaledSize(cocos2d::Node *node);
+    static cocos2d::Vec2 getGlobalCoord(cocos2d::Node *node,
+                                        const cocos2d::Vec2 &anchor);
 };
 

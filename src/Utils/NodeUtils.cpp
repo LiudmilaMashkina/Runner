@@ -31,3 +31,10 @@ cocos2d::Vec2 NodeUtils::getScaledSize(cocos2d::Node *node)
     return Vec2(node->getContentSize().width * node->getScaleX(),
                 node->getContentSize().height * node->getScaleY());
 }
+
+cocos2d::Vec2 NodeUtils::getGlobalCoord(cocos2d::Node *node, const cocos2d::Vec2 &anchor)
+{
+    auto size= node->getContentSize();
+    Vec2 local(anchor.x * size.width, anchor.y * size.height);
+    return node->convertToWorldSpace(local);
+}
