@@ -59,8 +59,10 @@ bool DeathMenu::initWithHud(HeadUpDisplay* hud, int distance, int coins)
     _base = Sprite::create("resources/deathmenu_base.png");
     addChild(_base);
     
+    Vec2 baseSize = _base->getContentSize();
+    
     float baseWidth = winSize.x * 0.66;
-    float scale = baseWidth / _base->getContentSize().width;
+    float scale = baseWidth / baseSize.x;
     _base->setScale(scale);
     _base->setAnchorPoint({0.5, 0.5});
     _base->setPosition(winSize.x * 0.5, NodeUtils::getScaledSize(_base).y * -0.5);
@@ -71,15 +73,14 @@ bool DeathMenu::initWithHud(HeadUpDisplay* hud, int distance, int coins)
     auto restartTexture = TextureCache::getInstance()->addImage("resources/deathmenu_restart.png");
     auto mainMenuTexture = TextureCache::getInstance()->addImage("resources/deathmenu_mainmenu.png");
     
-    float horizontalGapSum = _base->getContentSize().width - (restartTexture->getContentSize().width + mainMenuTexture->getContentSize().width);
+    float horizontalGapSum = baseSize.x - (restartTexture->getContentSize().width + mainMenuTexture->getContentSize().width);
     float sideGap = horizontalGapSum * 0.4;
     
     {
         // restart button
         auto button = gui2::Button::create("resources/deathmenu_restart.png", "resources/deathmenu_restart_pressed.png");
         button->setAnchorPoint({0, 0});
-        NodeUtils::attach(button, _base, {sideGap / _base->getContentSize().width, 0.05});
-        
+        NodeUtils::attach(button, _base, {sideGap / baseSize.x, 0.05});
         button->setCallback(std::bind(&DeathMenu::onRestartClicked,
                                       this, std::placeholders::_1));
         // totem
@@ -102,8 +103,9 @@ bool DeathMenu::initWithHud(HeadUpDisplay* hud, int distance, int coins)
         // main menu button
         auto button = gui2::Button::create("resources/deathmenu_mainmenu.png", "resources/deathmenu_mainmenu_pressed.png");
         button->setAnchorPoint({1, 0});
-        NodeUtils::attach(button, _base, {1 - sideGap / _base->getContentSize().width, 0.05});
+        NodeUtils::attach(button, _base, {1 - sideGap / baseSize.x, 0.05});
         button->setCallback(std::bind(&DeathMenu::onMainMenuClicked, this, std::placeholders::_1));
+        
         // totem
         auto cat = Sprite::create("resources/deathmenu_cat.png");
         cat->setAnchorPoint({1, 0.18});
@@ -124,7 +126,7 @@ bool DeathMenu::initWithHud(HeadUpDisplay* hud, int distance, int coins)
     auto distLabelTitle = Label::createWithTTF("Distance:", "resources/Monster_AG.ttf", 65);
     _base->addChild(distLabelTitle);
     distLabelTitle->setAnchorPoint({0, 0.5});
-    distLabelTitle->setPosition(_base->getContentSize().width * 0.3, _base->getContentSize().height * 0.7);
+    distLabelTitle->setPosition(baseSize.x * 0.3, baseSize.y * 0.7);
     distLabelTitle->setColor(Color3B(234, 222, 174));
     
     std::string dist = std::to_string(distance);
@@ -132,7 +134,7 @@ bool DeathMenu::initWithHud(HeadUpDisplay* hud, int distance, int coins)
     _base->addChild(distLabel);
     distLabel->setAnchorPoint({0, 0.5});
     auto distPos = distLabelTitle->getPosition();
-    distPos.x += distLabelTitle->getContentSize().width + _base->getContentSize().width * 0.02;
+    distPos.x += distLabelTitle->getContentSize().width + baseSize.x * 0.02;
     distLabel->setPosition(distPos);
     distLabel->setColor(Color3B(234, 222, 174));
     
@@ -147,7 +149,7 @@ bool DeathMenu::initWithHud(HeadUpDisplay* hud, int distance, int coins)
     _base->addChild(coinsLabel);
     coinsLabel->setAnchorPoint({0, 0.5});
     auto coinsPos = coinSign->getPosition();
-    coinsPos.x += coinSign->getContentSize().width + _base->getContentSize().width * 0.02;
+    coinsPos.x += coinSign->getContentSize().width + baseSize.x * 0.02;
     coinsPos.y -= coinSign->getContentSize().height / 2;
     coinsLabel->setPosition(coinsPos);
     coinsLabel->setColor(Color3B(234, 222, 174));
@@ -158,13 +160,11 @@ bool DeathMenu::initWithHud(HeadUpDisplay* hud, int distance, int coins)
 void DeathMenu::onRestartClicked(gui2::Button *sender)
 {
     close([=](){_hud->onRestartClicked();});
-    //_hud->onRestartClicked();
 }
 
 void DeathMenu::onMainMenuClicked(gui2::Button *sender)
 {
     close([=](){_hud->onMainMenuClicked();});
-    //_hud->onMainMenuClicked();
 }
 
 void DeathMenu::close(const std::function<void ()> &hudCallback)
