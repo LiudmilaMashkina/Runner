@@ -24,5 +24,7 @@ public:
     static ParticleSystemControls createBombParticles(const std::shared_ptr<TimeProvider>& timeProvider, cocos2d::Node* partNode);
     static ParticleSystemControls createGrassParticles(const std::shared_ptr<TimeProvider>& timeProvider, cocos2d::Node* partNode, const b2Vec2& diapason);
     static ParticleSystemControls createChippingParticles(const std::shared_ptr<TimeProvider>& timeProvider, cocos2d::Node* partNode, const std::vector<std::string>& fileNames);
+    
+    static ParticleSystemControls createMainMenuFireParticleSystem(const std::shared_ptr<TimeProvider>& timeProvider, cocos2d::Node* parentNode);
 
 };

@@ -1,9 +1,9 @@
  #pragma once
 
-#include <2d/CCLayer.h>
 #include "GUI/ViewPort.h"
 #include "SceneManager.h"
 #include "Utils/MacroCreate.h"
+#include "Utils/StrongPtr.h"
 
 namespace gui
 {
@@ -12,17 +12,25 @@ namespace gui
     class Label;
 }
 
-class GenericScene;
+namespace gui2
+{
+    class Button;
+    class ProgressBar;
+}
 
-class HeadUpDisplay : public gui::ViewPort
+class GenericScene;
+class PauseMenu;
+
+class HeadUpDisplay : public cocos2d::Node
 {
 public:
+    HeadUpDisplay();
 	virtual ~HeadUpDisplay();
 	virtual void update(float delta);
-	void onPauseClicked(gui::Button* sender);
-	void onContinueClicked(gui::Button* sender);
-	void onRestartClicked(gui::Button* sender);
-    void onMainMenuClicked(gui::Button* sender);
+	void onPauseClicked(gui2::Button* sender);
+	void onContinueClicked();
+	void onRestartClicked();
+    void onMainMenuClicked();
     
     void setDistance(int dist);
     void setLifes(int lifes);
@@ -30,18 +38,21 @@ public:
     
     void createDeathMenu(int distance, int coins);
 
-	CREATE_FUNC_1(HeadUpDisplay, GenericScene*, scene);
+	CC_CREATE_FUNC_1(HeadUpDisplay, initWithScene,
+                     GenericScene*, scene);
 
 private:
-    HeadUpDisplay(GenericScene* scene);
+    bool initWithScene(GenericScene* scene);
     
-    //void createStatsMenu();
-    void createPauseMenu();
+    void createPauseButton(float scale, float winOffset);
+    void createLifesBar(float scale, float winOffset);
+    void createDistanceLabel(float scale, float horizontalOffset, float winOffset);
+    void createCoinsLabel(float scale, float horizontalOffset, float winOffset);
     
-	std::shared_ptr<gui::Button> _pauseButton;
-	std::shared_ptr<gui::View> _pauseMenu;
-    std::shared_ptr<gui::ProgressBar> _progressBar;
-    std::shared_ptr<gui::Label> _distanceBar;
-    std::shared_ptr<gui::Label> _coinsBar;
+    StrongPtr<gui2::Button> _pauseButton;
+    StrongPtr<PauseMenu> _pauseMenu;
+    StrongPtr<gui2::ProgressBar> _livesBar;
+    StrongPtr<cocos2d::Label> _distanceLabel;
+    StrongPtr<cocos2d::Label> _coinsLabel;
     GenericScene* _scene = nullptr;
 };

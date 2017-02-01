@@ -26,6 +26,8 @@ set(sources
 	src/ContactListener.h
 	src/DropController.cpp
 	src/DropController.h
+	src/DeathMenu.h
+	src/DeathMenu.cpp
 	src/DelayedDrop.cpp
 	src/DelayedDrop.h
 	src/ForceField/Clamper.cpp
@@ -109,8 +111,16 @@ set(sources
 	src/GUI/ProgressBar.h
 	src/GUI/Placer.cpp
 	src/GUI/Placer.h
+	src/GUI2/Button.cpp
+	src/GUI2/Button.h
+	src/GUI2/CheckBox.cpp
+	src/GUI2/CheckBox.h
+	src/GUI2/ProgressBar.cpp
+	src/GUI2/ProgressBar.h
 	src/HeadUpDisplay.cpp
 	src/HeadUpDisplay.h
+	src/PauseMenu.h
+	src/PauseMenu.cpp
 	src/Hero/AttackState.cpp
 	src/Hero/AttackState.h
 	src/Hero/DeadState.cpp
@@ -166,6 +176,8 @@ set(sources
 	src/Utils/Forwards.h
 	src/Utils/ITimeProvider.h
 	src/Utils/MacroCreate.h
+	src/Utils/NodeUtils.cpp
+	src/Utils/NodeUtils.h
 	src/Utils/TimeProvider.cpp
 	src/Utils/TimeProvider.h
 	src/Utils/StrongPtr.h

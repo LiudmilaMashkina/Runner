@@ -7,6 +7,7 @@
 #include "ParticlesGenerator.h"
 #include "ParticleGeneratorGroup.h"
 #include "Utils/Environment.h"
+#include "Utils/Convert.h"
 #include "ForceField/ForceFieldFactory.h"
 #include "ForceField/StaticForceField.h"
 #include "Utils/TimeProvider.h"
@@ -220,4 +221,37 @@ ParticlesFactory::ParticleSystemControls ParticlesFactory::createChippingParticl
 
     return info;
 }
+
+ParticlesFactory::ParticleSystemControls ParticlesFactory::createMainMenuFireParticleSystem(const std::shared_ptr<TimeProvider>& timeProvider, Node* parentNode)
+{
+    auto forceField = StaticForceField::create(b2Vec2(0, 15));
+    std::shared_ptr<ParticlesSystem> system = ParticlesSystem::create();
+    
+    auto parentSize = Convert::toMeters(parentNode->getContentSize());
+    
+    ParticlesGenerator::Params params;
+    params.fileName = "resources/mainmenu_fire_particle.png";
+    params.rate = 14;
+    params.velocityRange.set(b2Vec2(0, 0), b2Vec2(0, 0));
+    params.massRange.set(0.5, 1);
+    params.generationRange.set(b2Vec2(parentSize.x * 0.4, parentSize.y * 0.2), b2Vec2(parentSize.x * 0.6, parentSize.y * 0.4));
+    params.field = forceField;
+    params.ttlRange.set(0.5, 1.0);
+    params.widthRange.set(parentSize.x * 0.3, parentSize.x * 1.2);
+    
+    ParticlesFactory::ParticleSystemControls info;
+    info.particlesNode = parentNode;
+    
+    auto generator = ParticlesGenerator::create(params, info.particlesNode);
+    system->addSystemUpdater(generator);
+    
+    auto partMover = ParticlesMover::create(forceField, 0);
+    system->addParticlesUpdater(partMover);
+    
+    info.particlesSystem = system;
+    info.generatorGroup = ParticleGeneratorGroup::create(generator);
+    
+    return info;
+}
+
 

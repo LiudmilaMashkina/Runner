@@ -9,6 +9,7 @@
 
 #include "Utils/MacroCreate.h"
 #include "Utils/TimeProvider.h"
+#include "Utils/StrongPtr.h"
 #include "Particles/ParticlesFactory.h"
 #include "GenericScene.h"
 
@@ -30,9 +31,11 @@ public:
     virtual bool init() override;
 	void update(float delta) override;
     bool shouldBeRemoved(std::shared_ptr<IGameObject> obj);
+    
+    virtual ~GameScene();
 
 private:
-	GameScene() {}
+    GameScene();
     cocos2d::Sprite* createBackground(const std::string & backgroundName);
     cocos2d::Sprite* createSecondPlan(const std::string& planName, float ratioToScreenSize);
     
@@ -42,7 +45,7 @@ private:
     std::shared_ptr<GameCamera> _camera;
     std::shared_ptr<GameLevelGenerator> _levelGenerator;
     std::shared_ptr<TimeProvider> _timeProvider;
-    std::shared_ptr<HeadUpDisplay> _hud;
+    StrongPtr<HeadUpDisplay> _hud;
     ParticlesFactory::ParticleSystemControls _particlesSystem;
     cocos2d::Sprite* _background = nullptr;
     cocos2d::Sprite* _backgroundTrees = nullptr;

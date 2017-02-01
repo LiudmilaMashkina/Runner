@@ -35,7 +35,10 @@ void SceneManager::setScene(cocos2d::Scene* scene)
 	if (_scene == nullptr)
 		cocos2d::Director::getInstance()->runWithScene(scene);
 	else
-		cocos2d::Director::getInstance()->replaceScene(scene);
+    {
+        auto transition = TransitionFade::create(0.5, scene, Color3B::BLACK);
+		cocos2d::Director::getInstance()->replaceScene(transition);
+    }
 
 	_scene = scene;
 }

@@ -1,21 +1,25 @@
 #pragma once
 
-#include "View.h"
 #include "2d/CCSprite.h"
+#include "Utils/MacroCreate.h"
 
-namespace gui
+namespace gui2
 {
-	class Button : public View
+    class Button : public cocos2d::Node
 	{
 	public:
-		~Button();
-		static std::shared_ptr<Button> create(const std::string &normal, const std::string &pressed);
+        CC_CREATE_FUNC_2(Button, initWith,
+                         const std::string&, normal,
+                         const std::string&, pressed);
+        
 		void setCallback(const std::function<void(Button*)> callback);
         
-        void setEnabled(bool enabled);
+        void setEnabled(bool enabled) {_enabled = enabled;}
+        
+        virtual void setOpacity(GLubyte opacity) override;
 
 	private:
-		Button(cocos2d::Node* node, const std::string &normal, const std::string &pressed);
+		bool initWith(const std::string &normal, const std::string &pressed);
 
 		bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
 		void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
@@ -25,6 +29,7 @@ namespace gui
 		cocos2d::Sprite* _pressed = nullptr;
 
 		std::function<void(Button*)> _callback;
+        
         bool _enabled = true;
 	};
 

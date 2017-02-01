@@ -10,13 +10,14 @@
 #define Wanderer_IAnimation_h
 
 #include "FrameId.h"
+#include "IUpdatable.h"
 
 namespace cocos2d
 {
     class Sprite;
 }
 
-class IAnimation
+class IAnimation : public IUpdatable
 {
 public:
     virtual ~IAnimation() {}
