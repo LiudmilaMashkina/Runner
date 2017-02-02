@@ -140,9 +140,9 @@ b2Vec2 GameObjectComposer::assembleLightingLine(const LineDef& def)
         }
         else if (randNumber >= 5 && randNumber <= 18)
         {
-            b2Vec2 grassSize = {block.width, 0.5};
+            b2Vec2 grassSize = {blockWidth, 0.5};
             b2Vec2 grassPos = leftCorner;
-            grassPos.x += block.width / 2;
+            grassPos.x += blockWidth / 2;
             grassPos.y += grassSize.y / 2;
             auto grass = factory.createGrass(grassPos, 0, grassSize);
             

@@ -552,15 +552,15 @@ std::shared_ptr<Coin> GameObjectFactory::createCoin(const b2Vec2 &pos)
     return coin;
 }
 
-std::shared_ptr<AnimationObject> GameObjectFactory::createBombExplosion(const b2Vec2& pos)
+std::shared_ptr<AnimationObject> GameObjectFactory::createBombExplosion(const b2Vec2& pos, float scale)
 {
     Vector<SpriteFrame*> frames;
     
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < 7; ++i)
     {
-        std::string fString = "resources/bomb_" + std::to_string(i) + ".png";
+        std::string fString = "resources/fire_explosion_" + std::to_string(i) + ".png";
         Rect fRect;
-        fRect.size = Size(64, 64);
+        fRect.size = Size(163, 146);
         fRect.origin = Vec2(0, 0);
         SpriteFrame* frame = SpriteFrame::create(fString, fRect);
         
@@ -569,6 +569,8 @@ std::shared_ptr<AnimationObject> GameObjectFactory::createBombExplosion(const b2
     
     std::shared_ptr<AnimationObject> animation = std::shared_ptr<AnimationObject>(new AnimationObject(_world, frames, 10, false));
     animation->setPosition(pos);
+    animation->setScale(scale);
+    animation->setAnchorPoint({0.6, 0.14});
     _world->addObject(animation);
     
     return animation;
