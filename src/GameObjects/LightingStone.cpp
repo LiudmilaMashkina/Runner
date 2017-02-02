@@ -6,12 +6,14 @@
 #include "LightingStone.h"
 #include "GameWorld.h"
 #include "Utils/Convert.h"
+#include "ParticlesObject.h"
 
 USING_NS_CC;
 
 LightingStone::LightingStone(b2Body* body,
                              cocos2d::Node* node,
                              cocos2d::Node* lighting,
+                             const std::shared_ptr<ParticlesObject>& particles,
                              GameWorld* world) : SimpleGameObject::SimpleGameObject(body, node, world),
 _body(body),
 _node(node),

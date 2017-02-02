@@ -13,7 +13,7 @@ enum class CompositionId
     Bridge,
     //IceLine,
     Line,
-    //LightingLine,
+    LightingLine,
     //BrownStoneLine,
     //MIxedStoneLine,
     EnumEnd
