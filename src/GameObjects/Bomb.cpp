@@ -107,7 +107,9 @@ void Bomb::explode(const b2Vec2& pos)
     }
     
     GameObjectFactory factory(_world);
-    factory.createBombExplosion(getPosition());
+    
+    float scale = getScale();
+    auto explosion = factory.createBombExplosion(getPosition(), scale);
     
     _particles->setPaused(true);
     _world->removeObjectLater(this);

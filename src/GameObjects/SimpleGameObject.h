@@ -24,6 +24,7 @@ public:
     virtual GameObjectType getType() const override { return GameObjectType::SimpleGameObject; }
     virtual void drop() override;
     virtual bool isDroppable() override { return true; }
+    float getScale() { return _node->getScale();}
     
 protected:
 	b2Body* _body = nullptr;

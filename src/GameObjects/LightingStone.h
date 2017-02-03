@@ -11,11 +11,17 @@
 namespace cocos2d { class Node; }
 class b2Body;
 class GameWorld;
+class ParticlesObject;
 
 class LightingStone : public SimpleGameObject
 {
 public:
-    CREATE_FUNC_4(LightingStone, b2Body*, body, cocos2d::Node*, node, cocos2d::Node*, lighting, GameWorld*, world);
+    CREATE_FUNC_5(LightingStone,
+                  b2Body*, body,
+                  cocos2d::Node*, node,
+                  cocos2d::Node*, lighting,
+                  const std::shared_ptr<ParticlesObject>&, particles,
+                  GameWorld*, world);
     
 	virtual ~LightingStone();
 
@@ -26,12 +32,17 @@ public:
     virtual void onContactBegin(std::shared_ptr<IGameObject> obj) override;
     
 private:
-    LightingStone(b2Body* body, cocos2d::Node* node, cocos2d::Node* lighting, GameWorld* world);
+    LightingStone(b2Body* body,
+                  cocos2d::Node* node,
+                  cocos2d::Node* lighting,
+                  const std::shared_ptr<ParticlesObject>& particles,
+                  GameWorld* world);
 	b2Body* _body = nullptr;
 	cocos2d::Node* _node = nullptr;
     bool _isTouched = false;
     cocos2d::Node* _lighting = nullptr;
     float _timer = -150;
+    std::weak_ptr<ParticlesObject> _particles;
 };
 
  

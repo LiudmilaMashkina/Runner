@@ -22,6 +22,8 @@ _world(world)
 
 b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
 {
+    // TODO: this and assembleLightingLine are too similar
+    
 	GameObjectFactory factory = GameObjectFactory(_world);
     
     float curLength = 0.0f;
@@ -103,9 +105,11 @@ b2Vec2 GameObjectComposer::assembleLightingLine(const LineDef& def)
         int num = Environment::generateIntRand(0, def.blocks.size() - 1);
         const LineDef::Block& block = def.blocks[num];
         
+        float blockWidth = Environment::generateFloatRand(0.4, block.width);
+        
         b2Vec2 leftCorner(def.startPos.x + curLength, def.startPos.y);
         
-        auto stone = factory.createLightingStone(leftCorner, block.width, block.textureName, block.lightingName);
+        auto stone = factory.createLightingStone(leftCorner, blockWidth, block.textureName, block.lightingName, def.chippingNamePrefix);
         b2Vec2 coinPos = leftCorner;
         coinPos.x += block.width / 2;
         coinPos.y += 0.5;
@@ -117,7 +121,7 @@ b2Vec2 GameObjectComposer::assembleLightingLine(const LineDef& def)
         if (randNumber >= 1 && randNumber <= 4)
         {
             b2Vec2 bombPos = leftCorner;
-            bombPos.x += block.width / 2;
+            bombPos.x += blockWidth / 2;
             auto bomb = factory.createBomb(bombPos, 0, b2Vec2(0.5, 0.5));
             
             b2WeldJointDef jointDef;
@@ -136,9 +140,9 @@ b2Vec2 GameObjectComposer::assembleLightingLine(const LineDef& def)
         }
         else if (randNumber >= 5 && randNumber <= 18)
         {
-            b2Vec2 grassSize = {block.width, 0.5};
+            b2Vec2 grassSize = {blockWidth, 0.5};
             b2Vec2 grassPos = leftCorner;
-            grassPos.x += block.width / 2;
+            grassPos.x += blockWidth / 2;
             grassPos.y += grassSize.y / 2;
             auto grass = factory.createGrass(grassPos, 0, grassSize);
             
@@ -160,7 +164,7 @@ b2Vec2 GameObjectComposer::assembleLightingLine(const LineDef& def)
             auto wall = factory.createWall("ice_wall_controller", wallPos, 3);
         }
         
-        curLength += block.width;
+        curLength += blockWidth * (1 - def.maxOverlap);
     }
     
     b2Vec2 exitPos = def.startPos;

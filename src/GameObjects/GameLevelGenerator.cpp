@@ -54,8 +54,8 @@ b2Vec2 GameLevelGenerator::generateComposition(CompositionId compositionId, cons
             return generateBridge(startPos, theme);
         case CompositionId::Line :
             return generateLine(startPos, theme);
-        //case CompositionId::LightingLine :
-            //return generateLightingLine(startPos);
+        case CompositionId::LightingLine :
+            return generateLightingLine(startPos);
         /*
         case CompositionId::BrownStoneLine :
             generateBrownStoneLine(startPos);
@@ -132,12 +132,14 @@ b2Vec2 GameLevelGenerator::generateLine(const b2Vec2 &startPos, ObjectThemer::Th
 b2Vec2 GameLevelGenerator::generateLightingLine(const b2Vec2 &startPos)
 {
     GameObjectComposer::LineDef line;
-    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/lighting_stone_0.png", "resources/lighting_stone_light_0.png", 0.5f));
-    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/lighting_stone_1.png", "resources/lighting_stone_light_1.png", 0.75f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/ice_lightingline.png", "resources/ice_lightingline_light.png", 1.0f));
+    
+    std::string chippingName = "resources/ice_chipping_default_";
+    line.chippingNamePrefix = chippingName;
     
     int len = Environment::generateIntRand(6, 15);
     line.length = len;
-    line.maxOverlap = 0;
+    line.maxOverlap = 0.1;
     line.startPos.Set(startPos.x, startPos.y);
     
     GameObjectComposer composer = GameObjectComposer(_world);

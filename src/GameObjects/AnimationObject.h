@@ -21,6 +21,9 @@ public:
     virtual b2Body* getBody() override { return nullptr; }
     virtual void setPosition(const b2Vec2& pos);
     
+    void setScale(float scale) {_sprite->setScale(scale);}
+    void setAnchorPoint(const cocos2d::Vec2& anchor) {_sprite->setAnchorPoint(anchor);}
+    
     StrongPtr<cocos2d::Sprite> getSprite() { return _sprite; }
 
 private:

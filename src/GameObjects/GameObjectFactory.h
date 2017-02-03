@@ -28,13 +28,18 @@ public:
 	
     std::shared_ptr<IGameObject> createStaticStone(const b2Vec2& topLeftCornerPos, float width, const std::string& fileName, const std::string& chippingPrefix, float* outHeight = nullptr);
     
-    std::shared_ptr<IGameObject> createLightingStone(const b2Vec2& topLeftCorner, float width, const std::string& fileName, const std::string& lightingName, float* outHeight = nullptr);
+    std::shared_ptr<IGameObject> createLightingStone(const b2Vec2& topLeftCorner, float width, const std::string& fileName, const std::string& lightingName, const std::string& chippingPrefix, float* outHeight = nullptr);
 	
     std::shared_ptr<IGameObject> createCircle(const b2Vec2& pos, float angle, float radius, b2BodyType type, const std::string& fileName);
     
-    std::shared_ptr<Bomb> createBomb(const b2Vec2& pos, float angle, const b2Vec2& size);
-    std::shared_ptr<AnimationObject> createBombExplosion(const b2Vec2& pos);
-    std::shared_ptr<Grass> createGrass(const b2Vec2& pos, float angle, const b2Vec2& size);
+    std::shared_ptr<Bomb> createBomb(const b2Vec2& pos,
+                                     float angle,
+                                     const b2Vec2& size);
+    std::shared_ptr<AnimationObject> createBombExplosion(const b2Vec2& pos,
+                                                         float scale);
+    std::shared_ptr<Grass> createGrass(const b2Vec2& pos,
+                                       float angle,
+                                       const b2Vec2& size);
     std::shared_ptr<Bulb> createBulb(const b2Vec2& pos, const b2Vec2& size);
     std::shared_ptr<BridgeColumn> createColumn(const std::string& objName, const b2Vec2& pos, float height);
     std::shared_ptr<WallController> createWall(const std::string& controllerName, const b2Vec2& pos, float height);

@@ -21,6 +21,7 @@
 #include "Particles/ParticlesFactory.h"
 #include "Utils/Environment.h"
 #include "Utils/Convert.h"
+#include "Utils/NodeUtils.h"
 #include "json/document.h"
 #include "platform/CCFileUtils.h"
 
@@ -49,7 +50,7 @@ std::shared_ptr<SimpleGameObject> GameObjectFactory::createBox(const b2Vec2& pos
 
 std::shared_ptr<IGameObject> GameObjectFactory::createStaticStone(const b2Vec2 & topLeftCornerPos, float width, const std::string & fileName, const std::string& chippingPrefix, float* outHeight)
 {
-    //just for testing
+    //TODO: just for testing
     std::vector<std::string> names;
     names.push_back(chippingPrefix + "0.png");
     names.push_back(chippingPrefix + "1.png");
@@ -87,19 +88,26 @@ std::shared_ptr<IGameObject> GameObjectFactory::createStaticStone(const b2Vec2 &
     return obj;
 }
 
-std::shared_ptr<IGameObject> GameObjectFactory::createLightingStone(const b2Vec2 & topLeftCornerPos, float width, const std::string& fileName, const std::string & lightingName, float* outHeight)
+std::shared_ptr<IGameObject> GameObjectFactory::createLightingStone(const b2Vec2 & topLeftCornerPos, float width, const std::string& fileName, const std::string & lightingName, const std::string& chippingPrefix, float* outHeight)
 {
+    //TODO: just for testing
+    std::vector<std::string> names;
+    names.push_back(chippingPrefix + "0.png");
+    names.push_back(chippingPrefix + "1.png");
+    
+    auto particles = createChippingParticles(names);
+    particles->setPaused(true);
+    
     Sprite* sprite = createSprite(fileName);
-    Sprite* lighting = Sprite::create(lightingName);
+    Sprite* light = Sprite::create(lightingName);
+    light->setAnchorPoint({0.5, 0.5});
+    NodeUtils::attach(light, sprite, {0.5, 0.5});
+    light->setOpacity(0);
     
     Vec2 spriteSize = sprite->getContentSize();
     float scale = width / Convert::toMeters(spriteSize.x);
     
     sprite->setScale(scale);
-    lighting->setOpacity(0);
-    Vec2 lightingPos = sprite->getContentSize() / 2;
-    lighting->setPosition(lightingPos);
-    sprite->addChild(lighting);
     
     b2Vec2 bodySize = Convert::toMeters(spriteSize * scale);
     b2Vec2 bodyCenter = topLeftCornerPos + b2Vec2(bodySize.x / 2, -bodySize.y / 2);
@@ -108,19 +116,17 @@ std::shared_ptr<IGameObject> GameObjectFactory::createLightingStone(const b2Vec2
     physShape.SetAsBox(bodySize.x / 2, bodySize.y / 2);
     b2Body* body = createBody(b2BodyType::b2_staticBody, &physShape, bodyCenter, 0);
     
-    std::shared_ptr<LightingStone> stone = LightingStone::create(body, sprite, lighting, _world);
+    std::shared_ptr<LightingStone> obj = LightingStone::create(body, sprite, light, particles, _world);
+    _world->addObject(obj);
     
-    _world->addObject(stone);
-    
-    IGameObject* istone = stone.get();
-    body->SetUserData(istone);
+    IGameObject* iobj = obj.get();
+    body->SetUserData(iobj);
     
     if (outHeight)
         *outHeight = bodySize.y;
     
-    return stone;
+    return obj;
 }
-
 
 std::shared_ptr<IGameObject> GameObjectFactory::createCircle(const b2Vec2& pos, float angle, float radius, b2BodyType type, const std::string& fileName)
 {
@@ -546,15 +552,15 @@ std::shared_ptr<Coin> GameObjectFactory::createCoin(const b2Vec2 &pos)
     return coin;
 }
 
-std::shared_ptr<AnimationObject> GameObjectFactory::createBombExplosion(const b2Vec2& pos)
+std::shared_ptr<AnimationObject> GameObjectFactory::createBombExplosion(const b2Vec2& pos, float scale)
 {
     Vector<SpriteFrame*> frames;
     
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < 7; ++i)
     {
-        std::string fString = "resources/bomb_" + std::to_string(i) + ".png";
+        std::string fString = "resources/fire_explosion_" + std::to_string(i) + ".png";
         Rect fRect;
-        fRect.size = Size(64, 64);
+        fRect.size = Size(163, 146);
         fRect.origin = Vec2(0, 0);
         SpriteFrame* frame = SpriteFrame::create(fString, fRect);
         
@@ -563,6 +569,8 @@ std::shared_ptr<AnimationObject> GameObjectFactory::createBombExplosion(const b2
     
     std::shared_ptr<AnimationObject> animation = std::shared_ptr<AnimationObject>(new AnimationObject(_world, frames, 10, false));
     animation->setPosition(pos);
+    animation->setScale(scale);
+    animation->setAnchorPoint({0.6, 0.14});
     _world->addObject(animation);
     
     return animation;
