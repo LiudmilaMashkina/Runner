@@ -121,7 +121,7 @@ b2Vec2 GameObjectComposer::assembleLightingLine(const LineDef& def)
         if (randNumber >= 1 && randNumber <= 4)
         {
             b2Vec2 bombPos = leftCorner;
-            bombPos.x += block.width / 2;
+            bombPos.x += blockWidth / 2;
             auto bomb = factory.createBomb(bombPos, 0, b2Vec2(0.5, 0.5));
             
             b2WeldJointDef jointDef;
