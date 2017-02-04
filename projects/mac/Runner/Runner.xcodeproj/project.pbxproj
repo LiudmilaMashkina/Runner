@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		856E59E11E462A7700CA316B /* rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 856E59E01E462A7700CA316B /* rsrc */; };
 		85A877E01DB7854600A25CB1 /* config in Resources */ = {isa = PBXBuildFile; fileRef = 85A877DF1DB7854600A25CB1 /* config */; };
 		85FAAF3B1D99C83900933768 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 85FAAF3A1D99C83900933768 /* main.mm */; };
 		85FAAF4F1D99C8DC00933768 /* libGameLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FAAF4E1D99C87500933768 /* libGameLib.a */; };
@@ -17,7 +18,6 @@
 		85FAAF601D99CF7400933768 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FAAF5F1D99CF7400933768 /* IOKit.framework */; };
 		85FAAF621D99CFA200933768 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FAAF611D99CFA200933768 /* libz.tbd */; };
 		85FAAF641D99CFCF00933768 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FAAF631D99CFCF00933768 /* libiconv.tbd */; };
-		85FAAF661D99D14800933768 /* resources in Resources */ = {isa = PBXBuildFile; fileRef = 85FAAF651D99D14800933768 /* resources */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		856E59E01E462A7700CA316B /* rsrc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = rsrc; path = ../../../rsrc; sourceTree = "<group>"; };
 		85A877DF1DB7854600A25CB1 /* config */ = {isa = PBXFileReference; lastKnownFileType = folder; name = config; path = ../../../config; sourceTree = "<group>"; };
 		85FAAF331D99C83900933768 /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85FAAF3A1D99C83900933768 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
@@ -45,7 +46,6 @@
 		85FAAF5F1D99CF7400933768 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		85FAAF611D99CFA200933768 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		85FAAF631D99CFCF00933768 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
-		85FAAF651D99D14800933768 /* resources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = resources; path = ../../../resources; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,8 +70,8 @@
 		85FAAF2A1D99C83900933768 = {
 			isa = PBXGroup;
 			children = (
+				856E59E01E462A7700CA316B /* rsrc */,
 				85A877DF1DB7854600A25CB1 /* config */,
-				85FAAF651D99D14800933768 /* resources */,
 				85FAAF471D99C87500933768 /* GameLib.xcodeproj */,
 				85FAAF351D99C83900933768 /* Runner */,
 				85FAAF341D99C83900933768 /* Products */,
@@ -203,8 +203,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				856E59E11E462A7700CA316B /* rsrc in Resources */,
 				85A877E01DB7854600A25CB1 /* config in Resources */,
-				85FAAF661D99D14800933768 /* resources in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,6 +314,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					PLATFORM_MAC,
+				);
 				HEADER_SEARCH_PATHS = (
 					../../../src,
 					"/Users/luda/Downloads/cocos2d-x-3.13.1/cocos",
@@ -321,6 +326,7 @@
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = ../../../external;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = luda.Runner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WARNING_CFLAGS = "-Wno-documentation";
@@ -332,6 +338,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = PLATFORM_MAC;
 				HEADER_SEARCH_PATHS = (
 					../../../src,
 					"/Users/luda/Downloads/cocos2d-x-3.13.1/cocos",
@@ -339,6 +346,7 @@
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = ../../../external;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = luda.Runner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WARNING_CFLAGS = "-Wno-documentation";

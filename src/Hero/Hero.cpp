@@ -30,8 +30,8 @@ _world(world)
     _data.velocity.Set(0, 0);
     
     _data.animationEngine = factory.getEngine("config/hero_animations.json");
-    _data.node = _data.animationEngine->start();
-    layer->addChild(_data.node);
+    _data.node.reset(_data.animationEngine->start());
+    layer->addChild(_data.node.get());
     
     float height = _data.node->getContentSize().height;
     float scale = Convert::toPixels(1/height);

@@ -3,14 +3,11 @@
 #include "Utils/Forwards.h"
 #include <Box2D/Dynamics/b2Body.h>
 #include <Box2D/Dynamics/b2Fixture.h>
+#include <2d/CCNode.h>
 #include "GameObjects/CollisionCategory.h"
+#include "Utils/StrongPtr.h"
 
 FORWARD_DECLARE_SHARED(AnimationEngine)
-
-namespace cocos2d
-{
-    class Node;
-}
 
 /* HeroData is a common part for both Hero and hero states
  */
@@ -24,7 +21,7 @@ struct HeroData
     
     b2Vec2 acceleration = {0, 0};
     b2Vec2 velocity = {0, 0};
-    cocos2d::Node* node = nullptr;
+    StrongPtr<cocos2d::Node> node;
     b2Body* body = nullptr;
     AnimationEnginePtr animationEngine;
     bool canAttack = true;
