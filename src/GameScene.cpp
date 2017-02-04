@@ -60,7 +60,7 @@ bool GameScene::init()
     addUpdatable(_world);
 
     _levelGenerator = GameLevelGenerator::create(_world.get());
-    _levelGenerator->generateUntil(Environment::getScreenSize().x * 0.75f);
+    _levelGenerator->generateUntil(Environment::getScreenSize().x * 2);
 
     _camera = GameCamera::create();
 
@@ -122,7 +122,7 @@ bool GameScene::init()
     {
         float camX = camera->getPosition().x;
         float winSizeX = Environment::getScreenSize().x;
-        levelGenerator->generateUntil(camX + winSizeX * 0.75f);
+        levelGenerator->generateUntil(camX + winSizeX * 2);
     };
     addUpdatable(UpdaterFunc::create(sync));
 
