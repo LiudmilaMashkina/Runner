@@ -45,7 +45,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glview = director->getOpenGLView();
     if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        glview = GLViewImpl::createWithRect("RunnerCocos", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
+        glview = GLViewImpl::createWithRect("RunnerCocos", cocos2d::Rect(0, 0, 1136, 640));
 #else
         glview = GLViewImpl::create("RunnerCocos");
 #endif
@@ -62,7 +62,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     foo = director->getWinSize();
     
-#ifdef PLATFORM_MAC
+#ifdef WIN32
 	director->getOpenGLView()->setFrameSize(1136, 640);
 	director->getOpenGLView()->setDesignResetOpenGLViewsolutionSize(1136, 640, ResolutionPolicy::EXACT_FIT);
 #endif
