@@ -3,7 +3,7 @@
 		"run_from_left_leg": {
 			"cyclic": false,
 			"frame_pattern": {
-				"prefix": "resources/run_from_left_leg_",
+				"prefix": "rsrc/run_from_left_leg_",
 				"extension": "png",
 				"range": {
 					"first": 0,
@@ -16,7 +16,7 @@
 		"run_from_right_leg": {
 			"cyclic": false,
 			"frame_pattern": {
-				"prefix": "resources/run_from_right_leg_",
+				"prefix": "rsrc/run_from_right_leg_",
 				"extension": "png",
 				"range": {
 					"first": 0,
@@ -29,7 +29,7 @@
 		"jump_from_right_leg": {
 			"cyclic": false,
 			"frame_pattern": {
-				"prefix": "resources/jump_white_right_",
+				"prefix": "rsrc/jump_white_right_",
 				"extension": "png",
 				"range": {
 					"first": 0,
@@ -42,7 +42,7 @@
 		"jump_from_left_leg": {
 			"cyclic": false,
 			"frame_pattern": {
-				"prefix": "resources/jump_white_left_",
+				"prefix": "rsrc/jump_white_left_",
 				"extension": "png",
 				"range": {
 					"first": 0,
@@ -55,7 +55,7 @@
 		"fall_right": {
 			"cyclic": false,
 			"frame_pattern": {
-				"prefix": "resources/jump_white_left_",
+				"prefix": "rsrc/jump_white_left_",
 				"extension": "png",
 				"range": {
 					"first": 3,
@@ -68,7 +68,7 @@
 		"fall_left": {
 			"cyclic": false,
 			"frame_pattern": {
-				"prefix": "resources/jump_white_right_",
+				"prefix": "rsrc/jump_white_right_",
 				"extension": "png",
 				"range": {
 					"first": 3,
@@ -81,7 +81,7 @@
 		"attack_from_right": {
 			"cyclic": true,
 			"frame_pattern": {
-				"prefix": "resources/attack_from_right_",
+				"prefix": "rsrc/attack_from_right_",
 				"extension": "png",
 				"range": {
 					"first": 0,
@@ -94,7 +94,7 @@
 		"attack_from_left": {
 			"cyclic": true,
 			"frame_pattern": {
-				"prefix": "resources/attack_from_left_",
+				"prefix": "rsrc/attack_from_left_",
 				"extension": "png",
 				"range": {
 					"first": 0,
@@ -106,7 +106,7 @@
 		"dead": {
 			"cyclic": true,
 			"frame_pattern": {
-				"prefix": "resources/deadState_",
+				"prefix": "rsrc/deadState_",
 				"extension": "png",
 				"range": {
 					"first": 0,

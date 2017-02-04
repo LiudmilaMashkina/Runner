@@ -155,7 +155,7 @@ std::shared_ptr<Bomb> GameObjectFactory::createBomb(const b2Vec2 &pos, float ang
     
     auto particles = createBombParticles(pos);
      
-    Vector<SpriteFrame*> frames = createFramesForAnimation(7, "resources/fire_", Size(57, 64));
+    Vector<SpriteFrame*> frames = createFramesForAnimation(7, "rsrc/fire_", Size(57, 64));
     
     assert(!frames.empty());
     IAnimationPtr animation = std::shared_ptr<::Animation>(new ::Animation(frames, 10, true));
@@ -187,7 +187,7 @@ std::shared_ptr<Grass> GameObjectFactory::createGrass(const b2Vec2 &pos, float a
     physShape.SetAsBox(size.x / 2, size.y / 2);
     
     b2Body* body = createSensor(b2BodyType::b2_dynamicBody, &physShape, pos, angle);
-    auto sprite = createSprite("resources/black_grass.png", size);
+    auto sprite = createSprite("rsrc/black_grass.png", size);
     auto particles = createGrassParticles(pos, size);
     
     std::shared_ptr<Grass> obj = Grass::create(body, _world, sprite, particles);
@@ -202,7 +202,7 @@ std::shared_ptr<Grass> GameObjectFactory::createGrass(const b2Vec2 &pos, float a
     b2Vec2 heapPos = pos;
     heapPos.x += 0.5;
     int q = Environment::generateIntRand(0, 5);
-    createStoneHeap(heapPos, q, "resources/ice_dynamic_stone.png");
+    createStoneHeap(heapPos, q, "rsrc/ice_dynamic_stone.png");
     
     return obj;
 }
@@ -213,7 +213,7 @@ std::shared_ptr<Bulb> GameObjectFactory::createBulb(const b2Vec2 &pos, const b2V
     physShape.SetAsBox(size.x / 2, size.y / 2);
     
     b2Body* body = createSensor(b2BodyType::b2_dynamicBody, &physShape, pos, 0);
-    auto sprite = createSprite("resources/bulb_64x64.png", size);
+    auto sprite = createSprite("rsrc/bulb_64x64.png", size);
     
     std::shared_ptr<Bulb> obj = Bulb::create(body, _world, sprite);
     _world->addObject(obj);
@@ -226,7 +226,7 @@ std::shared_ptr<Bulb> GameObjectFactory::createBulb(const b2Vec2 &pos, const b2V
 
 std::shared_ptr<BridgeColumn> GameObjectFactory::createColumn(const std::string & objName, const b2Vec2& pos, float height)
 {
-    std::string content = FileUtils::getInstance()->getStringFromFile("resources/objects.json");
+    std::string content = FileUtils::getInstance()->getStringFromFile("rsrc/objects.json");
     rapidjson::Document doc;
     doc.Parse(content.c_str());
     
@@ -240,7 +240,7 @@ std::shared_ptr<BridgeColumn> GameObjectFactory::createColumn(const std::string 
         tex = texturePath.substr (found,texturePath.size() - 1);
     }
     
-    texturePath = "resources" + tex;
+    texturePath = "rsrc" + tex;
     
     const rapidjson::Value &jSize = jObject["original_size"];
     b2Vec2 originalSize;
@@ -392,7 +392,7 @@ std::shared_ptr<BridgeColumn> GameObjectFactory::createColumn(const std::string 
 std::shared_ptr<WallController> GameObjectFactory::createWall(const std::string& controllerName, const b2Vec2& pos, float height)
 {
     std::shared_ptr<WallController> controller = WallController::create(_world, pos);
-    std::string content = FileUtils::getInstance()->getStringFromFile("resources/objects.json");
+    std::string content = FileUtils::getInstance()->getStringFromFile("rsrc/objects.json");
     rapidjson::Document doc;
     doc.Parse(content.c_str());
     
@@ -410,7 +410,7 @@ std::shared_ptr<WallController> GameObjectFactory::createWall(const std::string&
         std::string texturePath = jStone["texture_path"].GetString();
         std::size_t found = texturePath.find("/");
         std::string imageName = texturePath.substr(found + 1, texturePath.size() - 1);
-        std::string texture = "resources/" + imageName;
+        std::string texture = "rsrc/" + imageName;
         
         const rapidjson::Value &jLocation = jStone["location"];
         b2Vec2 globalPos = pos;
@@ -509,12 +509,12 @@ std::shared_ptr<WallController> GameObjectFactory::createWall(const std::string&
     b2Vec2 heapPos1 = pos;
     heapPos1.x += 0.2;
     int q1 = Environment::generateIntRand(0, 5);
-    createStoneHeap(heapPos1, q1, "resources/ice_dynamic_stone.png");
+    createStoneHeap(heapPos1, q1, "rsrc/ice_dynamic_stone.png");
     
     b2Vec2 heapPos2 = pos;
     heapPos2.x -= 0.3;
     int q2 = Environment::generateIntRand(0, 5);
-    createStoneHeap(heapPos2, q2, "resources/ice_dynamic_stone.png");
+    createStoneHeap(heapPos2, q2, "rsrc/ice_dynamic_stone.png");
     
 
     return controller;
@@ -528,7 +528,7 @@ std::shared_ptr<Coin> GameObjectFactory::createCoin(const b2Vec2 &pos)
     
     b2Body* body = createSensor(b2BodyType::b2_staticBody, &physShape, pos, 0);
     
-    Vector<SpriteFrame*> frames = createFramesForAnimation(4, "resources/coin_", Size(256,256));
+    Vector<SpriteFrame*> frames = createFramesForAnimation(4, "rsrc/coin_", Size(256,256));
     
     assert(!frames.empty());
     IAnimationPtr animation = std::shared_ptr<::Animation>(new ::Animation(frames, 10, true));
@@ -558,7 +558,7 @@ std::shared_ptr<AnimationObject> GameObjectFactory::createBombExplosion(const b2
     
     for (int i = 0; i < 7; ++i)
     {
-        std::string fString = "resources/fire_explosion_" + std::to_string(i) + ".png";
+        std::string fString = "rsrc/fire_explosion_" + std::to_string(i) + ".png";
         Rect fRect;
         fRect.size = Size(163, 146);
         fRect.origin = Vec2(0, 0);

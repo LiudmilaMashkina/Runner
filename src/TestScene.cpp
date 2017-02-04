@@ -31,7 +31,7 @@ bool TestScene::init()
 
     _winSize = Environment::getScreenSize();
     
-    auto background = createBackground("resources/background_1_1024x1024.jpg");
+    auto background = createBackground("rsrc/background_1_1024x1024.jpg");
     addChild(background);
     
     Node* gameNode = Node::create();
@@ -47,7 +47,7 @@ bool TestScene::init()
     //_system = system;
     
     ParticlesGenerator::Params gParams;
-    gParams.fileName = "resources/particle_16x16.png";
+    gParams.fileName = "rsrc/particle_16x16.png";
     gParams.rate = 5;
     gParams.velocityRange.set(b2Vec2(0, 1), b2Vec2(0, 2));
     gParams.massRange.set(0.5, 1);

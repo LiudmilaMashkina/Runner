@@ -207,7 +207,7 @@ b2Vec2 GameObjectComposer::assembleBridge(const BridgeDef & def, ObjectThemer::T
         
         float dist = 0.5f * def.linkSize.x + (1 - def.overlap) * i * def.linkSize.x;
         pos = startDynamicPart + dist * dir;
-        auto curObj = factory.createBox(pos, angle, def.linkSize, bodyType, "resources/wood_bridge.png");
+        auto curObj = factory.createBox(pos, angle, def.linkSize, bodyType, "rsrc/wood_bridge.png");
 		b2Body* curBody = curObj->getBody();
 
         if (i == 0)

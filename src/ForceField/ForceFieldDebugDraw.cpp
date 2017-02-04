@@ -26,7 +26,7 @@ bool ForceFieldDebugDraw::initWithField(const std::shared_ptr<IForceField> &forc
 		std::vector<Sprite*> spritesY;
 		for (float y = 0; y < fieldSize.y; y += drawStep)
 		{
-			auto sprite = Sprite::create("resources/force_arrow.png");
+			auto sprite = Sprite::create("rsrc/force_arrow.png");
 			sprite->setAnchorPoint(Vec2(0, 0.5));
             sprite->setPosition(Convert::toPixels(x), Convert::toPixels(y));
 			sprite->setScaleY(0.2f);

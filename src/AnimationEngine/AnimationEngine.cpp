@@ -74,7 +74,7 @@ cocos2d::Sprite* AnimationEngine::start()
 {
     if (!_sprite)
     {
-        _sprite = cocos2d::Sprite::create("resources/jump_white_left_0.png");
+        _sprite = cocos2d::Sprite::create("rsrc/jump_white_left_0.png");
         assert(_sprite);
     }
     return _sprite;

@@ -46,7 +46,7 @@ bool PauseMenu::initWithHud(HeadUpDisplay* hud)
     Vec2 winSize = Convert::toPixels(Environment::getScreenSize());
     
     {
-        _background = Sprite::create("resources/pause_menu_background_256x256.png");
+        _background = Sprite::create("rsrc/pause_menu_background_256x256.png");
         NodeUtils::scaleTo(_background, {winSize.x * 0.6f, winSize.y});
         _background->setAnchorPoint({1, 1});
         _background->setPosition(winSize);
@@ -58,7 +58,7 @@ bool PauseMenu::initWithHud(HeadUpDisplay* hud)
     }
     
     {
-        _totem = Sprite::create("resources/pause_menu_totem.png");
+        _totem = Sprite::create("rsrc/pause_menu_totem.png");
         _totem->setAnchorPoint({1, 0.5});
         _totem->setPosition(winSize.x + NodeUtils::getScaledSize(_totem).x, winSize.y / 2);
         float scale = winSize.y * 0.8 / _totem->getContentSize().height;
@@ -72,8 +72,8 @@ bool PauseMenu::initWithHud(HeadUpDisplay* hud)
     
     {
         // continue button
-        auto button = gui2::Button::create("resources/pause_menu_continue.png",
-                                           "resources/pause_menu_continue_pressed.png");
+        auto button = gui2::Button::create("rsrc/pause_menu_continue.png",
+                                           "rsrc/pause_menu_continue_pressed.png");
         button->setCallback(std::bind(&PauseMenu::onContinueClicked, this, std::placeholders::_1));
         
         button->setAnchorPoint({1, 1});
@@ -85,8 +85,8 @@ bool PauseMenu::initWithHud(HeadUpDisplay* hud)
 
     {
         // restart button
-        auto button = gui2::Button::create("resources/pause_menu_restart.png",
-                                           "resources/pause_menu_restart_pressed.png");
+        auto button = gui2::Button::create("rsrc/pause_menu_restart.png",
+                                           "rsrc/pause_menu_restart_pressed.png");
         button->setCallback(std::bind(&PauseMenu::onRestartClicked, this, std::placeholders::_1));
 
         button->setAnchorPoint({1, 1});
@@ -98,8 +98,8 @@ bool PauseMenu::initWithHud(HeadUpDisplay* hud)
     
     {
         // main menu button
-        auto button = gui2::Button::create("resources/pause_menu_mainmenu.png",
-                                           "resources/pause_menu_mainmenu_pressed.png");
+        auto button = gui2::Button::create("rsrc/pause_menu_mainmenu.png",
+                                           "rsrc/pause_menu_mainmenu_pressed.png");
         button->setCallback(std::bind(&PauseMenu::onMainMenuClicked, this, std::placeholders::_1));
 
         button->setAnchorPoint({1, 1});
@@ -111,8 +111,8 @@ bool PauseMenu::initWithHud(HeadUpDisplay* hud)
     
     {
         // sound check box
-        auto checkBox = gui2::CheckBox::create("resources/pause_menu_sounds_on.png",
-                                               "resources/pause_menu_sounds_off.png");
+        auto checkBox = gui2::CheckBox::create("rsrc/pause_menu_sounds_on.png",
+                                               "rsrc/pause_menu_sounds_off.png");
         checkBox->setAnchorPoint({1, 0});
         NodeUtils::attach(checkBox, _totem, {-1.4, 0.8});
         turnOnCheckBox(checkBox);
@@ -121,8 +121,8 @@ bool PauseMenu::initWithHud(HeadUpDisplay* hud)
     
     {
         // music check box
-        auto checkBox = gui2::CheckBox::create("resources/pause_menu_music_on.png",
-                                               "resources/pause_menu_music_off.png");
+        auto checkBox = gui2::CheckBox::create("rsrc/pause_menu_music_on.png",
+                                               "rsrc/pause_menu_music_off.png");
         checkBox->setAnchorPoint({0, 0});
         NodeUtils::attach(checkBox, _totem, {-1.2, 0.8});
         turnOnCheckBox(checkBox);

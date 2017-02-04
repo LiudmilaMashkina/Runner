@@ -13,6 +13,7 @@
 		856E59CC1E46211900CA316B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 856E59CB1E46211900CA316B /* AudioToolbox.framework */; };
 		856E59CE1E46213B00CA316B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 856E59CD1E46213B00CA316B /* CoreMotion.framework */; };
 		856E59D31E46233F00CA316B /* rsrc in Resources */ = {isa = PBXBuildFile; fileRef = 856E59D21E46233F00CA316B /* rsrc */; };
+		856E59D51E46261B00CA316B /* config in Resources */ = {isa = PBXBuildFile; fileRef = 856E59D41E46261B00CA316B /* config */; };
 		8571029E1E460789009CF6A5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8571029D1E460789009CF6A5 /* main.m */; };
 		857102A11E460789009CF6A5 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 857102A01E460789009CF6A5 /* AppController.mm */; };
 		857102A41E460789009CF6A5 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 857102A31E460789009CF6A5 /* RootViewController.mm */; };
@@ -37,6 +38,7 @@
 		856E59CB1E46211900CA316B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		856E59CD1E46213B00CA316B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		856E59D21E46233F00CA316B /* rsrc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = rsrc; path = ../../../rsrc; sourceTree = "<group>"; };
+		856E59D41E46261B00CA316B /* config */ = {isa = PBXFileReference; lastKnownFileType = folder; name = config; path = ../../../config; sourceTree = "<group>"; };
 		857102991E460789009CF6A5 /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8571029D1E460789009CF6A5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8571029F1E460789009CF6A5 /* AppController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 		857102901E460789009CF6A5 = {
 			isa = PBXGroup;
 			children = (
+				856E59D41E46261B00CA316B /* config */,
 				856E59D21E46233F00CA316B /* rsrc */,
 				857102B51E460B54009CF6A5 /* GameLib.xcodeproj */,
 				8571029B1E460789009CF6A5 /* Runner */,
@@ -202,6 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				856E59D31E46233F00CA316B /* rsrc in Resources */,
+				856E59D51E46261B00CA316B /* config in Resources */,
 				857102A91E460789009CF6A5 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -324,11 +328,13 @@
 					"/Users/luda/Downloads/cocos2d-x-3.13.1/cocos",
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = ../../../external;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_BUNDLE_IDENTIFIER = luda.Runner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -344,11 +350,13 @@
 					"/Users/luda/Downloads/cocos2d-x-3.13.1/cocos",
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = ../../../external;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_BUNDLE_IDENTIFIER = luda.Runner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

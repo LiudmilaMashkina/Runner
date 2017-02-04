@@ -45,7 +45,7 @@ bool DeathMenu::initWithHud(HeadUpDisplay* hud, int distance, int coins)
     auto winSize = Convert::toPixels(Environment::getScreenSize());
     
     {
-        auto background = Sprite::create("resources/deathmenu_background.png");
+        auto background = Sprite::create("rsrc/deathmenu_background.png");
         addChild(background);
         background->setAnchorPoint({0, 0});
         background->setPosition(0, 0);
@@ -56,7 +56,7 @@ bool DeathMenu::initWithHud(HeadUpDisplay* hud, int distance, int coins)
         background->runAction(fade);
     }
     
-    _base = Sprite::create("resources/deathmenu_base.png");
+    _base = Sprite::create("rsrc/deathmenu_base.png");
     addChild(_base);
     
     Vec2 baseSize = _base->getContentSize();
@@ -70,26 +70,26 @@ bool DeathMenu::initWithHud(HeadUpDisplay* hud, int distance, int coins)
     auto move = EaseElasticOut::create(MoveTo::create(MenuMoveTime, winSize / 2), MenuEaseRate);
     _base->runAction(move);
     
-    auto restartTexture = TextureCache::getInstance()->addImage("resources/deathmenu_restart.png");
-    auto mainMenuTexture = TextureCache::getInstance()->addImage("resources/deathmenu_mainmenu.png");
+    auto restartTexture = TextureCache::getInstance()->addImage("rsrc/deathmenu_restart.png");
+    auto mainMenuTexture = TextureCache::getInstance()->addImage("rsrc/deathmenu_mainmenu.png");
     
     float horizontalGapSum = baseSize.x - (restartTexture->getContentSize().width + mainMenuTexture->getContentSize().width);
     float sideGap = horizontalGapSum * 0.4;
     
     {
         // restart button
-        auto button = gui2::Button::create("resources/deathmenu_restart.png", "resources/deathmenu_restart_pressed.png");
+        auto button = gui2::Button::create("rsrc/deathmenu_restart.png", "rsrc/deathmenu_restart_pressed.png");
         button->setAnchorPoint({0, 0});
         NodeUtils::attach(button, _base, {sideGap / baseSize.x, 0.05});
         button->setCallback(std::bind(&DeathMenu::onRestartClicked,
                                       this, std::placeholders::_1));
         // totem
-        auto deer = Sprite::create("resources/deathmenu_deer.png");
+        auto deer = Sprite::create("rsrc/deathmenu_deer.png");
         deer->setAnchorPoint({0, 0.125});
         NodeUtils::attach(deer, button, {0, 1}, 1);
         
         // eyes
-        auto eyes = Sprite::create("resources/deathmenu_deer_eyes.png");
+        auto eyes = Sprite::create("rsrc/deathmenu_deer_eyes.png");
         NodeUtils::attach(eyes, deer, {0.5, 0.23}, 1);
         
         eyes->setOpacity(0);
@@ -101,18 +101,18 @@ bool DeathMenu::initWithHud(HeadUpDisplay* hud, int distance, int coins)
     
     {
         // main menu button
-        auto button = gui2::Button::create("resources/deathmenu_mainmenu.png", "resources/deathmenu_mainmenu_pressed.png");
+        auto button = gui2::Button::create("rsrc/deathmenu_mainmenu.png", "rsrc/deathmenu_mainmenu_pressed.png");
         button->setAnchorPoint({1, 0});
         NodeUtils::attach(button, _base, {1 - sideGap / baseSize.x, 0.05});
         button->setCallback(std::bind(&DeathMenu::onMainMenuClicked, this, std::placeholders::_1));
         
         // totem
-        auto cat = Sprite::create("resources/deathmenu_cat.png");
+        auto cat = Sprite::create("rsrc/deathmenu_cat.png");
         cat->setAnchorPoint({1, 0.18});
         NodeUtils::attach(cat, button, {0.9, 1}, 1);
         
         // eyes
-        auto eyes = Sprite::create("resources/deathmenu_cat_eyes.png");
+        auto eyes = Sprite::create("rsrc/deathmenu_cat_eyes.png");
         NodeUtils::attach(eyes, cat, {0.5, 0.76}, 1);
         
         eyes->setOpacity(0);
@@ -123,14 +123,14 @@ bool DeathMenu::initWithHud(HeadUpDisplay* hud, int distance, int coins)
     }
     
     // distance info label
-    auto distLabelTitle = Label::createWithTTF("Distance:", "resources/Monster_AG.ttf", 65);
+    auto distLabelTitle = Label::createWithTTF("Distance:", "rsrc/Monster_AG.ttf", 65);
     _base->addChild(distLabelTitle);
     distLabelTitle->setAnchorPoint({0, 0.5});
     distLabelTitle->setPosition(baseSize.x * 0.3, baseSize.y * 0.7);
     distLabelTitle->setColor(Color3B(234, 222, 174));
     
     std::string dist = std::to_string(distance);
-    auto distLabel = Label::createWithTTF(dist, "resources/Monster_AG.ttf", 65);
+    auto distLabel = Label::createWithTTF(dist, "rsrc/Monster_AG.ttf", 65);
     _base->addChild(distLabel);
     distLabel->setAnchorPoint({0, 0.5});
     auto distPos = distLabelTitle->getPosition();
@@ -139,13 +139,13 @@ bool DeathMenu::initWithHud(HeadUpDisplay* hud, int distance, int coins)
     distLabel->setColor(Color3B(234, 222, 174));
     
     // coins info label
-    auto coinSign = Sprite::create("resources/deathmenu_coin_sign.png");
+    auto coinSign = Sprite::create("rsrc/deathmenu_coin_sign.png");
     _base->addChild(coinSign);
     coinSign->setAnchorPoint({0, 1});
     coinSign->setPosition(distLabelTitle->getPosition().x, distLabelTitle->getPosition().y - distLabelTitle->getContentSize().height);
     
     std::string co = std::to_string(coins);
-    auto coinsLabel = Label::createWithTTF(co, "resources/Monster_AG.ttf", 120);
+    auto coinsLabel = Label::createWithTTF(co, "rsrc/Monster_AG.ttf", 120);
     _base->addChild(coinsLabel);
     coinsLabel->setAnchorPoint({0, 0.5});
     auto coinsPos = coinSign->getPosition();

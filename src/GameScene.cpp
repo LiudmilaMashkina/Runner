@@ -41,12 +41,12 @@ bool GameScene::init()
 
     _winSize = Environment::getScreenSize();
 
-    _background = createBackground("resources/background_square_256x256.png");
+    _background = createBackground("rsrc/background_square_256x256.png");
     addChild(_background);
 
-    _backgroundTrees = createBackground("resources/background_trees_1024x1024.png");
+    _backgroundTrees = createBackground("rsrc/background_trees_1024x1024.png");
     
-    //_backgroundTrees = createSecondPlan("resources/background_trees_1024x1024.png", 2);
+    //_backgroundTrees = createSecondPlan("rsrc/background_trees_1024x1024.png", 2);
     addChild(_backgroundTrees);
     
     

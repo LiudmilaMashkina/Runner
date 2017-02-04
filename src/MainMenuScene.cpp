@@ -63,12 +63,12 @@ bool MainMenuScene::init()
 	if (!GenericScene::init())
 		return false;
 
-	auto background = createBackground("resources/mainmenu_background_512x512.png");
+	auto background = createBackground("rsrc/mainmenu_background_512x512.png");
 	addChild(background);
     
     auto winSize = Convert::toPixels(Environment::getScreenSize());
     
-    auto grassTexture = TextureCache::getInstance()->addImage("resources/mainmenu_grass.png");
+    auto grassTexture = TextureCache::getInstance()->addImage("rsrc/mainmenu_grass.png");
     Size grassSize = grassTexture->getContentSize();
     float scale = winSize.y * 0.26 / grassSize.height;
     
@@ -83,13 +83,13 @@ bool MainMenuScene::init()
     
     createNorthLights(winSize);
     
-    auto totem = Sprite::create("resources/mainmenu_totem.png");
+    auto totem = Sprite::create("rsrc/mainmenu_totem.png");
     addChild(totem);
     totem->setAnchorPoint({0.5, 0.65});
     totem->setScale(scale);
     totem->setPosition(winSize /2);
     
-    auto button = gui2::Button::create("resources/mainmenu_start.png", "resources/mainmenu_start_pressed.png");
+    auto button = gui2::Button::create("rsrc/mainmenu_start.png", "rsrc/mainmenu_start_pressed.png");
     button->setAnchorPoint({0.5, 1});
     NodeUtils::attach(button, totem, {0.49, 0.6});
     
@@ -100,7 +100,7 @@ bool MainMenuScene::init()
     button->setCallback(startGameCallback);
     
     // eyes
-    auto eyes = Sprite::create("resources/mainmenu_bull_eyes.png");
+    auto eyes = Sprite::create("rsrc/mainmenu_bull_eyes.png");
     NodeUtils::attach(eyes, totem, {0.5, 0.695}, 1);
     
     eyes->setOpacity(0);
@@ -111,8 +111,8 @@ bool MainMenuScene::init()
 
     {
         // sound check box
-        auto checkBox = gui2::CheckBox::create("resources/mainmenu_sounds_on.png",
-                                               "resources/mainmenu_sounds_off.png");
+        auto checkBox = gui2::CheckBox::create("rsrc/mainmenu_sounds_on.png",
+                                               "rsrc/mainmenu_sounds_off.png");
         checkBox->setAnchorPoint({0, 0});
         NodeUtils::attach(checkBox, totem, {0.02, 0.52});
         turnOnCheckBox(checkBox);
@@ -120,8 +120,8 @@ bool MainMenuScene::init()
     
     {
         // music check box
-        auto checkBox = gui2::CheckBox::create("resources/mainmenu_music_on.png",
-                                               "resources/mainmenu_music_off.png");
+        auto checkBox = gui2::CheckBox::create("rsrc/mainmenu_music_on.png",
+                                               "rsrc/mainmenu_music_off.png");
         checkBox->setAnchorPoint({1, 0});
         NodeUtils::attach(checkBox, totem, {0.98, 0.52});
         turnOnCheckBox(checkBox);
@@ -153,7 +153,7 @@ void MainMenuScene::createGrass(Vec2 startPos, float untilX, float scale)
 {
     while (startPos.x <= untilX)
     {
-        auto grass = Sprite::create("resources/mainmenu_grass.png");
+        auto grass = Sprite::create("rsrc/mainmenu_grass.png");
         addChild(grass);
         grass->setScale(scale);
         grass->setAnchorPoint({0, 0});
@@ -174,7 +174,7 @@ void MainMenuScene::createNorthLights(const Vec2& winSize)
     
     while (leftEdge <= winSize.x)
     {
-        auto light = Sprite::create("resources/mainmenu_background_light_1_128x256.png");
+        auto light = Sprite::create("rsrc/mainmenu_background_light_1_128x256.png");
         addChild(light);
         light->setAnchorPoint({0, 0});
         
@@ -245,7 +245,7 @@ Sprite* MainMenuScene::createFire(float scale)
     Vector<SpriteFrame*> frames;
     for (int i = 0; i < 7; ++i)
     {
-        std::string fString = "resources/mainmenu_fire_" + std::to_string(i) + ".png";
+        std::string fString = "rsrc/mainmenu_fire_" + std::to_string(i) + ".png";
         auto texture = TextureCache::getInstance()->addImage(fString);
         Rect fRect;
         fRect.size = texture->getContentSize();

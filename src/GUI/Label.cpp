@@ -19,7 +19,7 @@ namespace gui
 		_base = baseSprite;
         node->addChild(baseSprite);
 
-        //_label = cocos2d::Label::createWithTTF(text, "resources/Monster_AG.ttf", 20);
+        //_label = cocos2d::Label::createWithTTF(text, "rsrc/Monster_AG.ttf", 20);
         _label = cocos2d::Label::createWithTTF(text, ttfFile, textSize);
         _label->setColor(Color3B::BLACK);
         _label->setAnchorPoint({0, 0});

@@ -108,8 +108,8 @@ b2Vec2 GameLevelGenerator::generateLine(const b2Vec2 &startPos, ObjectThemer::Th
             typeSuffix = "brown_";
     }
     
-    std::string fileName = "resources/" + themePrefix + "_line_" + typeSuffix;
-    std::string chippingName = "resources/" + themePrefix + "_chipping_" + typeSuffix;
+    std::string fileName = "rsrc/" + themePrefix + "_line_" + typeSuffix;
+    std::string chippingName = "rsrc/" + themePrefix + "_chipping_" + typeSuffix;
     
     GameObjectComposer::LineDef line;
     line.blocks.push_back(GameObjectComposer::LineDef::Block(fileName + "0.png", "", 0.25f));
@@ -132,9 +132,9 @@ b2Vec2 GameLevelGenerator::generateLine(const b2Vec2 &startPos, ObjectThemer::Th
 b2Vec2 GameLevelGenerator::generateLightingLine(const b2Vec2 &startPos)
 {
     GameObjectComposer::LineDef line;
-    line.blocks.push_back(GameObjectComposer::LineDef::Block("resources/ice_lightingline.png", "resources/ice_lightingline_light.png", 1.0f));
+    line.blocks.push_back(GameObjectComposer::LineDef::Block("rsrc/ice_lightingline.png", "rsrc/ice_lightingline_light.png", 1.0f));
     
-    std::string chippingName = "resources/ice_chipping_default_";
+    std::string chippingName = "rsrc/ice_chipping_default_";
     line.chippingNamePrefix = chippingName;
     
     int len = Environment::generateIntRand(6, 15);

@@ -23,7 +23,7 @@ ParticlesFactory::ParticleSystemControls ParticlesFactory::createGameParticlesSy
     std::shared_ptr<ParticlesSystem> system = ParticlesSystem::create();
     
     ParticlesGenerator::Params gParams1;
-    gParams1.fileName = "resources/dust_16x16.png";
+    gParams1.fileName = "rsrc/dust_16x16.png";
     gParams1.rate = 5;
     gParams1.velocityRange.set(b2Vec2(0, 1), b2Vec2(0, 2));
     gParams1.massRange.set(0.5, 1);
@@ -34,7 +34,7 @@ ParticlesFactory::ParticleSystemControls ParticlesFactory::createGameParticlesSy
     gParams1.widthRange.set(0.1, 0.5);
     
     ParticlesGenerator::Params gParams2;
-    gParams2.fileName = "resources/dust_32x32.png";
+    gParams2.fileName = "rsrc/dust_32x32.png";
     gParams2.rate = 3  ;
     gParams2.velocityRange.set(b2Vec2(0, 1), b2Vec2(0, 2));
     gParams2.massRange.set(0.5, 1);
@@ -45,7 +45,7 @@ ParticlesFactory::ParticleSystemControls ParticlesFactory::createGameParticlesSy
     gParams2.widthRange.set(0.2, 0.6);
     
     ParticlesGenerator::Params gParams3;
-    gParams3.fileName = "resources/dust_64x64.png";
+    gParams3.fileName = "rsrc/dust_64x64.png";
     gParams3.rate = 1  ;
     gParams3.velocityRange.set(b2Vec2(0, 1), b2Vec2(0, 2));
     gParams3.massRange.set(0.5, 1);
@@ -93,7 +93,7 @@ ParticlesFactory::ParticleSystemControls ParticlesFactory::createMainMenuParticl
     std::shared_ptr<ParticlesSystem> system = ParticlesSystem::create();
     
     ParticlesGenerator::Params gParams;
-    gParams.fileName = "resources/dust_32x32.png";
+    gParams.fileName = "rsrc/dust_32x32.png";
     gParams.rate = 5;
     gParams.velocityRange.set(b2Vec2(0, 1), b2Vec2(0, 2));
     gParams.massRange.set(0.5, 1);
@@ -132,7 +132,7 @@ ParticlesFactory::ParticleSystemControls ParticlesFactory::createBombParticles(c
     std::shared_ptr<ParticlesSystem> system = ParticlesSystem::create();
     
     ParticlesGenerator::Params params;
-    params.fileName = "resources/fire_particle_16x16.png";
+    params.fileName = "rsrc/fire_particle_16x16.png";
     params.rate = 14;
     params.velocityRange.set(b2Vec2(0, 0), b2Vec2(0, 0));
     params.massRange.set(0.5, 1);
@@ -162,7 +162,7 @@ ParticlesFactory::ParticleSystemControls ParticlesFactory::createGrassParticles(
     std::shared_ptr<ParticlesSystem> system = ParticlesSystem::create();
     
     ParticlesGenerator::Params params;
-    params.fileName = "resources/black_grass_particle.png";
+    params.fileName = "rsrc/black_grass_particle.png";
     params.rate = 20;
     params.velocityRange.set(b2Vec2(0, 0), b2Vec2(0, 0));
     params.massRange.set(0.5, 1);
@@ -230,7 +230,7 @@ ParticlesFactory::ParticleSystemControls ParticlesFactory::createMainMenuFirePar
     auto parentSize = Convert::toMeters(parentNode->getContentSize());
     
     ParticlesGenerator::Params params;
-    params.fileName = "resources/mainmenu_fire_particle.png";
+    params.fileName = "rsrc/mainmenu_fire_particle.png";
     params.rate = 14;
     params.velocityRange.set(b2Vec2(0, 0), b2Vec2(0, 0));
     params.massRange.set(0.5, 1);
