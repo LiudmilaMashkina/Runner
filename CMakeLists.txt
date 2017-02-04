@@ -1,11 +1,6 @@
 cmake_minimum_required (VERSION 2.8.11)
 project (GameLib)
 
-if (NOT ("${platform}" MATCHES "^(ios|mac)$"))
-	message(FATAL_ERROR "Platform '${platform}' is not known")
-endif()
-message("Configuring for platform '${platform}'")
-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror")
 
 set(sources 
@@ -194,12 +189,13 @@ set(includes
 	$ENV{COCOS_X_ROOT}/cocos2d-x-3.13.1/cocos
 )
 
-if (${platform} STREQUAL ios)
-elseif(${platform} STREQUAL mac)
+if (APPLE AND NOT IOS)
 	list(APPEND includes "$ENV{COCOS_X_ROOT}/cocos2d-x-3.13.1/external/glfw3/include/mac")
 endif()
 
 list(APPEND includes "src")
+
+add_definitions("-D${PLATFORM}")
 
 add_library(GameLib ${sources})
 target_include_directories(GameLib PUBLIC ${includes})

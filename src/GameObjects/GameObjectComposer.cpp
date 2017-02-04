@@ -29,7 +29,7 @@ b2Vec2 GameObjectComposer::assembleLine(const LineDef& def)
     float curLength = 0.0f;
 	for ( ; curLength < def.length; )
 	{
-		int num = Environment::generateIntRand(0, def.blocks.size() - 1);
+		int num = Environment::generateIntRand(0, int(def.blocks.size()) - 1);
 		const LineDef::Block& block = def.blocks[num];
 		
 		b2Vec2 leftCorner(def.startPos.x + curLength, def.startPos.y);
@@ -102,7 +102,7 @@ b2Vec2 GameObjectComposer::assembleLightingLine(const LineDef& def)
     float curLength = 0.0f;
     for ( ; curLength < def.length; )
     {
-        int num = Environment::generateIntRand(0, def.blocks.size() - 1);
+        int num = Environment::generateIntRand(0, int(def.blocks.size()) - 1);
         const LineDef::Block& block = def.blocks[num];
         
         float blockWidth = Environment::generateFloatRand(0.4, block.width);

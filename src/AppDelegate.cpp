@@ -1,7 +1,9 @@
 #pragma warning(push, 0)
 #include <platform/CCGLView.h>
 #include <base/CCDirector.h>
+#ifdef MAC
 #include <platform/desktop/CCGLViewImpl-desktop.h>
+#endif
 #pragma warning(pop)
 #include "AppDelegate.h"
 #include "TestScene.h"

@@ -187,7 +187,7 @@ void MainMenuScene::createNorthLights(const Vec2& winSize)
         
         float startOpacity = Environment::generateIntRand(0, 190);
         light->setOpacity(startOpacity);
-        int startColor = Environment::generateIntRand(0, colors.size() - 1);
+        int startColor = Environment::generateIntRand(0, int(colors.size() - 1));
         light->setColor(colors[startColor]);
         
         float appearTime = Environment::generateFloatRand(4.0, 6.0);
@@ -200,10 +200,10 @@ void MainMenuScene::createNorthLights(const Vec2& winSize)
         auto fade = EaseExponentialIn::create(FadeTo::create(fadeTime, 80));
         
         float tintTime = Environment::generateFloatRand(3.0, 5.0);
-        int color1 = Environment::generateIntRand(0, colors.size() - 1);
+        int color1 = Environment::generateIntRand(0, int(colors.size() - 1));
         auto tint1 = EaseExponentialIn::create(TintTo::create(tintTime, colors[color1]));
         
-        int color2 = Environment::generateIntRand(0, colors.size() - 1);
+        int color2 = Environment::generateIntRand(0, int(colors.size() - 1));
         auto tint2 = EaseExponentialIn::create(TintTo::create(tintTime, colors[color2]));
         
         auto tintToWhite = EaseExponentialIn::create(TintTo::create(tintTime, Color3B::WHITE));

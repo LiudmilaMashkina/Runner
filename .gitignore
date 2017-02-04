@@ -37,6 +37,7 @@ _ReSharper*/
 # Ignore files build by ndk and eclipse
 external/
 resources/
+rsrc/
 build/
 libs/
 bin/

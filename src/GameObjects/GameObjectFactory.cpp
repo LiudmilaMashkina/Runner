@@ -274,7 +274,7 @@ std::shared_ptr<BridgeColumn> GameObjectFactory::createColumn(const std::string 
     }
     
     const rapidjson::Value &jIndices = jObject["indices"];
-    size_t indicesSize = jIndices.Size();
+    int indicesSize = (int)jIndices.Size();
     unsigned short* indices = new unsigned short[indicesSize];
     for (rapidjson::SizeType i = 0; i < indicesSize; ++i)
     {
@@ -442,7 +442,7 @@ std::shared_ptr<WallController> GameObjectFactory::createWall(const std::string&
         }
         
         const rapidjson::Value &jIndices = jStone["indices"];
-        size_t indicesSize = jIndices.Size();
+        int indicesSize = (int)jIndices.Size();
         unsigned short* indices = new unsigned short[indicesSize];
         for (rapidjson::SizeType j = 0; j < indicesSize; ++j)
         {

@@ -2,8 +2,10 @@
 
 #ifdef WIN32
 #include <platform/win32/CCApplication-win32.h>
-#elif __APPLE__
+#elif PLATFORM_MAC
 #include <platform/mac/CCApplication-mac.h>
+#elif PLATFORM_IOS
+#include <platform/ios/CCApplication-ios.h>
 #endif
 
 /**
@@ -11,7 +13,7 @@
 
 Private inheritance here hides part of interface from Director.
 */
-class  AppDelegate : private cocos2d::Application
+class AppDelegate : private cocos2d::Application
 {
 public:
     AppDelegate();
