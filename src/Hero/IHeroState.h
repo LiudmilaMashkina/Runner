@@ -19,7 +19,8 @@ public:
     
     virtual void onEnter() = 0;
     virtual HeroStateId update(float delta) = 0;
-    virtual HeroStateId onTap() = 0;
+    virtual HeroStateId onTapBegan() = 0;
+    virtual HeroStateId onTapEnded() = 0;
     virtual void onExit() = 0;
     virtual HeroStateId getStateId() const = 0;
 };

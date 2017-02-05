@@ -31,13 +31,15 @@ public:
     
     virtual void onEnter() override;
     virtual HeroStateId update(float delta) override;
-    virtual HeroStateId onTap() override;
+    virtual HeroStateId onTapBegan() override;
+    virtual HeroStateId onTapEnded() override;
     virtual void onExit() override;
     virtual HeroStateId getStateId() const override;
     
 private:
 	GameWorld* _world = nullptr;
     HeroData* _data = nullptr;
+    float _jumpIncreaseTimeLeft = 0;
 };
 
 

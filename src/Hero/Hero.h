@@ -28,7 +28,8 @@ public:
     
     virtual void update(float delta) override;
     
-    void onTap();
+    void onTapBegan();
+    void onTabEnded();
     
     virtual void setPosition(const b2Vec2 &position);
     virtual b2Vec2 getPosition() override;
@@ -53,9 +54,10 @@ private:
          GameWorld* world);
 
     void decreaseLifes(int num);
+    void goToState(HeroStateId stateId);
     
-    IGameLavelInfo* _info;
-    GameWorld* _world;
+    IGameLavelInfo* _info = nullptr;
+    GameWorld* _world = nullptr;
     HeroData _data;
     std::map<HeroStateId, std::shared_ptr<IHeroState>> _states;
     std::shared_ptr<IHeroState> _currentState;

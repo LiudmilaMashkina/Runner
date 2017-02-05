@@ -1,4 +1,5 @@
 
+#include <cmath>
 #include "Hero.h"
 #include "GameWorld.h"
 #include "Utils/Convert.h"
@@ -14,6 +15,7 @@
 #include "GameObjects/IGameLavelInfo.h"
 #include "GameObjects/CollisionCategory.h"
 #include "Utils/MacroCreate.h"
+#include "Utils/Cfg.h"
 
 #include <iostream>
 
@@ -26,7 +28,7 @@ _world(world)
 {
     AnimationFactory factory;
 
-    _data.acceleration.Set(0, -5);
+    _data.acceleration.Set(0, Cfg::Env::GravityY);
     _data.velocity.Set(0, 0);
     
     _data.animationEngine = factory.getEngine("config/hero_animations.json");
@@ -98,38 +100,38 @@ void Hero::update(float delta)
     HeroStateId stateId = _currentState->update(delta);
     
     if (stateId != _currentState->getStateId())
-    {
-        _currentState->onExit();
-        _currentState = _states[stateId];
-        _currentState->onEnter();
-    }
+        goToState(stateId);
     
 	auto currentButtom = _info->getCurrentBottom(getPosition().x);
     if (getPosition().y < currentButtom)
-    {
-        _currentState = _states[HeroStateId::Dead];
-        _currentState->onEnter();
-    }
+        goToState(HeroStateId::Dead);
     else
         _currentState = _states[stateId];
     
     _data.animationEngine->update(delta);
-
 }
 
-void Hero::onTap()
+void Hero::onTapBegan()
 {
-    HeroStateId stateId = _currentState->onTap();
+    HeroStateId stateId = _currentState->onTapBegan();
     
     if (stateId != _currentState->getStateId())
-    {
-        _currentState = _states[stateId];
-        _currentState->onEnter();
-    }
+        goToState(stateId);
+}
+
+void Hero::onTabEnded()
+{
+    HeroStateId stateId = _currentState->onTapEnded();
+    
+    if (stateId != _currentState->getStateId())
+        goToState(stateId);
 }
 
 void Hero::setPosition(const b2Vec2 &position)
 {
+    assert(fabs(position.x) < 1000.0f * 1000.0f * 1000.0f);
+    assert(fabs(position.y) < 1000.0f * 1000.0f * 1000.0f);
+    
     _data.node->setPosition(Convert::toPixels(position));
 }
 
@@ -181,4 +183,10 @@ void Hero::decreaseLifes(int num)
     }
 }
 
+void Hero::goToState(HeroStateId stateId)
+{
+    _currentState->onExit();
+    _currentState = _states[stateId];
+    _currentState->onEnter();
+}
 

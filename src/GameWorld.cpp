@@ -32,6 +32,8 @@ void GameWorld::addObject(const std::shared_ptr<IGameObject>& object)
 
 void GameWorld::removeObject(const std::function<bool (const std::shared_ptr<IGameObject> &)> &predicate)
 {
+    processObjectsToRemove();
+    assert(_objectsToRemove.empty());
     
     auto startIt = std::partition(_objects.begin(), _objects.end(),
                                   [&](const std::shared_ptr<IGameObject>& obj)
@@ -91,6 +93,11 @@ void GameWorld::update(float delta)
 		_objects[i]->update(delta);
 	}
     
+    processObjectsToRemove();
+}
+
+void GameWorld::processObjectsToRemove()
+{
     for (auto& obj : _objectsToRemove)
     {
         auto it = std::find(_objects.begin(), _objects.end(), obj);
@@ -101,4 +108,3 @@ void GameWorld::update(float delta)
     }
     _objectsToRemove.clear();
 }
-

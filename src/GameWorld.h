@@ -36,6 +36,8 @@ public:
 private:
     GameWorld(const b2Vec2& gravity, cocos2d::Node* rootNode, const std::shared_ptr<TimeProvider>& timeProvider);
     
+    void processObjectsToRemove();
+    
     std::shared_ptr<b2World> _physics = nullptr;
 	cocos2d::Node* _graphics = nullptr;
 	std::vector<std::shared_ptr<IGameObject>> _objects;

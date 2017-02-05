@@ -31,6 +31,7 @@
 #include "GameObjects/BridgeColumn.h"
 #include "GameObjects/WallController.h"
 #include "DropController.h"
+#include "Utils/Cfg.h"
 
 USING_NS_CC;
 
@@ -56,7 +57,7 @@ bool GameScene::init()
     _timeProvider = TimeProvider::create();
     addUpdatable(_timeProvider);
     
-    _world = GameWorld::create(b2Vec2(0, -10), _gameNode, _timeProvider);
+    _world = GameWorld::create(b2Vec2(0, Cfg::Env::GravityY), _gameNode, _timeProvider);
     addUpdatable(_world);
 
     _levelGenerator = GameLevelGenerator::create(_world.get());
@@ -94,7 +95,12 @@ bool GameScene::init()
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->onTouchBegan = [=](Touch* touch, Event* event)
     {
-        hero->onTap();
+        hero->onTapBegan();
+        return true;
+    };
+    touchListener->onTouchEnded = [=](Touch* touch, Event* event)
+    {
+        hero->onTabEnded();
         return true;
     };
     getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);

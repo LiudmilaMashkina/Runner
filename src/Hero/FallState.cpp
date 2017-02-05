@@ -49,12 +49,17 @@ HeroStateId FallState::update(float delta)
     return getStateId();
 }
 
-HeroStateId FallState::onTap()
+HeroStateId FallState::onTapBegan()
 {
     if (_data->canAttack)
         return HeroStateId::Attack;
     else
         return getStateId();
+}
+
+HeroStateId FallState::onTapEnded()
+{
+    return getStateId();
 }
 
 void FallState::onExit()

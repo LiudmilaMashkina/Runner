@@ -12,6 +12,7 @@
 #include "Utils/Convert.h"
 #include "GameWorld.h"
 #include "AnimationEngine/AnimationEngine.h"
+#include "Utils/Cfg.h"
 
 RunState::RunState(GameWorld* world,
                    HeroData* data) :
@@ -21,7 +22,7 @@ _data(data)
 
 void RunState::onEnter()
 {
-    _data->velocity.x = 3;
+    _data->velocity.x = Cfg::Hero::VelocityX;
     _data->velocity.y = 0;
     
     _data->animationEngine->goToAnimationGroup("run");
@@ -51,9 +52,14 @@ HeroStateId RunState::update(float delta)
     return getStateId();
 }
 
-HeroStateId RunState::onTap()
+HeroStateId RunState::onTapBegan()
 {
     return HeroStateId::Jump;
+}
+
+HeroStateId RunState::onTapEnded()
+{
+    return getStateId();
 }
 
 void RunState::onExit()

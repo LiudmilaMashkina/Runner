@@ -62,7 +62,12 @@ HeroStateId AttackState::update(float delta)
     return getStateId();
 }
 
-HeroStateId AttackState::onTap()
+HeroStateId AttackState::onTapBegan()
+{
+    return getStateId();
+}
+
+HeroStateId AttackState::onTapEnded()
 {
     return getStateId();
 }

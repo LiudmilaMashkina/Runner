@@ -173,8 +173,11 @@ set(sources
 	src/Utils/Convert.h
 	src/Utils/Environment.cpp
 	src/Utils/Environment.h
+	src/Utils/Cfg.cpp
+	src/Utils/Cfg.h
 	src/Utils/Forwards.h
-	src/Utils/ITimeProvider.h
+	src/Utils/Environment.cpp
+	src/Utils/Environment.h
 	src/Utils/MacroCreate.h
 	src/Utils/NodeUtils.cpp
 	src/Utils/NodeUtils.h
