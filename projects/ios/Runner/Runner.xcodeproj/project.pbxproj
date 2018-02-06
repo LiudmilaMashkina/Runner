@@ -325,7 +325,7 @@
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					../../../src,
-					"/Users/luda/Downloads/cocos2d-x-3.13.1/cocos",
+					"/Users/liudmilamashkina/Downloads/cocos2d-x-3.13.1/cocos",
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -347,7 +347,7 @@
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					../../../src,
-					"/Users/luda/Downloads/cocos2d-x-3.13.1/cocos",
+					"/Users/liudmilamashkina/Downloads/cocos2d-x-3.13.1/cocos",
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
