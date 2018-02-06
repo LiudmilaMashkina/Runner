@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Box2d/Dynamics/b2WorldCallbacks.h>
+#include <Box2D/Dynamics/b2WorldCallbacks.h>
 
 class GameWorld;
 

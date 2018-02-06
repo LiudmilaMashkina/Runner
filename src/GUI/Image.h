@@ -2,7 +2,7 @@
 
 #include "View.h"
 #include "2d/CCSprite.h"
-#include "gui/ScalePolicy.h"
+#include "GUI/ScalePolicy.h"
 
 namespace gui
 {

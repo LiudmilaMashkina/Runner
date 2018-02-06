@@ -187,13 +187,13 @@ set(sources
 )
 
 set(includes
-	$ENV{COCOS_X_ROOT}/cocos2d-x-3.13.1/cocos/audio/include
-	$ENV{COCOS_X_ROOT}/cocos2d-x-3.13.1/external
-	$ENV{COCOS_X_ROOT}/cocos2d-x-3.13.1/cocos
+	$ENV{COCOS_X_ROOT}/cocos/audio/include
+	$ENV{COCOS_X_ROOT}/external
+	$ENV{COCOS_X_ROOT}/cocos
 )
 
 if (APPLE AND NOT IOS)
-	list(APPEND includes "$ENV{COCOS_X_ROOT}/cocos2d-x-3.13.1/external/glfw3/include/mac")
+	list(APPEND includes "$ENV{COCOS_X_ROOT}/external/glfw3/include/mac")
 endif()
 
 list(APPEND includes "src")

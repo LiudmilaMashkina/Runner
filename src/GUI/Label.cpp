@@ -6,7 +6,7 @@
 #pragma warning(pop)
 
 #include "Label.h"
-#include "gui/BorderdNode.h"
+#include "GUI/BorderdNode.h"
 
 USING_NS_CC;
 

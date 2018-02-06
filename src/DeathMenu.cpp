@@ -16,7 +16,7 @@ USING_NS_CC;
 
 namespace
 {
-    const float MenuMoveTime = 0.8;
+    const float MenuMoveTime = 0.5;
     const float MenuEaseRate = 1;
     const float MenuCloseDelay = 0.2;
     const float BackgroundFadeTime = 0.5;
@@ -54,21 +54,92 @@ bool DeathMenu::initWithHud(HeadUpDisplay* hud, int distance, int coins)
         background->setOpacity(0);
         auto fade = EaseCubicActionIn::create(FadeTo::create(BackgroundFadeTime, 255));
         background->runAction(fade);
+        
+        // distance info label
+        auto distLabelTitle = Label::createWithTTF("Distance:", "rsrc/Monster_AG.ttf", 65);
+        background->addChild(distLabelTitle);
+        distLabelTitle->setAnchorPoint({0, 0.5});
+        //distLabelTitle->setPosition(winSize.x * 0.2, winSize.y * 0.7);
+        distLabelTitle->setPosition(0, 0);
+        distLabelTitle->setColor(Color3B(234, 222, 174));
+        
+        std::string dist = std::to_string(distance);
+        auto distLabel = Label::createWithTTF(dist, "rsrc/Monster_AG.ttf", 65);
+        background->addChild(distLabel);
+        distLabel->setAnchorPoint({0, 0.5});
+        auto distPos = distLabelTitle->getPosition();
+        distPos.x += distLabelTitle->getContentSize().width + winSize.x * 0.02;
+        distLabel->setPosition(distPos);
+        distLabel->setColor(Color3B(234, 222, 174));
     }
     
-    _base = Sprite::create("rsrc/deathmenu_base.png");
-    addChild(_base);
+    _deer = Sprite::create("rsrc/deathmenu_deer.png");
+    addChild(_deer);
+    _deer->setAnchorPoint({0.5, 0});
+    _deer->setPosition(winSize.x / 2, -winSize.y * 0.75);
+    Vec2 deerSize = _deer->getContentSize();
+    float deerHeight = winSize.y * 0.7;
+    float scale = deerHeight / deerSize.y;
+    _deer->setScale(scale);
+    auto move = EaseOut::create(MoveTo::create(MenuMoveTime, {winSize.x / 2, 0}), MenuEaseRate);
+    _deer->runAction(move);
     
-    Vec2 baseSize = _base->getContentSize();
+    auto deerScaledSize = NodeUtils::getScaledSize(_deer);
     
-    float baseWidth = winSize.x * 0.66;
-    float scale = baseWidth / baseSize.x;
-    _base->setScale(scale);
-    _base->setAnchorPoint({0.5, 0.5});
-    _base->setPosition(winSize.x * 0.5, NodeUtils::getScaledSize(_base).y * -0.5);
+    {
+        // restart button
+        auto button = gui2::Button::create("rsrc/deathmenu_restart.png", "rsrc/deathmenu_restart_pressed.png");
+        auto buttonScaledSIze = NodeUtils::getScaledSize(button);
+        button->setAnchorPoint({1, 0});
+        Vec2 pos;
+        pos.x = 0.46;
+        pos.y = 0.36;
+        NodeUtils::attach(button, _deer, pos);
+        button->setCallback(std::bind(&DeathMenu::onRestartClicked,
+                                      this, std::placeholders::_1));
+        // mein menu button
+        auto mainMenuButton = gui2::Button::create("rsrc/deathmenu_mainmenu.png", "rsrc/deathmenu_mainmenu_pressed.png");
+        auto mmButtonScaledSIze = NodeUtils::getScaledSize(button);
+        mainMenuButton->setAnchorPoint({0, 0});
+        Vec2 mmPos;
+        mmPos.x = 0.54;
+        mmPos.y = 0.36;
+        NodeUtils::attach(mainMenuButton, _deer, mmPos);
+        mainMenuButton->setCallback(std::bind(&DeathMenu::onMainMenuClicked,
+                                      this, std::placeholders::_1));
+        // eyes
+        auto eyes = Sprite::create("rsrc/deathmenu_deer_eyes.png");
+        NodeUtils::attach(eyes, _deer, {0.5, 0.37}, 1);
+        
+        eyes->setOpacity(0);
+        auto delay = DelayTime::create(EyesFadeDelay);
+        auto fade = EaseExponentialIn::create(FadeTo::create(EyesFadeTime, 255));
+        auto sequence = Sequence::create(delay, fade, nullptr);
+        eyes->runAction(sequence);
+        
+        // totem
+        auto cat = Sprite::create("rsrc/deathmenu_cat.png");
+        cat->setAnchorPoint({1, 0.18});
+        NodeUtils::attach(cat, mainMenuButton, {0.67, 0.61}, 1);
+        
+        // eyes
+        auto catEyes = Sprite::create("rsrc/deathmenu_cat_eyes.png");
+        NodeUtils::attach(catEyes, cat, {0.5, 0.76}, 1);
+        catEyes->setOpacity(0);
+        {
+            auto delay = DelayTime::create(EyesFadeDelay);
+            auto fade = EaseExponentialIn::create(FadeTo::create(EyesFadeTime, 255));
+            auto sequence = Sequence::create(delay, fade, nullptr);
+            catEyes->runAction(sequence);
+        }
+    }
     
-    auto move = EaseElasticOut::create(MoveTo::create(MenuMoveTime, winSize / 2), MenuEaseRate);
-    _base->runAction(move);
+    
+    
+    
+    /*
+    //auto move = EaseElasticOut::create(MoveTo::create(MenuMoveTime, winSize / 2), MenuEaseRate);
+    //_base->runAction(move);
     
     auto restartTexture = TextureCache::getInstance()->addImage("rsrc/deathmenu_restart.png");
     auto mainMenuTexture = TextureCache::getInstance()->addImage("rsrc/deathmenu_mainmenu.png");
@@ -153,7 +224,7 @@ bool DeathMenu::initWithHud(HeadUpDisplay* hud, int distance, int coins)
     coinsPos.y -= coinSign->getContentSize().height / 2;
     coinsLabel->setPosition(coinsPos);
     coinsLabel->setColor(Color3B(234, 222, 174));
-    
+    */
     return true;
 }
 
@@ -173,10 +244,10 @@ void DeathMenu::close(const std::function<void ()> &hudCallback)
     Vec2 winSize = Convert::toPixels(Environment::getScreenSize());
 
     {
-        auto move = EaseCubicActionIn::create(MoveTo::create(MenuMoveTime, {winSize.x * 0.5f, NodeUtils::getScaledSize(_base).y * -0.5f}));
+        auto move = EaseCubicActionIn::create(MoveTo::create(MenuMoveTime, {winSize.x * 0.5f, NodeUtils::getScaledSize(_deer).y * -0.5f}));
         auto delay = DelayTime::create(MenuCloseDelay);
         auto sequence = Sequence::create(delay, move, nullptr);
-        _base->runAction(sequence);
+        _deer->runAction(sequence);
     }
     
     {

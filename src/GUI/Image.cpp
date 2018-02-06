@@ -1,6 +1,6 @@
 #include "Image.h"
 #include "2d/CCSprite.h"
-#include "gui/BorderdNode.h"
+#include "GUI/BorderdNode.h"
 
 namespace gui
 {

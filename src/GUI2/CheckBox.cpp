@@ -1,5 +1,5 @@
 #include "CheckBox.h"
-#include "gui/BorderdNode.h"
+#include "GUI/BorderdNode.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventDispatcher.h"
 

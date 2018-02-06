@@ -29,5 +29,5 @@ private:
     void close(const std::function<void()> &hudCallback);
     
     HeadUpDisplay* _hud = nullptr;
-    cocos2d::Sprite* _base = nullptr;
+    cocos2d::Sprite* _deer = nullptr;
 };

@@ -1,7 +1,7 @@
 #include <algorithm>
 #include "BoxLayout.h"
 #include "View.h"
-#include "gui/Alignment.h"
+#include "GUI/Alignment.h"
 
 namespace gui
 {

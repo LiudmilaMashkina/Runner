@@ -1,6 +1,6 @@
 #pragma warning(push, 0)
 #include <2d/CCNode.h>
-#include <Box2d/Box2D.h>
+#include <Box2D/Box2D.h>
 #pragma warning(pop)
 #include "SimpleGameObject.h"
 #include "GameWorld.h"

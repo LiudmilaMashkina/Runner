@@ -95,6 +95,9 @@ void Hero::update(float delta)
     _info->getCurrentBottom(getPosition().x); /// delete
 
     b2Vec2 bodyPos = Convert::toMeters(_data.node->getPosition());
+    assert(fabs(bodyPos.x) < 1000.0f * 1000.0f * 1000.0f);
+    assert(fabs(bodyPos.y) < 1000.0f * 1000.0f * 1000.0f);
+    
     _data.body->SetTransform(bodyPos, 0);
     
     HeroStateId stateId = _currentState->update(delta);
