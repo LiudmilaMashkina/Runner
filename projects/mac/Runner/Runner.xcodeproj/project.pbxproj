@@ -18,6 +18,8 @@
 		85FAAF601D99CF7400933768 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FAAF5F1D99CF7400933768 /* IOKit.framework */; };
 		85FAAF621D99CFA200933768 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FAAF611D99CFA200933768 /* libz.tbd */; };
 		85FAAF641D99CFCF00933768 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 85FAAF631D99CFCF00933768 /* libiconv.tbd */; };
+		FD67B37A202D8589003810A3 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67B376202D8589003810A3 /* OpenAL.framework */; };
+		FD67B381202D865D003810A3 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD67B37D202D8647003810A3 /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +48,10 @@
 		85FAAF5F1D99CF7400933768 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		85FAAF611D99CFA200933768 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		85FAAF631D99CFCF00933768 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		FD67B376202D8589003810A3 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		FD67B37B202D8607003810A3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FD67B37D202D8647003810A3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		FD67B37E202D8647003810A3 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +59,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD67B381202D865D003810A3 /* AudioToolbox.framework in Frameworks */,
+				FD67B37A202D8589003810A3 /* OpenAL.framework in Frameworks */,
 				85FAAF641D99CFCF00933768 /* libiconv.tbd in Frameworks */,
 				85FAAF621D99CFA200933768 /* libz.tbd in Frameworks */,
 				85FAAF601D99CF7400933768 /* IOKit.framework in Frameworks */,
@@ -107,6 +115,10 @@
 		85FAAF511D99CE6700933768 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FD67B37D202D8647003810A3 /* AudioToolbox.framework */,
+				FD67B37E202D8647003810A3 /* AudioUnit.framework */,
+				FD67B37B202D8607003810A3 /* QuartzCore.framework */,
+				FD67B376202D8589003810A3 /* OpenAL.framework */,
 				85FAAF631D99CFCF00933768 /* libiconv.tbd */,
 				85FAAF611D99CFA200933768 /* libz.tbd */,
 				85FAAF5F1D99CF7400933768 /* IOKit.framework */,

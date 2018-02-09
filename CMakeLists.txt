@@ -14,6 +14,8 @@ set(sources
 	src/AnimationEngine/IAnimation.h
 	src/AppDelegate.cpp
 	src/AppDelegate.h
+	src/AudioEngine.cpp
+	src/AudioEngine.h
 	src/B2DebugDraw/B2DebugDrawLayer.cpp
 	src/B2DebugDraw/B2DebugDrawLayer.h
 	src/B2DebugDraw/GB2ShapeCacheX.cpp
@@ -85,6 +87,7 @@ set(sources
 	src/GameObjects/WallStone.h
 	src/GameWorld.cpp
 	src/GameWorld.h
+	src/GameSoundType.h
 	src/GenericScene.cpp
 	src/GenericScene.h
 	src/GUI/Alignment.h

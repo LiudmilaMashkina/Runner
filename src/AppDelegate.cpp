@@ -9,6 +9,7 @@
 #include "TestScene.h"
 #include "GenericScene.h"
 #include "SceneManager.h"
+#include "AudioEngine.h"
 
 USING_NS_CC;
 
@@ -72,6 +73,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     SceneManager* manager = SceneManager::getInstance();
     manager->showMainMenu();
+    
+    AudioEngine::getInstace()->playMusic();
     
     return true;
 }
