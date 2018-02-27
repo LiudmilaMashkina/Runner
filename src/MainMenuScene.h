@@ -35,7 +35,8 @@ private:
     static void turnOnCheckBox(gui2::CheckBox* checkBox);
     static void turnOffCheckBox(gui2::CheckBox* checkBox);
     cocos2d::Sprite* createFire(float scale);
-
+    
+    unsigned int _fireId = 0;
 
 	//std::shared_ptr<gui::ViewPort> _viewPort;
 };

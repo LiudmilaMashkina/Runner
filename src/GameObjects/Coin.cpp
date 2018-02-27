@@ -3,6 +3,8 @@
 #pragma warning(pop)
 
 #include "Coin.h"
+#include "../AudioEngine.h"
+#include "../GameSoundType.h"
 #include "WallController.h"
 #include "GameWorld.h"
 #include "Utils/Convert.h"
@@ -37,6 +39,7 @@ void Coin::onContactBegin(std::shared_ptr<IGameObject> obj)
     if (obj->getType() != GameObjectType::Hero)
         return;
     
+    AudioEngine::getInstance()->playSound(GameSoundType::Coin);
     static_cast<Hero*>(obj.get())->collectCoin();
     _world->removeObjectLater(this);
 }

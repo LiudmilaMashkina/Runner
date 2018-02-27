@@ -1,6 +1,8 @@
 #include <2d/CCScene.h>
 #include <2d/CCAction.h>
 #include <2d/CCActionEase.h>
+#include "AudioEngine.h"
+#include "DataBase.h"
 #include "HeadUpDisplay.h"
 #include "Utils/Convert.h"
 #include "Utils/b2Vec2Operators.h"
@@ -112,7 +114,7 @@ bool PauseMenu::initWithHud(HeadUpDisplay* hud)
     {
         // sound check box
         auto checkBox = gui2::CheckBox::create("rsrc/pause_menu_sounds_on.png",
-                                               "rsrc/pause_menu_sounds_off.png");
+                                               "rsrc/pause_menu_sounds_off.png", false);
         checkBox->setAnchorPoint({1, 0});
         NodeUtils::attach(checkBox, _totem, {-1.4, 0.8});
         turnOnCheckBox(checkBox);
@@ -121,12 +123,27 @@ bool PauseMenu::initWithHud(HeadUpDisplay* hud)
     
     {
         // music check box
+        bool condition = DataBase::getInstace()->getBoolForKey("music");
         auto checkBox = gui2::CheckBox::create("rsrc/pause_menu_music_on.png",
-                                               "rsrc/pause_menu_music_off.png");
+                                               "rsrc/pause_menu_music_off.png", condition);
         checkBox->setAnchorPoint({0, 0});
         NodeUtils::attach(checkBox, _totem, {-1.2, 0.8});
         turnOnCheckBox(checkBox);
         _musicCheckBox = checkBox;
+        
+        auto stopMusicCallback = [=](gui2::CheckBox* checkBox)
+        {
+            AudioEngine::getInstance()->stopMusic();
+            DataBase::getInstace()->setBoolForKey("music", false);
+        };
+        checkBox->setCallbackOff(stopMusicCallback);
+        
+        auto playMusicCallback = [=](gui2::CheckBox* checkBox)
+        {
+            AudioEngine::getInstance()->playMusic();
+            DataBase::getInstace()->setBoolForKey("music", true);
+        };
+        checkBox->setCallbackOn(playMusicCallback);
     }
     
     return true;

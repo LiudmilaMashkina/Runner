@@ -2,6 +2,8 @@
 #include "GUI/BorderdNode.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventDispatcher.h"
+#include "../GameSoundType.h"
+#include "../AudioEngine.h"
 
 USING_NS_CC;
 
@@ -14,20 +16,29 @@ namespace gui2
         _checked->setOpacity(opacity);
     }
     
-	bool CheckBox::initWith(const std::string &normal, const std::string &checked)
+	bool CheckBox::initWith(const std::string &normal, const std::string &checked, bool condition)
 	{
         if (!Node::init())
             return false;
         
 		cocos2d::Sprite* normalSprite = cocos2d::Sprite::create(normal);
 		normalSprite->setAnchorPoint(Vec2(0, 0));
-		normalSprite->setVisible(true);
 		_normal = normalSprite;
 
 		cocos2d::Sprite* checkedSprite = cocos2d::Sprite::create(checked);
 		checkedSprite->setAnchorPoint(Vec2(0, 0));
-		checkedSprite->setVisible(false);
 		_checked = checkedSprite;
+        
+        if (condition)
+        {
+            normalSprite->setVisible(true);
+            checkedSprite->setVisible(false);
+        }
+        else
+        {
+            normalSprite->setVisible(false);
+            checkedSprite->setVisible(true);
+        }
 
 		setContentSize(normalSprite->getContentSize());
 		addChild(normalSprite);
@@ -56,18 +67,23 @@ namespace gui2
 		if (isVisible() == false)
 			return false;
         
+        AudioEngine::getInstance()->playSound(GameSoundType::Button);
+        
         if (_isChecked == false)
         {
             _normal->setVisible(false);
             _checked->setVisible(true);
             _isChecked = true;
+            setCallback(_callbackOff);
         }
         else
         {
             _normal->setVisible(true);
             _checked->setVisible(false);
             _isChecked = false;
+            setCallback(_callbackOn);
         }
+        
 		event->stopPropagation();
         
 		return true;
@@ -83,6 +99,7 @@ namespace gui2
 		_normal->setVisible(true);
 		_checked->setVisible(false);
         */
+        
         if (_callback)
             _callback(this);
     }
@@ -100,4 +117,14 @@ namespace gui2
 	{
 		_callback = callback;
 	}
+    
+    void CheckBox::setCallbackOn(const std::function<void(CheckBox*)> callback)
+    {
+        _callbackOn = callback;
+    }
+    
+    void CheckBox::setCallbackOff(const std::function<void(CheckBox*)> callback)
+    {
+        _callbackOff = callback;
+    }
 }

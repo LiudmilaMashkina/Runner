@@ -6,6 +6,7 @@
 #endif
 #pragma warning(pop)
 #include "AppDelegate.h"
+#include "DataBase.h"
 #include "TestScene.h"
 #include "GenericScene.h"
 #include "SceneManager.h"
@@ -74,7 +75,18 @@ bool AppDelegate::applicationDidFinishLaunching() {
     SceneManager* manager = SceneManager::getInstance();
     manager->showMainMenu();
     
-    AudioEngine::getInstace()->playMusic();
+    
+    
+    //auto condition = DataBase::getInstace()->getBoolForKey("music");
+    
+    AudioEngine::getInstance()->preloadMusic();
+    
+    if (DataBase::getInstace()->getBoolForKey("music"))
+        AudioEngine::getInstance()->playMusic();
+    else
+        DataBase::getInstace()->setBoolForKey("music", false);
+    
+    
     
     return true;
 }

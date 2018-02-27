@@ -10,20 +10,25 @@ namespace gui2
 	public:
 		virtual ~CheckBox();
 		
-  		void setCallback(const std::function<void(CheckBox*)> callback);
+  		void setCallbackOn(const std::function<void(CheckBox*)> callback);
+        void setCallbackOff(const std::function<void(CheckBox*)> callback);
         
-        CC_CREATE_FUNC_2(CheckBox, initWith,
+        CC_CREATE_FUNC_3(CheckBox, initWith,
                          const std::string&, normal,
-                         const std::string&, checked);
+                         const std::string&, checked,
+                         bool, condition);
         
         virtual void setOpacity(GLubyte opacity) override;
         
         void setEnabled(bool enabled) {_enabled = enabled;}
         
+        
 	private:
         CheckBox();
         
-		bool initWith(const std::string &normal, const std::string &checked);
+        void setCallback(const std::function<void(CheckBox*)> callback);
+        
+		bool initWith(const std::string &normal, const std::string &checked, bool condition);
 
 		bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
 		void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
@@ -32,7 +37,10 @@ namespace gui2
 		cocos2d::Sprite* _normal = nullptr;
 		cocos2d::Sprite* _checked = nullptr;
         bool _isChecked = false;
+        std::function<void(CheckBox*)> _callbackOn;
+        std::function<void(CheckBox*)> _callbackOff;
 		std::function<void(CheckBox*)> _callback;
+        
         
         bool _enabled = true;
 	};

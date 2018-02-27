@@ -5,6 +5,8 @@
 #include <set>
 #include <math.h>
 #include "Bomb.h"
+#include "../GameSoundType.h"
+#include "../AudioEngine.h"
 #include "Hero/Hero.h"
 #include "GameWorld.h"
 #include "Utils/Convert.h"
@@ -109,7 +111,9 @@ void Bomb::explode(const b2Vec2& pos)
     GameObjectFactory factory(_world);
     
     float scale = getScale();
+    AudioEngine::getInstance()->playSound(GameSoundType::Bomb);
     auto explosion = factory.createBombExplosion(getPosition(), scale);
+    
     
     _particles->setPaused(true);
     _world->removeObjectLater(this);

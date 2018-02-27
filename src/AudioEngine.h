@@ -7,12 +7,18 @@ class AudioEngine // Singleton
 {
 public:
     void playMusic();
-    void playSound(GameSoundType sound);
+    void stopMusic();
+    void preloadMusic();
     
-    static const std::unique_ptr<AudioEngine>& getInstace();
+    void playSound(GameSoundType sound);
+    unsigned int playLoopedSound(GameSoundType sound);
+    void preloadSounds();
+    void stopSound(unsigned int soundId);
+    
+    static const std::unique_ptr<AudioEngine>& getInstance();
     
 private:
-    AudioEngine(){ AudioEngine::playMusic(); }
+    AudioEngine(){}
     
     static std::unique_ptr<AudioEngine> _audioEngine;
 };

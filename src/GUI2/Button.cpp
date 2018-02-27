@@ -1,4 +1,6 @@
 #include "Button.h"
+#include "../AudioEngine.h"
+#include "../GameSoundType.h"
 #include "2d/CCSprite.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventDispatcher.h"
@@ -55,6 +57,8 @@ namespace gui2
 
 		if (isVisible() == false)
 			return false;
+        
+        AudioEngine::getInstance()->playSound(GameSoundType::Button);
 
 		_normal->setVisible(false);
 		_pressed->setVisible(true);

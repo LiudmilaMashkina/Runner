@@ -8,5 +8,6 @@ enum class GameSoundType
     Ice,
     Stone,
     Hit,
-    Coin
+    Coin,
+    Fire
 };

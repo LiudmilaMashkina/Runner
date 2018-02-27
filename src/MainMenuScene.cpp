@@ -1,5 +1,7 @@
 #include "MainMenuScene.h"
 #include "AnimationEngine/Animation.h"
+#include "AudioEngine.h"
+#include "DataBase.h"
 #include "Utils/Convert.h"
 #include "Utils/b2Vec2Operators.h"
 #include "Utils/TimeProvider.h"
@@ -56,7 +58,9 @@ MainMenuScene::MainMenuScene()
 {}
 
 MainMenuScene::~MainMenuScene()
-{}
+{
+    AudioEngine::getInstance()->stopSound(_fireId);
+}
 
 bool MainMenuScene::init()
 {
@@ -112,7 +116,7 @@ bool MainMenuScene::init()
     {
         // sound check box
         auto checkBox = gui2::CheckBox::create("rsrc/mainmenu_sounds_on.png",
-                                               "rsrc/mainmenu_sounds_off.png");
+                                               "rsrc/mainmenu_sounds_off.png", false);
         checkBox->setAnchorPoint({0, 0});
         NodeUtils::attach(checkBox, totem, {0.02, 0.52});
         turnOnCheckBox(checkBox);
@@ -120,8 +124,25 @@ bool MainMenuScene::init()
     
     {
         // music check box
+
+        bool condition = DataBase::getInstace()->getBoolForKey("music");
         auto checkBox = gui2::CheckBox::create("rsrc/mainmenu_music_on.png",
-                                               "rsrc/mainmenu_music_off.png");
+                                               "rsrc/mainmenu_music_off.png", condition);
+        
+        auto stopMusicCallback = [=](gui2::CheckBox* checkBox)
+        {
+            AudioEngine::getInstance()->stopMusic();
+            DataBase::getInstace()->setBoolForKey("music", false);
+        };
+        checkBox->setCallbackOff(stopMusicCallback);
+        
+        auto playMusicCallback = [=](gui2::CheckBox* checkBox)
+        {
+            AudioEngine::getInstance()->playMusic();
+            DataBase::getInstace()->setBoolForKey("music", true);
+        };
+        checkBox->setCallbackOn(playMusicCallback);
+        
         checkBox->setAnchorPoint({1, 0});
         NodeUtils::attach(checkBox, totem, {0.98, 0.52});
         turnOnCheckBox(checkBox);
@@ -262,6 +283,8 @@ Sprite* MainMenuScene::createFire(float scale)
     assert(sprite.get());
     animation->setTarget(sprite.get());
     this->addUpdatable(animation);
+    
+    _fireId = AudioEngine::getInstance()->playLoopedSound(GameSoundType::Fire);
     
     return sprite.get();
 }
